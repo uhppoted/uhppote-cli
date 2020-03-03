@@ -119,7 +119,7 @@ revoke-all: build
 	$(CLI) $(DEBUG) revoke-all $(SERIALNO)
 
 load-acl: build
-	$(CLI) $(DEBUG) --config ../runtime/$(SERIALNO).conf load-acl ../runtime/$(SERIALNO).acl
+	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)
