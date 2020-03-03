@@ -5,6 +5,7 @@ CLI     = ./bin/uhppote-cli
 SERIALNO ?= 405419896
 CARD     ?= 65538
 DOOR     ?= 3
+DEVICEIP ?= 192.168.1.125
 DATETIME  = $(shell date "+%Y-%m-%d %H:%M:%S")
 LISTEN   ?= 192.168.1.100:60001
 DEBUG    ?= --debug
@@ -42,6 +43,19 @@ coverage: build
 debug: build
 	go test ./...
 
+release: test vet
+	mkdir -p dist/$(DIST)/windows
+	mkdir -p dist/$(DIST)/darwin
+	mkdir -p dist/$(DIST)/linux
+	mkdir -p dist/$(DIST)/arm7
+	env GOOS=linux   GOARCH=amd64         go build -o dist/$(DIST)/linux/uhppote-cli             ./...
+	env GOOS=linux   GOARCH=arm   GOARM=7 go build -o dist/$(DIST)/arm7/uhppote-cli              ./...
+	env GOOS=darwin  GOARCH=amd64         go build -o dist/$(DIST)/darwin/uhppote-cli            ./..
+	env GOOS=windows GOARCH=amd64         go build -o dist/$(DIST)/windows/uhppote-cli.exe       ./...
+
+release-tar: release
+	tar --directory=dist --exclude=".DS_Store" -cvzf dist/$(DIST).tar.gz $(DIST)
+
 usage: build
 	$(CLI)
 
@@ -59,7 +73,7 @@ get-device: build
 	$(CLI) $(DEBUG) get-device $(SERIALNO)
 
 set-address: build
-	$(CLI) $(DEBUG) set-address $(SERIALNO) '192.168.1.125' '255.255.255.0' '0.0.0.0'
+	$(CLI) $(DEBUG) set-address $(SERIALNO) $(DEVICEIP) '255.255.255.0' '0.0.0.0'
 
 get-status: build
 	$(CLI) $(DEBUG) get-status $(SERIALNO)
@@ -87,7 +101,7 @@ get-listener: build
 	$(CLI) $(DEBUG) get-listener $(SERIALNO)
 
 set-listener: build
-	$(CLI) $(DEBUG) set-listener $(SERIALNO) 192.168.1.100:40000
+	$(CLI) $(DEBUG) set-listener $(SERIALNO) $(LISTEN)
 
 get-cards: build
 	$(CLI) $(DEBUG) get-cards $(SERIALNO)
@@ -96,7 +110,7 @@ get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
 grant: build
-	$(CLI) $(DEBUG) grant $(SERIALNO) $(CARD) 2019-01-01 2019-12-31 1,2,3,4
+	$(CLI) $(DEBUG) grant $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
 
 revoke: build
 	$(CLI) $(DEBUG) revoke $(SERIALNO) $(CARD)
@@ -105,7 +119,7 @@ revoke-all: build
 	$(CLI) $(DEBUG) revoke-all $(SERIALNO)
 
 load-acl: build
-	$(CLI) $(DEBUG) --config ../runtime/405419896.conf load-acl ../runtime/405419896.acl
+	$(CLI) $(DEBUG) --config ../runtime/$(SERIALNO).conf load-acl ../runtime/$(SERIALNO).acl
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)
