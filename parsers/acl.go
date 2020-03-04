@@ -134,44 +134,95 @@ func parseHeader(header []string, path string, cfg *config.Config) (*index, erro
 
 func parseRecord(record []string, index *index, path string) (*map[uint32]types.Card, error) {
 	cards := make(map[uint32]types.Card, 0)
+
 	for k, v := range index.doors {
-		card := types.Card{Doors: make([]bool, 4)}
-
-		if cardnumber, err := strconv.ParseUint(record[index.cardnumber-1], 10, 32); err != nil {
-			return nil, errors.New(fmt.Sprintf("Invalid card number: '%s'", record[index.cardnumber-1]))
-		} else {
-			card.CardNumber = uint32(cardnumber)
+		cardno, err := getCardNumber(record, index)
+		if err != nil {
+			return nil, err
 		}
 
-		if date, err := time.ParseInLocation("2006-01-02", record[index.from-1], time.Local); err != nil {
-			return nil, errors.New(fmt.Sprintf("Invalid 'from' date: '%s'", record[index.from-1]))
-		} else {
-			card.From = types.Date(date)
+		from, err := getFromDate(record, index)
+		if err != nil {
+			return nil, err
 		}
 
-		if date, err := time.ParseInLocation("2006-01-02", record[index.to-1], time.Local); err != nil {
-			return nil, errors.New(fmt.Sprintf("Invalid 'to' date: '%s'", record[index.to-1]))
-		} else {
-			card.To = types.Date(date)
+		to, err := getToDate(record, index)
+		if err != nil {
+			return nil, err
 		}
 
-		for i, d := range v {
-			if d == 0 {
-				card.Doors[i] = false
-			} else {
-				switch record[d-1] {
-				case "Y":
-					card.Doors[i] = true
-				case "N":
-					card.Doors[i] = false
-				default:
-					return nil, errors.New(fmt.Sprintf("Expected 'Y/N' for door: '%s'", record[d]))
-				}
-			}
+		doors, err := getDoors(record, v)
+		if err != nil {
+			return nil, err
 		}
 
-		cards[k] = card
+		cards[k] = types.Card{
+			CardNumber: cardno,
+			From:       *from,
+			To:         *to,
+			Doors:      doors,
+		}
 	}
 
 	return &cards, nil
+}
+
+func getCardNumber(record []string, index *index) (uint32, error) {
+	f := get(record, index.cardnumber)
+	cardnumber, err := strconv.ParseUint(f, 10, 32)
+	if err != nil {
+		return 0, fmt.Errorf("Invalid card number '%s' (%w)", f, err)
+	}
+
+	return uint32(cardnumber), nil
+}
+
+func getFromDate(record []string, index *index) (*types.Date, error) {
+	f := get(record, index.from)
+	date, err := time.ParseInLocation("2006-01-02", f, time.Local)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid 'from' date '%s' (%w)", f, err)
+	}
+
+	from := types.Date(date)
+
+	return &from, nil
+}
+
+func getToDate(record []string, index *index) (*types.Date, error) {
+	f := get(record, index.to)
+	date, err := time.ParseInLocation("2006-01-02", f, time.Local)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid 'to' date '%s' (%w)", f, err)
+	}
+
+	to := types.Date(date)
+
+	return &to, nil
+}
+
+func getDoors(record []string, v []int) ([]bool, error) {
+	doors := make([]bool, 4)
+
+	for i, d := range v {
+		if d == 0 {
+			doors[i] = false
+			continue
+		}
+
+		switch get(record, d) {
+		case "Y":
+			doors[i] = true
+		case "N":
+			doors[i] = false
+		default:
+			return doors, fmt.Errorf("Expected 'Y/N' for door: '%s'", record[d])
+		}
+	}
+
+	return doors, nil
+}
+
+func get(record []string, ix int) string {
+	return strings.TrimSpace(record[ix-1])
 }
