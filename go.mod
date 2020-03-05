@@ -2,6 +2,4 @@ module github.com/uhppoted/uhppote-cli
 
 go 1.14
 
-require github.com/uhppoted/uhppote-core v0.0.0-20200228192138-00c62a4d6ea3
-
-replace github.com/uhppoted/uhppote-core => ../uhppote-core
+require github.com/uhppoted/uhppote-core v0.5.1
