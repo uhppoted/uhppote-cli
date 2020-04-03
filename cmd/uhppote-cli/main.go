@@ -79,7 +79,7 @@ func main() {
 	u.ListenAddress = conf.ListenAddress
 
 	for s, d := range conf.Devices {
-		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover)
+		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover, d.Door)
 	}
 
 	if options.bind.address != nil {
