@@ -48,7 +48,7 @@ var options = struct {
 	listen    addr
 	debug     bool
 }{
-	config:    ".config",
+	config:    DEFAULT_CONFIG,
 	bind:      addr{nil},
 	broadcast: addr{nil},
 	listen:    addr{nil},
@@ -56,11 +56,11 @@ var options = struct {
 }
 
 func main() {
-	flag.StringVar(&options.config, "config", "", "Specifies the path for the config file")
+	flag.StringVar(&options.config, "config", options.config, "Specifies the path for the config file")
 	flag.Var(&options.bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
 	flag.Var(&options.broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
 	flag.Var(&options.listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
-	flag.BoolVar(&options.debug, "debug", false, "Displays vaguely useful information while processing a command")
+	flag.BoolVar(&options.debug, "debug", options.debug, "Displays vaguely useful information while processing a command")
 	flag.Parse()
 
 	u := uhppote.UHPPOTE{
@@ -79,7 +79,7 @@ func main() {
 	u.ListenAddress = conf.ListenAddress
 
 	for s, d := range conf.Devices {
-		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover, d.Door)
+		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover, d.Doors)
 	}
 
 	if options.bind.address != nil {

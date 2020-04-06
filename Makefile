@@ -57,7 +57,8 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	go test ./...
+	$(CLI) help load-acl
+	$(CLI) load-acl ../runtime/simulation/simulation.acl
 
 usage: build
 	$(CLI)

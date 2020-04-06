@@ -15,7 +15,7 @@ import (
 type Device struct {
 	Address  *net.UDPAddr
 	Rollover uint32
-	Door     []string
+	Doors    []string
 }
 
 type Config struct {
@@ -81,7 +81,7 @@ func (c *Config) Load(path string) error {
 func (c *Config) Verify() error {
 	doors := make(map[string]bool)
 	for _, device := range c.Devices {
-		for _, door := range device.Door {
+		for _, door := range device.Doors {
 			d := strings.ReplaceAll(strings.ToLower(door), " ", "")
 
 			if doors[d] {
@@ -170,7 +170,7 @@ func address(l string, c *Config) *Config {
 		d := c.Devices[k]
 		if d == nil {
 			d = &Device{
-				Door:     make([]string, 4),
+				Doors:    make([]string, 4),
 				Rollover: ROLLOVER,
 			}
 		}
@@ -203,12 +203,12 @@ func door(l string, c *Config) *Config {
 		d := c.Devices[k]
 		if d == nil {
 			d = &Device{
-				Door:     make([]string, 4),
+				Doors:    make([]string, 4),
 				Rollover: ROLLOVER,
 			}
 		}
 
-		d.Door[door-1] = strings.TrimSpace(match[3])
+		d.Doors[door-1] = strings.TrimSpace(match[3])
 		c.Devices[k] = d
 	}
 
