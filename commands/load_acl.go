@@ -10,10 +10,10 @@ import (
 	"os"
 )
 
-type Load struct {
+type LoadACL struct {
 }
 
-func (c *Load) Execute(ctx Context) error {
+func (c *LoadACL) Execute(ctx Context) error {
 	if ctx.config == nil {
 		return errors.New("load-acl requires a valid configuration file")
 	}
@@ -25,7 +25,7 @@ func (c *Load) Execute(ctx Context) error {
 
 	devices := getDevices(&ctx)
 
-	file, err := getACLFile()
+	file, err := c.getACLFile()
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (c *Load) Execute(ctx Context) error {
 	return err
 }
 
-func getACLFile() (string, error) {
+func (c *LoadACL) getACLFile() (string, error) {
 	if len(flag.Args()) < 2 {
 		return "", fmt.Errorf("Please specify the TSV file from which to load the access control list ")
 	}
@@ -79,19 +79,19 @@ func getACLFile() (string, error) {
 	return file, nil
 }
 
-func (c *Load) CLI() string {
+func (c *LoadACL) CLI() string {
 	return "load-acl"
 }
 
-func (c *Load) Description() string {
+func (c *LoadACL) Description() string {
 	return "Downloads an access control list from a TSV file to a set of access controllers"
 }
 
-func (c *Load) Usage() string {
+func (c *LoadACL) Usage() string {
 	return "<TSV file>"
 }
 
-func (c *Load) Help() {
+func (c *LoadACL) Help() {
 	fmt.Println("Usage: uhppote-cli [options] load-acl <TSV file>")
 	fmt.Println()
 	fmt.Println(" Downloads the access control list in the TSV file to the access controllers defined in the configuration file")
@@ -109,10 +109,11 @@ func (c *Load) Help() {
 	fmt.Println("              a backup copy of the existing permissions (using e.g. get-cards) before executing this")
 	fmt.Println("              is highly recommended.")
 	fmt.Println()
-	fmt.Printf("  config      (optional) File path for the 'conf' file containing the controller configuration (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Println("  config      (optional) File path for the 'conf' file containing the controller configuration")
+	fmt.Printf("                         (defaults to %s)\n", DEFAULT_CONFIG)
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli --config .config load-acl \"hell-2019-05-25.tsv\"")
+	fmt.Println("    uhppote-cli --config .config load-acl \"uhppote-2019-05-25.tsv\"")
 	fmt.Println()
 }
