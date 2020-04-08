@@ -57,9 +57,9 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) help get-acl
-	$(CLI) get-acl ../runtime/simulation/debug.tsv
-	$(CLI) get-acl
+	$(CLI) help compare-acl
+	$(CLI) compare-acl ../runtime/simulation/simulation.acl
+	$(CLI) compare-acl ../runtime/simulation/simulation.acl ../runtime/acl/cli-compare.rpt
 
 usage: build
 	$(CLI)
@@ -127,7 +127,11 @@ load-acl: build
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
 
 get-acl: build
+	$(CLI) get-acl
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
+
+compare-acl: build
+	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/$(SERIALNO).acl
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

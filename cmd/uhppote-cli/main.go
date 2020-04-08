@@ -35,6 +35,7 @@ var cli = []commands.Command{
 	&commands.RevokeAllCommand{},
 	&commands.LoadACL{},
 	&commands.GetACL{},
+	&commands.COMPARE_ACL,
 	&commands.GetEventsCommand{},
 	&commands.GetEventIndexCommand{},
 	&commands.SetEventIndexCommand{},
