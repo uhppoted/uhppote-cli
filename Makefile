@@ -57,9 +57,14 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) help compare-acl
-	$(CLI) compare-acl ../runtime/simulation/simulation.acl
-	$(CLI) compare-acl ../runtime/simulation/simulation.acl ../runtime/acl/cli-compare.rpt
+	$(CLI) revoke $(SERIALNO) $(CARD)
+	$(CLI) get-card $(SERIALNO) $(CARD)
+	$(CLI) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,4
+# #	$(CLI) grant $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,4
+# 	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 Workshop
+	$(CLI) get-card $(SERIALNO) $(CARD)
+	$(CLI) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 2,3
+	$(CLI) get-card $(SERIALNO) $(CARD)
 
 usage: build
 	$(CLI)
@@ -114,8 +119,8 @@ get-cards: build
 get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
-grant: build
-	$(CLI) $(DEBUG) grant $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
+put-card: build
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
 
 revoke: build
 	$(CLI) $(DEBUG) revoke $(SERIALNO) $(CARD)
@@ -131,7 +136,8 @@ get-acl: build
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
 
 compare-acl: build
-	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/$(SERIALNO).acl
+	$(CLI) $(DEBUG) compare-acl ../runtime/simulation/simulation.acl
+	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/simulation.acl ../runtime/simulation/$(SERIALNO).rpt
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

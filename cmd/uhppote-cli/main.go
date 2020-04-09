@@ -30,7 +30,7 @@ var cli = []commands.Command{
 	&commands.SetListenerCommand{},
 	&commands.GetCardsCommand{},
 	&commands.GetCardCommand{},
-	&commands.GrantCommand{},
+	&commands.PUT_CARD,
 	&commands.RevokeCommand{},
 	&commands.RevokeAllCommand{},
 	&commands.LoadACL{},
