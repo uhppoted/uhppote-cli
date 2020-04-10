@@ -57,13 +57,11 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
+#	$(CLI) help grant
 	$(CLI) revoke $(SERIALNO) $(CARD)
+	$(CLI) --debug grant $(CARD) 2020-01-01 2020-12-31 Upstairs
 	$(CLI) get-card $(SERIALNO) $(CARD)
-	$(CLI) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,4
-# #	$(CLI) grant $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,4
-# 	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 Workshop
-	$(CLI) get-card $(SERIALNO) $(CARD)
-	$(CLI) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 2,3
+	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Downstairs"
 	$(CLI) get-card $(SERIALNO) $(CARD)
 
 usage: build

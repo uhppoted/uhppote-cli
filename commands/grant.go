@@ -1,78 +1,106 @@
 package commands
 
 import (
+	"flag"
 	"fmt"
 	"github.com/uhppoted/uhppote-core/types"
+	"github.com/uhppoted/uhppoted-api/acl"
+	"strings"
 )
 
-type GrantCommand struct {
+var GRANT = Grant{}
+
+type Grant struct {
 }
 
-func (c *GrantCommand) Execute(ctx Context) error {
-	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
+func (c *Grant) Execute(ctx Context) error {
+	if ctx.config == nil {
+		return fmt.Errorf("grant requires a valid configuration file")
+	}
+
+	err := ctx.config.Verify()
 	if err != nil {
 		return err
 	}
 
-	cardNumber, err := getUint32(2, "Missing card number", "Invalid card number: %v")
+	cardNumber, err := getUint32(1, "Missing card number", "Invalid card number: %v")
 	if err != nil {
 		return err
 	}
 
-	from, err := getDate(3, "Missing start date", "Invalid start date: %v")
+	from, err := getDate(2, "Missing start date", "Invalid start date: %v")
 	if err != nil {
 		return err
 	}
 
-	to, err := getDate(4, "Missing end date", "Invalid end date: %v")
+	to, err := getDate(3, "Missing end date", "Invalid end date: %v")
 	if err != nil {
 		return err
 	}
 
-	permissions, err := getPermissions(5)
+	doors, err := c.getDoors()
 	if err != nil {
 		return err
 	}
 
-	authorised, err := ctx.uhppote.PutCard(serialNumber, types.Card{
-		CardNumber: cardNumber,
-		From:       types.Date(*from),
-		To:         types.Date(*to),
-		Doors:      []bool{permissions[0], permissions[1], permissions[2], permissions[3]},
-	})
+	devices := getDevices(&ctx)
 
-	if err == nil {
-		fmt.Printf("%v\n", authorised)
-	}
-
-	return err
+	return acl.Grant(ctx.uhppote, devices, cardNumber, types.Date(*from), types.Date(*to), doors)
 }
 
-func (c *GrantCommand) CLI() string {
+func (c *Grant) getDoors() ([]string, error) {
+	doors := []string{}
+
+	s := strings.Join(flag.Args()[4:], " ")
+	tokens := strings.Split(s, ",")
+
+	for _, t := range tokens {
+		if d := strings.ToLower(strings.ReplaceAll(t, " ", "")); d != "" {
+			doors = append(doors, d)
+		}
+	}
+
+	return doors, nil
+}
+
+func (c *Grant) CLI() string {
 	return "grant"
 }
 
-func (c *GrantCommand) Description() string {
-	return "Grants access to a card"
+func (c *Grant) Description() string {
+	return "Grants a card access to a door (or doors)"
 }
 
-func (c *GrantCommand) Usage() string {
-	return "<serial number> <card number> <start date> <end date> <doors>"
+func (c *Grant) Usage() string {
+	return "<card number> <start date> <end date> <doors>"
 }
 
-func (c *GrantCommand) Help() {
-	fmt.Println("Usage: uhppote-cli [options] authorise <serial number> <card number> <start date> <end date> <doors>")
+func (c *Grant) Help() {
+	fmt.Println("Usage: uhppote-cli [options] grant <card number> <start date> <end date> <doors>")
 	fmt.Println()
-	fmt.Println(" Adds a card to the authorised list")
+	fmt.Println(" Sets the access permissions for a card")
 	fmt.Println()
-	fmt.Println("  <serial number>  (required) controller serial number")
 	fmt.Println("  <card number>    (required) card number")
 	fmt.Println("  <start date>     (required) start date YYYY-MM-DD")
 	fmt.Println("  <end date>       (required) end date   YYYY-MM-DD")
-	fmt.Println("  <doors>          (required) list of permitted doors [1 2 3 4]")
+	fmt.Println("  <doors>          (required) comma separated list of permitted doors e.g. Front Door, Workshop")
+	fmt.Println("                              Doors are case- and space insensitive and correspond to the doors")
+	fmt.Println("                              defined in the config file.")
+	fmt.Println()
+	fmt.Println("                              N.B. 'grant' permissions are ADDED to the existing permissions for")
+	fmt.Println("                                    a card. Use 'revoke' to remove unwanted permissions.")
+	fmt.Println("                                    Also, the 'from' and 'to' dates for a card are WIDENED to")
+	fmt.Println("                                    the earliest 'from' date and latest 'to' date combination")
+	fmt.Println("                                    for all records for this card across all controllers.")
+	fmt.Println()
+	fmt.Println("  Options:")
+	fmt.Println()
+	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
+	fmt.Printf("              (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli authorise 12345678 918273645 2019-01-01 2019-12-31 1,2,4")
+	fmt.Println("    uhppote-cli grant 918273645 2020-01-01 2020-12-31 Front Door, Workshop")
 	fmt.Println()
 }

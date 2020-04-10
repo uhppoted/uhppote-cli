@@ -31,6 +31,7 @@ var cli = []commands.Command{
 	&commands.GetCardsCommand{},
 	&commands.GetCardCommand{},
 	&commands.PUT_CARD,
+	&commands.GRANT,
 	&commands.RevokeCommand{},
 	&commands.RevokeAllCommand{},
 	&commands.LoadACL{},

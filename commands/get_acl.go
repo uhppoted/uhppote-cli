@@ -16,7 +16,7 @@ type GetACL struct {
 
 func (c *GetACL) Execute(ctx Context) error {
 	if ctx.config == nil {
-		return errors.New("get-acl requires a valid configuration file")
+		return fmt.Errorf("get-acl requires a valid configuration file")
 	}
 
 	err := ctx.config.Verify()
