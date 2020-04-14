@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+var GET_ACL = GetACL{}
+
 type GetACL struct {
 }
 

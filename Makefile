@@ -120,11 +120,11 @@ get-card: build
 put-card: build
 	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
 
-revoke: build
-	$(CLI) $(DEBUG) revoke $(SERIALNO) $(CARD)
+delete-card: build
+	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
 
-revoke-all: build
-	$(CLI) $(DEBUG) revoke-all $(SERIALNO)
+delete-all: build
+	$(CLI) $(DEBUG) delete-all $(SERIALNO)
 
 load-acl: build
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl

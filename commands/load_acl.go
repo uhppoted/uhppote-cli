@@ -10,6 +10,8 @@ import (
 	"os"
 )
 
+var LOAD_ACL = LoadACL{}
+
 type LoadACL struct {
 }
 
