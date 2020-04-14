@@ -57,12 +57,19 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-#	$(CLI) help grant
-	$(CLI) revoke $(SERIALNO) $(CARD)
-	$(CLI) --debug grant $(CARD) 2020-01-01 2020-12-31 Upstairs
+	$(CLI) help revoke
+	$(CLI) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
 	$(CLI) get-card $(SERIALNO) $(CARD)
-	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Downstairs"
+	$(CLI) revoke $(CARD) Upstairs
 	$(CLI) get-card $(SERIALNO) $(CARD)
+
+	$(CLI) put-card 303986753 $(CARD) 2020-01-01 2020-12-31 1,2,3,4
+	$(CLI) put-card 405419896 $(CARD) 2020-01-01 2020-12-31 1,2,3,4
+	$(CLI) get-card 303986753 $(CARD)
+	$(CLI) get-card 405419896 $(CARD)
+	$(CLI) revoke $(CARD) "Lady's Chamber, D2"
+	$(CLI) get-card 303986753 $(CARD)
+	$(CLI) get-card 405419896 $(CARD)
 
 usage: build
 	$(CLI)
@@ -136,6 +143,9 @@ get-acl: build
 compare-acl: build
 	$(CLI) $(DEBUG) compare-acl ../runtime/simulation/simulation.acl
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/simulation.acl ../runtime/simulation/$(SERIALNO).rpt
+
+grant: build
+	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Workshop"
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

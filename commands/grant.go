@@ -56,7 +56,7 @@ func (c *Grant) getDoors() ([]string, error) {
 
 	for _, t := range tokens {
 		if d := strings.ToLower(strings.ReplaceAll(t, " ", "")); d != "" {
-			doors = append(doors, d)
+			doors = append(doors, strings.TrimSpace(t))
 		}
 	}
 
