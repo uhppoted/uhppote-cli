@@ -85,7 +85,8 @@ func (c *Grant) Help() {
 	fmt.Println("  <end date>       (required) end date   YYYY-MM-DD")
 	fmt.Println("  <doors>          (required) comma separated list of permitted doors e.g. Front Door, Workshop")
 	fmt.Println("                              Doors are case- and space insensitive and correspond to the doors")
-	fmt.Println("                              defined in the config file.")
+	fmt.Println("                              defined in the config file. The pseudo-door ALL will grant the")
+	fmt.Println("                              card access to all doors across all configured devices")
 	fmt.Println()
 	fmt.Println("                              N.B. 'grant' permissions are ADDED to the existing permissions for")
 	fmt.Println("                                    a card. Use 'revoke' to remove unwanted permissions.")
@@ -102,5 +103,6 @@ func (c *Grant) Help() {
 	fmt.Println("  Examples:")
 	fmt.Println()
 	fmt.Println("    uhppote-cli grant 918273645 2020-01-01 2020-12-31 Front Door, Workshop")
+	fmt.Println("    uhppote-cli grant 918273645 2020-01-01 2020-12-31 ALL")
 	fmt.Println()
 }

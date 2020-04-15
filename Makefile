@@ -58,19 +58,16 @@ release-tar: release
 
 debug: build
 	$(CLI) help revoke
-	$(CLI) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
-	$(CLI) get-card $(SERIALNO) $(CARD)
-	$(CLI) revoke $(CARD) Upstairs
-	$(CLI) get-card $(SERIALNO) $(CARD)
-
-	$(CLI) put-card 303986753 $(CARD) 2020-01-01 2020-12-31 1,2,3,4
-	$(CLI) put-card 405419896 $(CARD) 2020-01-01 2020-12-31 1,2,3,4
+	$(CLI) delete-card 303986753 $(CARD)
+	$(CLI) delete-card 405419896 $(CARD)
+	$(CLI) put-card 303986753 $(CARD) 2020-01-01 2020-12-31 1,4
+	$(CLI) put-card 405419896 $(CARD) 2020-01-01 2020-12-31 3,2
 	$(CLI) get-card 303986753 $(CARD)
 	$(CLI) get-card 405419896 $(CARD)
-	$(CLI) revoke $(CARD) "Lady's Chamber, D2"
+	$(CLI) revoke $(CARD) ALL
 	$(CLI) get-card 303986753 $(CARD)
 	$(CLI) get-card 405419896 $(CARD)
-
+	
 usage: build
 	$(CLI)
 
@@ -146,6 +143,15 @@ compare-acl: build
 
 grant: build
 	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Workshop"
+
+grant-all: build
+	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 ALL
+
+revoke: build
+	$(CLI) $(DEBUG) revoke $(CARD) "Lady's Chamber, D2"
+
+revoke-all: build
+	$(CLI) $(DEBUG) revoke $(CARD) ALL
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

@@ -7,9 +7,14 @@
 - [x] Rework `uhppoted-api::MakeTSV` to use `MakeTable`
 - [x] compare-acl
 - [x] Default to commmon config file
+- [x] Rework grant for labelled doors
+- [x] Rework revoke for labelled doors
+- [ ] grant ALL
+- [ ] revoke ALL
+- [ ] show (get-card-acl)
 - [ ] Update documentation for ACL
-- [ ] Rework grant/revoke for labelled doors
-- [ ] Rework to use IDevice
+      - device commands
+      - ACL commands
 - [ ] Install documentation
 - [ ] Release v0.6.1
 
@@ -24,6 +29,7 @@
 - [ ] Rework GetDevices to also find 'known' devices
 - [ ] events: retrieve and show actual events
 - [ ] Generate OTP secret + QR code
+- [ ] --no-log option to suppress progress messages
 
 ### Documentation
 
