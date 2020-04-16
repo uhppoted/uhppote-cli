@@ -33,6 +33,7 @@ var cli = []commands.Command{
 	&commands.PUT_CARD,
 	&commands.DELETE_CARD,
 	&commands.DELETE_ALL,
+	&commands.SHOW,
 	&commands.GRANT,
 	&commands.REVOKE,
 	&commands.LOAD_ACL,

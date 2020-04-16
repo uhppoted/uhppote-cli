@@ -9,9 +9,9 @@
 - [x] Default to commmon config file
 - [x] Rework grant for labelled doors
 - [x] Rework revoke for labelled doors
-- [ ] grant ALL
-- [ ] revoke ALL
-- [ ] show (get-card-acl)
+- [x] grant ALL
+- [x] revoke ALL
+- [x] show (get-card-acl)
 - [ ] Update documentation for ACL
       - device commands
       - ACL commands

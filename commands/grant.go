@@ -45,7 +45,14 @@ func (c *Grant) Execute(ctx Context) error {
 
 	devices := getDevices(&ctx)
 
-	return acl.Grant(ctx.uhppote, devices, cardNumber, types.Date(*from), types.Date(*to), doors)
+	err = acl.Grant(ctx.uhppote, devices, cardNumber, types.Date(*from), types.Date(*to), doors)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("   ... ok")
+
+	return nil
 }
 
 func (c *Grant) getDoors() ([]string, error) {

@@ -57,16 +57,8 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) help revoke
-	$(CLI) delete-card 303986753 $(CARD)
-	$(CLI) delete-card 405419896 $(CARD)
-	$(CLI) put-card 303986753 $(CARD) 2020-01-01 2020-12-31 1,4
-	$(CLI) put-card 405419896 $(CARD) 2020-01-01 2020-12-31 3,2
-	$(CLI) get-card 303986753 $(CARD)
-	$(CLI) get-card 405419896 $(CARD)
-	$(CLI) revoke $(CARD) ALL
-	$(CLI) get-card 303986753 $(CARD)
-	$(CLI) get-card 405419896 $(CARD)
+	$(CLI) help show
+	$(CLI) show $(CARD)
 	
 usage: build
 	$(CLI)
@@ -77,6 +69,8 @@ help: build
 
 version: build
 	$(CLI) version
+
+# DEVICE COMMANDS
 
 get-devices: build
 	$(CLI) $(DEBUG) get-devices
@@ -130,29 +124,6 @@ delete-card: build
 delete-all: build
 	$(CLI) $(DEBUG) delete-all $(SERIALNO)
 
-load-acl: build
-	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
-
-get-acl: build
-	$(CLI) get-acl
-	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
-
-compare-acl: build
-	$(CLI) $(DEBUG) compare-acl ../runtime/simulation/simulation.acl
-	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/simulation.acl ../runtime/simulation/$(SERIALNO).rpt
-
-grant: build
-	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Workshop"
-
-grant-all: build
-	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 ALL
-
-revoke: build
-	$(CLI) $(DEBUG) revoke $(CARD) "Lady's Chamber, D2"
-
-revoke-all: build
-	$(CLI) $(DEBUG) revoke $(CARD) ALL
-
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)
 
@@ -168,4 +139,31 @@ open: build
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 
 
+# ACL COMMANDS
+
+show: build
+	$(CLI) $(DEBUG) show $(CARD)
+
+grant: build
+	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Workshop"
+
+grant-all: build
+	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 ALL
+
+revoke: build
+	$(CLI) $(DEBUG) revoke $(CARD) "Lady's Chamber, D2"
+
+revoke-all: build
+	$(CLI) $(DEBUG) revoke $(CARD) ALL
+	
+load-acl: build
+	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
+
+get-acl: build
+	$(CLI) get-acl
+	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
+
+compare-acl: build
+	$(CLI) $(DEBUG) compare-acl ../runtime/simulation/simulation.acl
+	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/simulation.acl ../runtime/simulation/$(SERIALNO).rpt
 
