@@ -12,15 +12,13 @@
 - [x] grant ALL
 - [x] revoke ALL
 - [x] show (get-card-acl)
-- [ ] Update documentation for ACL
-      - device commands
-      - ACL commands
-- [ ] Install documentation
+- [ ] use Config from uhppoted-api
+- [x] Update documentation for ACL
+- [x] Install documentation
 - [ ] Release v0.6.1
 
 ## TODO
 
-### CLI
 - [ ] Human readable output for e.g. get-status
 - [ ] JSON formatted output for e.g. get-status
 - [ ] Interactive shell (https://drewdevault.com/2019/09/02/Interactive-SSH-programs.html)
