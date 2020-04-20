@@ -5,28 +5,37 @@ import (
 	"github.com/uhppoted/uhppote-core/uhppote"
 )
 
-type VersionCommand struct {
+// VersionCmd is an initialized Version command for the main() command list
+var VersionCmd = Version{}
+
+// Version is a CLI command implementation that displays the CLI version information.
+type Version struct {
 }
 
-func (c *VersionCommand) Execute(ctx Context) error {
+// Execute prints the current 'uhppote' version
+func (c *Version) Execute(ctx Context) error {
 	fmt.Printf("%s\n", uhppote.VERSION)
 
 	return nil
 }
 
-func (c *VersionCommand) CLI() string {
+//CLI returns the 'version' command line
+func (c *Version) CLI() string {
 	return "version"
 }
 
-func (c *VersionCommand) Description() string {
+// Description returns the 'version' command short form help
+func (c *Version) Description() string {
 	return "Displays the current version"
 }
 
-func (c *VersionCommand) Usage() string {
+// Usage returns the string describing the additional options for the 'version' command
+func (c *Version) Usage() string {
 	return ""
 }
 
-func (c *VersionCommand) Help() {
+// Help returns the 'version' command long form help
+func (c *Version) Help() {
 	fmt.Println("Displays the uhppote-cli version in the format v<major>.<minor>.<build> e.g. v1.00.10")
 	fmt.Println()
 }

@@ -1,5 +1,6 @@
 package main
 
 const (
-	DEFAULT_CONFIG = "/etc/uhppoted/uhppoted.conf"
+	// DefaultConfig is the default file path for the uhppoted configuration file
+	DefaultConfig = "/etc/uhppoted/uhppoted.conf"
 )

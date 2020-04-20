@@ -15,7 +15,7 @@ type addr struct {
 }
 
 var cli = []commands.Command{
-	&commands.VersionCommand{},
+	&commands.VersionCmd,
 	&commands.GetDevicesCommand{},
 	&commands.GetDeviceCommand{},
 	&commands.SetAddressCommand{},
@@ -38,7 +38,7 @@ var cli = []commands.Command{
 	&commands.REVOKE,
 	&commands.LOAD_ACL,
 	&commands.GET_ACL,
-	&commands.COMPARE_ACL,
+	&commands.CompareACLCmd,
 	&commands.GetEventsCommand{},
 	&commands.GetEventIndexCommand{},
 	&commands.SetEventIndexCommand{},
@@ -53,7 +53,7 @@ var options = struct {
 	listen    addr
 	debug     bool
 }{
-	config:    DEFAULT_CONFIG,
+	config:    DefaultConfig,
 	bind:      addr{nil},
 	broadcast: addr{nil},
 	listen:    addr{nil},

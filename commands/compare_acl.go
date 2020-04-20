@@ -2,7 +2,6 @@ package commands
 
 import (
 	"bytes"
-	"errors"
 	"flag"
 	"fmt"
 	"github.com/uhppoted/uhppote-core/types"
@@ -14,7 +13,8 @@ import (
 	"time"
 )
 
-var COMPARE_ACL = CompareACL{
+// CompareACLCmd is an initialized CompareACL command for the main() command list
+var CompareACLCmd = CompareACL{
 	template: `
 -----------------------------------
 ACL DIFF REPORT {{ .DateTime }}
@@ -36,7 +36,7 @@ type CompareACL struct {
 
 func (c *CompareACL) Execute(ctx Context) error {
 	if ctx.config == nil {
-		return errors.New("compare-acl requires a valid configuration file")
+		return fmt.Errorf("compare-acl requires a valid configuration file")
 	}
 
 	devices := getDevices(&ctx)
@@ -86,6 +86,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 	}
 
 	fmt.Printf("%s\n", string(w.Bytes()))
+
 	return nil
 }
 
@@ -116,18 +117,18 @@ func (c *CompareACL) getACLFile() (string, error) {
 
 	if err != nil {
 		if os.IsNotExist(err) {
-			return "", errors.New(fmt.Sprintf("File '%s' does not exist", file))
+			return "", fmt.Errorf("File '%s' does not exist", file)
 		}
 
-		return "", errors.New(fmt.Sprintf("Failed to find file '%s':%v", file, err))
+		return "", fmt.Errorf("Failed to find file '%s':%v", file, err)
 	}
 
 	if stat.Mode().IsDir() {
-		return "", errors.New(fmt.Sprintf("File '%s' is a directory", file))
+		return "", fmt.Errorf("File '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", errors.New(fmt.Sprintf("File '%s' is not a real file", file))
+		return "", fmt.Errorf("File '%s' is not a real file", file)
 	}
 
 	return file, nil
@@ -143,18 +144,18 @@ func (c *CompareACL) getReportFile() (string, error) {
 
 	if err != nil {
 		if !os.IsNotExist(err) {
-			return "", errors.New(fmt.Sprintf("Cannot use to report file '%s':%v", file, err))
+			return "", fmt.Errorf("Cannot use to report file '%s':%v", file, err)
 		}
 
 		return file, nil
 	}
 
 	if stat.Mode().IsDir() {
-		return "", errors.New(fmt.Sprintf("File '%s' is a directory", file))
+		return "", fmt.Errorf("File '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", errors.New(fmt.Sprintf("File '%s' is not a real file", file))
+		return "", fmt.Errorf("File '%s' is not a real file", file)
 	}
 
 	return file, nil

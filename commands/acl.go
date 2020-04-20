@@ -7,7 +7,7 @@ import (
 
 func getDevices(ctx *Context) []*uhppote.Device {
 	keys := []uint32{}
-	for id, _ := range ctx.config.Devices {
+	for id := range ctx.config.Devices {
 		keys = append(keys, id)
 	}
 
