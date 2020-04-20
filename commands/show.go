@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var SHOW = Show{}
+var ShowCmd = Show{}
 
 type Show struct {
 }
@@ -31,7 +31,7 @@ func (c *Show) Execute(ctx Context) error {
 
 	doors := []string{}
 	width := 0
-	for k, _ := range permissions {
+	for k := range permissions {
 		doors = append(doors, k)
 
 		if width < len([]rune(k)) {
@@ -76,7 +76,7 @@ func (c *Show) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

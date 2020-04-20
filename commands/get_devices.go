@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetDevicesCommand struct {
+var GetDevicesCmd = GetDevices{}
+
+type GetDevices struct {
 }
 
-func (c *GetDevicesCommand) Execute(ctx Context) error {
+func (c *GetDevices) Execute(ctx Context) error {
 	devices, err := ctx.uhppote.FindDevices()
 
 	if err == nil {
@@ -19,19 +21,19 @@ func (c *GetDevicesCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *GetDevicesCommand) CLI() string {
+func (c *GetDevices) CLI() string {
 	return "get-devices"
 }
 
-func (c *GetDevicesCommand) Description() string {
+func (c *GetDevices) Description() string {
 	return "Returns a list of found UHPPOTE controllers on the network"
 }
 
-func (c *GetDevicesCommand) Usage() string {
+func (c *GetDevices) Usage() string {
 	return ""
 }
 
-func (c *GetDevicesCommand) Help() {
+func (c *GetDevices) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-devices [command options]")
 	fmt.Println()
 	fmt.Println(" Searches the local network for UHPPOTE access control boards reponding to a poll")

@@ -2,7 +2,6 @@ package commands
 
 import (
 	"bytes"
-	"errors"
 	"flag"
 	"fmt"
 	"github.com/uhppoted/uhppoted-api/acl"
@@ -11,7 +10,7 @@ import (
 	"strings"
 )
 
-var GET_ACL = GetACL{}
+var GetACLCmd = GetACL{}
 
 type GetACL struct {
 }
@@ -73,11 +72,11 @@ func (c *GetACL) getACLFile() (string, error) {
 	}
 
 	if stat.Mode().IsDir() {
-		return "", errors.New(fmt.Sprintf("File '%s' is a directory", file))
+		return "", fmt.Errorf("File '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", errors.New(fmt.Sprintf("File '%s' is not a real file", file))
+		return "", fmt.Errorf("File '%s' is not a real file", file)
 	}
 
 	return file, nil
@@ -106,7 +105,7 @@ func (c *GetACL) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

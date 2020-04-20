@@ -5,10 +5,12 @@ import (
 	"fmt"
 )
 
-type GetEventsCommand struct {
+var GetEventsCmd = GetEvents{}
+
+type GetEvents struct {
 }
 
-func (c *GetEventsCommand) Execute(ctx Context) error {
+func (c *GetEvents) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -33,19 +35,19 @@ func (c *GetEventsCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *GetEventsCommand) CLI() string {
+func (c *GetEvents) CLI() string {
 	return "get-events"
 }
 
-func (c *GetEventsCommand) Description() string {
+func (c *GetEvents) Description() string {
 	return "Returns the indices of the 'first' and 'last' events stored on the controller"
 }
 
-func (c *GetEventsCommand) Usage() string {
+func (c *GetEvents) Usage() string {
 	return "<serial number>"
 }
 
-func (c *GetEventsCommand) Help() {
+func (c *GetEvents) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-events <serial number>")
 	fmt.Println()
 	fmt.Println(" Retrieves the indices of the first and last' events stored in the controller event buffer")

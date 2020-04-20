@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type SetEventIndexCommand struct {
+var SetEventIndexCmd = SetEventIndex{}
+
+type SetEventIndex struct {
 }
 
-func (c *SetEventIndexCommand) Execute(ctx Context) error {
+func (c *SetEventIndex) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -28,19 +30,19 @@ func (c *SetEventIndexCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *SetEventIndexCommand) CLI() string {
+func (c *SetEventIndex) CLI() string {
 	return "set-event-index"
 }
 
-func (c *SetEventIndexCommand) Description() string {
+func (c *SetEventIndex) Description() string {
 	return "Sets the current event index"
 }
 
-func (c *SetEventIndexCommand) Usage() string {
+func (c *SetEventIndex) Usage() string {
 	return "<serial number> <index>"
 }
 
-func (c *SetEventIndexCommand) Help() {
+func (c *SetEventIndex) Help() {
 	fmt.Println("Usage: uhppote-cli [options] set-event-index <serial number> <index>")
 	fmt.Println()
 	fmt.Println(" Sets the event index")

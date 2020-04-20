@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetListenerCommand struct {
+var GetListenerCmd = GetListener{}
+
+type GetListener struct {
 }
 
-func (c *GetListenerCommand) Execute(ctx Context) error {
+func (c *GetListener) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -22,19 +24,19 @@ func (c *GetListenerCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *GetListenerCommand) CLI() string {
+func (c *GetListener) CLI() string {
 	return "get-listener"
 }
 
-func (c *GetListenerCommand) Description() string {
+func (c *GetListener) Description() string {
 	return "Returns the IP address to which the selected controller sends events"
 }
 
-func (c *GetListenerCommand) Usage() string {
+func (c *GetListener) Usage() string {
 	return "<serial number>"
 }
 
-func (c *GetListenerCommand) Help() {
+func (c *GetListener) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-listener <serial number>")
 	fmt.Println()
 	fmt.Println(" Retrieves the IP address and port of the remote host to which the controller sends access events")

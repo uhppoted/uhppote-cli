@@ -7,10 +7,12 @@ import (
 	"net"
 )
 
-type SetAddressCommand struct {
+var SetAddressCmd = SetAddress{}
+
+type SetAddress struct {
 }
 
-func (c *SetAddressCommand) Execute(ctx Context) error {
+func (c *SetAddress) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -23,7 +25,7 @@ func (c *SetAddressCommand) Execute(ctx Context) error {
 	address := net.ParseIP(flag.Arg(2))
 
 	if address == nil || address.To4() == nil {
-		return errors.New(fmt.Sprintf("Invalid IP address: %v", flag.Arg(2)))
+		return fmt.Errorf("Invalid IP address: %v", flag.Arg(2))
 	}
 
 	mask := net.IPv4(255, 255, 255, 0)
@@ -53,19 +55,19 @@ func (c *SetAddressCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *SetAddressCommand) CLI() string {
+func (c *SetAddress) CLI() string {
 	return "set-address"
 }
 
-func (c *SetAddressCommand) Description() string {
+func (c *SetAddress) Description() string {
 	return "Sets the controller IP address"
 }
 
-func (c *SetAddressCommand) Usage() string {
+func (c *SetAddress) Usage() string {
 	return "<serial number> <address> [mask] [gateway]"
 }
 
-func (c *SetAddressCommand) Help() {
+func (c *SetAddress) Help() {
 	fmt.Println("Usage: uhppote-cli [options] set-address <serial number> <address> [mask] [gateway]")
 	fmt.Println()
 	fmt.Println(" Sets the controller IP address, subnet mask and gateway address")

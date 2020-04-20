@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-var LOAD_ACL = LoadACL{}
+var LoadACLCmd = LoadACL{}
 
 type LoadACL struct {
 }
@@ -59,18 +59,18 @@ func (c *LoadACL) getACLFile() (string, error) {
 
 	if err != nil {
 		if os.IsNotExist(err) {
-			return "", errors.New(fmt.Sprintf("File '%s' does not exist", file))
+			return "", fmt.Errorf("File '%s' does not exist", file)
 		}
 
-		return "", errors.New(fmt.Sprintf("Failed to find file '%s':%v", file, err))
+		return "", fmt.Errorf("Failed to find file '%s':%v", file, err)
 	}
 
 	if stat.Mode().IsDir() {
-		return "", errors.New(fmt.Sprintf("File '%s' is a directory", file))
+		return "", fmt.Errorf("File '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", errors.New(fmt.Sprintf("File '%s' is not a real file", file))
+		return "", fmt.Errorf("File '%s' is not a real file", file)
 	}
 
 	return file, nil
@@ -109,7 +109,7 @@ func (c *LoadACL) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

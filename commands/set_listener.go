@@ -7,10 +7,12 @@ import (
 	"net"
 )
 
-type SetListenerCommand struct {
+var SetListenerCmd = SetListener{}
+
+type SetListener struct {
 }
 
-func (c *SetListenerCommand) Execute(ctx Context) error {
+func (c *SetListener) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -26,7 +28,7 @@ func (c *SetListenerCommand) Execute(ctx Context) error {
 	}
 
 	if address == nil || address.IP.To4() == nil {
-		return errors.New(fmt.Sprintf("Invalid UDP address: %v", flag.Arg(2)))
+		return fmt.Errorf("Invalid UDP address: %v", flag.Arg(2))
 	}
 
 	listener, err := ctx.uhppote.SetListener(serialNumber, *address)
@@ -38,19 +40,19 @@ func (c *SetListenerCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *SetListenerCommand) CLI() string {
+func (c *SetListener) CLI() string {
 	return "set-listener"
 }
 
-func (c *SetListenerCommand) Description() string {
+func (c *SetListener) Description() string {
 	return "Sets the IP address and port to which the controller sends access events"
 }
 
-func (c *SetListenerCommand) Usage() string {
+func (c *SetListener) Usage() string {
 	return "<serial number> <address:port>"
 }
 
-func (c *SetListenerCommand) Help() {
+func (c *SetListener) Help() {
 	fmt.Println("Usage: uhppote-cli [options] set-listener <serial number> <address:port>")
 	fmt.Println()
 	fmt.Println(" Sets the host address to which the controller sends access events")

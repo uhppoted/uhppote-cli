@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetTimeCommand struct {
+var GetTimeCmd = GetTime{}
+
+type GetTime struct {
 }
 
-func (c *GetTimeCommand) Execute(ctx Context) error {
+func (c *GetTime) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -22,19 +24,19 @@ func (c *GetTimeCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *GetTimeCommand) CLI() string {
+func (c *GetTime) CLI() string {
 	return "get-time"
 }
 
-func (c *GetTimeCommand) Description() string {
+func (c *GetTime) Description() string {
 	return "Returns the current time on the selected controller"
 }
 
-func (c *GetTimeCommand) Usage() string {
+func (c *GetTime) Usage() string {
 	return "<serial number>"
 }
 
-func (c *GetTimeCommand) Help() {
+func (c *GetTime) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-time <serial number> [command options]")
 	fmt.Println()
 	fmt.Println(" Retrieves the current date/time referenced to the local timezone for the controller")

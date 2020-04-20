@@ -7,7 +7,9 @@ import (
 	"os/signal"
 )
 
-type ListenCommand struct {
+var ListenCmd = Listen{}
+
+type Listen struct {
 }
 
 type listener struct {
@@ -26,7 +28,7 @@ func (l *listener) OnError(err error) bool {
 	return true
 }
 
-func (c *ListenCommand) Execute(ctx Context) error {
+func (c *Listen) Execute(ctx Context) error {
 	q := make(chan os.Signal)
 
 	defer close(q)
@@ -36,19 +38,19 @@ func (c *ListenCommand) Execute(ctx Context) error {
 	return ctx.uhppote.Listen(&listener{}, q)
 }
 
-func (c *ListenCommand) CLI() string {
+func (c *Listen) CLI() string {
 	return "listen"
 }
 
-func (c *ListenCommand) Description() string {
+func (c *Listen) Description() string {
 	return "Listens for access control events"
 }
 
-func (c *ListenCommand) Usage() string {
+func (c *Listen) Usage() string {
 	return "listen"
 }
 
-func (c *ListenCommand) Help() {
+func (c *Listen) Help() {
 	fmt.Println("Listens for access control events from UHPPOTE UT0311-L0x controllers configured to send events to this IP address and port")
 	fmt.Println()
 }

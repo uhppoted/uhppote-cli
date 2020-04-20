@@ -1,14 +1,15 @@
 package commands
 
 import (
-	"errors"
 	"fmt"
 )
 
-type OpenDoorCommand struct {
+var OpenDoorCmd = OpenDoor{}
+
+type OpenDoor struct {
 }
 
-func (c *OpenDoorCommand) Execute(ctx Context) error {
+func (c *OpenDoor) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -20,7 +21,7 @@ func (c *OpenDoorCommand) Execute(ctx Context) error {
 	}
 
 	if door != 1 && door != 2 && door != 3 && door != 4 {
-		return errors.New(fmt.Sprintf("Invalid door ID: %v", door))
+		return fmt.Errorf("Invalid door ID: %v", door)
 	}
 
 	opened, err := ctx.uhppote.OpenDoor(serialNumber, uint8(door))
@@ -32,19 +33,19 @@ func (c *OpenDoorCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *OpenDoorCommand) CLI() string {
+func (c *OpenDoor) CLI() string {
 	return "open"
 }
 
-func (c *OpenDoorCommand) Description() string {
+func (c *OpenDoor) Description() string {
 	return "Opens a door"
 }
 
-func (c *OpenDoorCommand) Usage() string {
+func (c *OpenDoor) Usage() string {
 	return "<serial number> <door>"
 }
 
-func (c *OpenDoorCommand) Help() {
+func (c *OpenDoor) Help() {
 	fmt.Println("Usage: uhppote-cli [options] open <serial number> <door>")
 	fmt.Println()
 	fmt.Println(" Opens the requested door:")

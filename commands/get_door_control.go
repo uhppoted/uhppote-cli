@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetDoorControlCommand struct {
+var GetDoorControlCmd = GetDoorControl{}
+
+type GetDoorControl struct {
 }
 
-func (c *GetDoorControlCommand) Execute(ctx Context) error {
+func (c *GetDoorControl) Execute(ctx Context) error {
 	lookup := map[uint8]string{
 		1: "normally open",
 		2: "normally closed",
@@ -34,19 +36,19 @@ func (c *GetDoorControlCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *GetDoorControlCommand) CLI() string {
+func (c *GetDoorControl) CLI() string {
 	return "get-door-control"
 }
 
-func (c *GetDoorControlCommand) Description() string {
+func (c *GetDoorControl) Description() string {
 	return "Gets the control state (normally open, normally closed or controlled) for a door"
 }
 
-func (c *GetDoorControlCommand) Usage() string {
+func (c *GetDoorControl) Usage() string {
 	return "<serial number> <door>"
 }
 
-func (c *GetDoorControlCommand) Help() {
+func (c *GetDoorControl) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-door-control <serial number> <door>")
 	fmt.Println()
 	fmt.Println(" Retrieves the door control state ('normally open', 'normally closed' or 'controlled')")

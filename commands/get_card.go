@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetCardCommand struct {
+var GetCardCmd = GetCard{}
+
+type GetCard struct {
 }
 
-func (c *GetCardCommand) Execute(ctx Context) error {
+func (c *GetCard) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -32,19 +34,19 @@ func (c *GetCardCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *GetCardCommand) CLI() string {
+func (c *GetCard) CLI() string {
 	return "get-card"
 }
 
-func (c *GetCardCommand) Description() string {
+func (c *GetCard) Description() string {
 	return "Returns the access granted to a card number"
 }
 
-func (c *GetCardCommand) Usage() string {
+func (c *GetCard) Usage() string {
 	return "<serial number> <card number>"
 }
 
-func (c *GetCardCommand) Help() {
+func (c *GetCard) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-card <serial number> <card number>")
 	fmt.Println()
 	fmt.Println(" Retrieves the access granted for the card number from  the controller card list")

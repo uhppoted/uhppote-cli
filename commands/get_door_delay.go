@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetDoorDelayCommand struct {
+var GetDoorDelayCmd = GetDoorDelay{}
+
+type GetDoorDelay struct {
 }
 
-func (c *GetDoorDelayCommand) Execute(ctx Context) error {
+func (c *GetDoorDelay) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -28,19 +30,19 @@ func (c *GetDoorDelayCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *GetDoorDelayCommand) CLI() string {
+func (c *GetDoorDelay) CLI() string {
 	return "get-door-delay"
 }
 
-func (c *GetDoorDelayCommand) Description() string {
+func (c *GetDoorDelay) Description() string {
 	return "Gets the time a door lock is kept open"
 }
 
-func (c *GetDoorDelayCommand) Usage() string {
+func (c *GetDoorDelay) Usage() string {
 	return "<serial number> <door>"
 }
 
-func (c *GetDoorDelayCommand) Help() {
+func (c *GetDoorDelay) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-door-delay <serial number> <door>")
 	fmt.Println()
 	fmt.Println(" Retrieves the door open delay (in seconds)")

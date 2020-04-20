@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type SetDoorControlCommand struct {
+var SetDoorControlCmd = SetDoorControl{}
+
+type SetDoorControl struct {
 }
 
-func (c *SetDoorControlCommand) Execute(ctx Context) error {
+func (c *SetDoorControl) Execute(ctx Context) error {
 	states := map[string]uint8{
 		"normally open":   1,
 		"normally closed": 2,
@@ -53,19 +55,19 @@ func (c *SetDoorControlCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *SetDoorControlCommand) CLI() string {
+func (c *SetDoorControl) CLI() string {
 	return "set-door-control"
 }
 
-func (c *SetDoorControlCommand) Description() string {
+func (c *SetDoorControl) Description() string {
 	return "Sets the control state (normally open, normally close or controlled) for a door"
 }
 
-func (c *SetDoorControlCommand) Usage() string {
+func (c *SetDoorControl) Usage() string {
 	return "<serial number> <door> <state>"
 }
 
-func (c *SetDoorControlCommand) Help() {
+func (c *SetDoorControl) Help() {
 	fmt.Println("Usage: uhppote-cli [options] set-door-control <serial number> <door> <state>")
 	fmt.Println()
 	fmt.Println(" Sets the door control state")

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-var DELETE_CARD = DeleteCard{}
+var DeleteCardCmd = DeleteCard{}
 
 type DeleteCard struct {
 }
@@ -52,7 +52,7 @@ func (c *DeleteCard) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

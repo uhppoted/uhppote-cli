@@ -1,16 +1,17 @@
 package commands
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"time"
 )
 
-type SetTimeCommand struct {
+var SetTimeCmd = SetTime{}
+
+type SetTime struct {
 }
 
-func (c *SetTimeCommand) Execute(ctx Context) error {
+func (c *SetTime) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -23,7 +24,7 @@ func (c *SetTimeCommand) Execute(ctx Context) error {
 		} else {
 			datetime, err = time.Parse("2006-01-02 15:04:05", flag.Arg(2))
 			if err != nil {
-				return errors.New(fmt.Sprintf("Invalid date/time parameter: %v", flag.Arg(3)))
+				return fmt.Errorf("Invalid date/time parameter: %v", flag.Arg(3))
 			}
 		}
 	}
@@ -37,19 +38,19 @@ func (c *SetTimeCommand) Execute(ctx Context) error {
 	return err
 }
 
-func (c *SetTimeCommand) CLI() string {
+func (c *SetTime) CLI() string {
 	return "set-time"
 }
 
-func (c *SetTimeCommand) Description() string {
+func (c *SetTime) Description() string {
 	return "Sets the controller internal clock"
 }
 
-func (c *SetTimeCommand) Usage() string {
+func (c *SetTime) Usage() string {
 	return "<serial number> [now|<yyyy-mm-dd HH:mm:ss>]"
 }
 
-func (c *SetTimeCommand) Help() {
+func (c *SetTime) Help() {
 	fmt.Println("Usage: uhppote-cli [options] set-time <serial number> [command options]")
 	fmt.Println()
 	fmt.Println(" Sets the controller date/time to the supplied time. Defaults to 'now'. Command format")

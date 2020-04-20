@@ -5,7 +5,7 @@ import (
 	"github.com/uhppoted/uhppote-core/types"
 )
 
-var PUT_CARD = PutCard{}
+var PutCardCmd = PutCard{}
 
 type PutCard struct {
 }
@@ -77,7 +77,7 @@ func (c *PutCard) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DEFAULT_CONFIG)
+	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

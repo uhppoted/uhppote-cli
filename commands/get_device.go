@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-type GetDeviceCommand struct {
+var GetDeviceCmd = GetDevice{}
+
+type GetDevice struct {
 }
 
-func (c *GetDeviceCommand) Execute(ctx Context) error {
+func (c *GetDevice) Execute(ctx Context) error {
 	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
@@ -25,19 +27,19 @@ func (c *GetDeviceCommand) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *GetDeviceCommand) CLI() string {
+func (c *GetDevice) CLI() string {
 	return "get-device"
 }
 
-func (c *GetDeviceCommand) Description() string {
+func (c *GetDevice) Description() string {
 	return "'pings' a UHPPOTE controller using the IP address configured for the device"
 }
 
-func (c *GetDeviceCommand) Usage() string {
+func (c *GetDevice) Usage() string {
 	return "<serial number>"
 }
 
-func (c *GetDeviceCommand) Help() {
+func (c *GetDevice) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-device <serial number>>")
 	fmt.Println()
 	fmt.Println("  serial-number  (required) controller serial number")
