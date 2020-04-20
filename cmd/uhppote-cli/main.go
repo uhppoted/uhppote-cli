@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"github.com/uhppoted/uhppote-cli/commands"
-	"github.com/uhppoted/uhppote-cli/config"
 	"github.com/uhppoted/uhppote-core/uhppote"
+	"github.com/uhppoted/uhppoted-api/config"
 	"net"
 	"os"
 )
@@ -75,6 +75,11 @@ func main() {
 
 	conf := config.NewConfig()
 	if err := conf.Load(options.config); err != nil {
+		fmt.Printf("\n   ERROR: %v\n\n", err)
+		os.Exit(1)
+	}
+
+	if err := conf.Validate(); err != nil {
 		fmt.Printf("\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}

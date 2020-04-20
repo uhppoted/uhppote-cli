@@ -39,11 +39,6 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return errors.New("compare-acl requires a valid configuration file")
 	}
 
-	err := ctx.config.Verify()
-	if err != nil {
-		return err
-	}
-
 	devices := getDevices(&ctx)
 
 	file, err := c.getACLFile()

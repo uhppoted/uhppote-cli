@@ -21,11 +21,6 @@ func (c *GetACL) Execute(ctx Context) error {
 		return fmt.Errorf("get-acl requires a valid configuration file")
 	}
 
-	err := ctx.config.Verify()
-	if err != nil {
-		return err
-	}
-
 	devices := getDevices(&ctx)
 	list, err := acl.GetACL(ctx.uhppote, devices)
 	if err != nil {

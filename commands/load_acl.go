@@ -20,11 +20,6 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return errors.New("load-acl requires a valid configuration file")
 	}
 
-	err := ctx.config.Verify()
-	if err != nil {
-		return err
-	}
-
 	devices := getDevices(&ctx)
 
 	file, err := c.getACLFile()

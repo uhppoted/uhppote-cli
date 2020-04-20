@@ -12,7 +12,7 @@
 - [x] grant ALL
 - [x] revoke ALL
 - [x] show (get-card-acl)
-- [ ] use Config from uhppoted-api
+- [x] use Config from uhppoted-api
 - [x] Update documentation for ACL
 - [x] Install documentation
 - [ ] Release v0.6.1

@@ -17,11 +17,6 @@ func (c *Show) Execute(ctx Context) error {
 		return fmt.Errorf("show requires a valid configuration file")
 	}
 
-	err := ctx.config.Verify()
-	if err != nil {
-		return err
-	}
-
 	cardNumber, err := getUint32(1, "Missing card number", "Invalid card number: %v")
 	if err != nil {
 		return err
