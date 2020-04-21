@@ -1,22 +1,5 @@
 ## v0.6x
 
-**IN PROGRESS**
-
-- [x] Rework load-acl to use `uhppoted-api`
-- [x] get-acl
-- [x] Rework `uhppoted-api::MakeTSV` to use `MakeTable`
-- [x] compare-acl
-- [x] Default to commmon config file
-- [x] Rework grant for labelled doors
-- [x] Rework revoke for labelled doors
-- [x] grant ALL
-- [x] revoke ALL
-- [x] show (get-card-acl)
-- [x] use Config from uhppoted-api
-- [x] Update documentation for ACL
-- [x] Install documentation
-- [x] Release v0.6.1
-
 ## TODO
 
 - [ ] Human readable output for e.g. get-status

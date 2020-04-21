@@ -15,17 +15,18 @@ systems.
 
 ## Releases
 
-| *Version* | *Description*                              |
-| --------- | ------------------------------------------ |
-| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules*            |
-| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`
+| *Version* | *Description*                                                                             |
+| --------- | ----------------------------------------------------------------------------------------- |
+| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers      |
+| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                     |
+| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules* |
 
 ## Installation
 
 Executables for all the supported operating systems are packaged in the [releases](https://github.com/uhppoted/uhppote-cli/releases):
 
-- [tar.gz](https://github.com/uhppoted/uhppote-cli/releases/download/v0.6.0/uhppote-cli_v0.6.0.tar.gz)
-- [zip](https://github.com/uhppoted/uhppote-cli/releases/download/v0.6.0/uhppote-cli_v0.6.0.zip)
+- [tar.gz](https://github.com/uhppoted/uhppote-cli/releases/download/v0.6.0/uhppote-cli_v0.6.1.tar.gz)
+- [zip](https://github.com/uhppoted/uhppote-cli/releases/download/v0.6.0/uhppote-cli_v0.6.1.zip)
 
 The above archives contain the executables for all the operating systems - operating system specific tarballs can be found in the
 [uhppoted](https://github.com/uhppoted/uhppoted/releases) releases.
