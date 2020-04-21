@@ -15,7 +15,7 @@
 - [x] use Config from uhppoted-api
 - [x] Update documentation for ACL
 - [x] Install documentation
-- [ ] Release v0.6.1
+- [x] Release v0.6.1
 
 ## TODO
 
