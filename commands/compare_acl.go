@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppoted-api/acl"
+	"github.com/uhppoted/uhppoted-api/config"
 	"io"
 	"io/ioutil"
 	"os"
@@ -193,7 +194,7 @@ func (c *CompareACL) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
+	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/uhppoted/uhppoted-api/acl"
+	"github.com/uhppoted/uhppoted-api/config"
 	"strings"
 )
 
@@ -83,7 +84,7 @@ func (c *Revoke) Help() {
 	fmt.Println("  Options:")
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", DefaultConfig)
+	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
 	fmt.Println("    --debug   Displays vaguely useful internal information")
 	fmt.Println()
 	fmt.Println("  Examples:")

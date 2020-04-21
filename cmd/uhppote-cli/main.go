@@ -53,7 +53,7 @@ var options = struct {
 	listen    addr
 	debug     bool
 }{
-	config:    DefaultConfig,
+	config:    config.DefaultConfig,
 	bind:      addr{nil},
 	broadcast: addr{nil},
 	listen:    addr{nil},
