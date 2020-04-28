@@ -54,7 +54,6 @@ func (c *GetACL) Execute(ctx Context) error {
 	fmt.Println(w.String())
 	fmt.Println()
 
-	fmt.Println(w.String())
 	return nil
 }
 
