@@ -79,7 +79,51 @@ func main() {
 		return
 	}
 
-	// (optionally) load configuration from file
+	// initialise execution context
+	conf := configuration(cmd)
+	u := uhppote.UHPPOTE{
+		Devices: make(map[uint32]*uhppote.Device),
+		Debug:   options.debug,
+	}
+
+	u.BindAddress = conf.BindAddress
+	u.BroadcastAddress = conf.BroadcastAddress
+	u.ListenAddress = conf.ListenAddress
+
+	for s, d := range conf.Devices {
+		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover, d.Doors)
+	}
+
+	if options.bind.address != nil {
+		u.BindAddress = options.bind.address
+		u.ListenAddress = options.bind.address
+	}
+
+	if options.broadcast.address != nil {
+		u.BroadcastAddress = options.broadcast.address
+	}
+
+	if options.listen.address != nil {
+		u.ListenAddress = options.listen.address
+	}
+
+	ctx := commands.NewContext(&u, conf)
+
+	// execute command
+	err = cmd.Execute(ctx)
+	if err != nil {
+		fmt.Printf("\n   ERROR: %v\n\n", err)
+		os.Exit(1)
+	}
+}
+
+// Optionally loads the configuration from file, falling back to the default configuration file
+// if a file is not specified by the --conf command line option. For 'device' and 'miscellaneous'
+// commands the configuration file is optional and a note is posted in debug mode if the
+// default configuration file is being used. A valid configuration file is mandatory for ACL
+// commands - a note is posted in debug mode if the default configuration file is in use,
+// but this is probably the desired behaviour.
+func configuration(cmd commands.Command) *config.Config {
 	conf := config.NewConfig()
 
 	if options.config != "" {
@@ -117,41 +161,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// initialise execution context
-	u := uhppote.UHPPOTE{
-		Devices: make(map[uint32]*uhppote.Device),
-		Debug:   options.debug,
-	}
-
-	u.BindAddress = conf.BindAddress
-	u.BroadcastAddress = conf.BroadcastAddress
-	u.ListenAddress = conf.ListenAddress
-
-	for s, d := range conf.Devices {
-		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover, d.Doors)
-	}
-
-	if options.bind.address != nil {
-		u.BindAddress = options.bind.address
-		u.ListenAddress = options.bind.address
-	}
-
-	if options.broadcast.address != nil {
-		u.BroadcastAddress = options.broadcast.address
-	}
-
-	if options.listen.address != nil {
-		u.ListenAddress = options.listen.address
-	}
-
-	ctx := commands.NewContext(&u, conf)
-
-	// execute command
-	err = cmd.Execute(ctx)
-	if err != nil {
-		fmt.Printf("\n   ERROR: %v\n\n", err)
-		os.Exit(1)
-	}
+	return conf
 }
 
 func parse() (commands.Command, error) {
