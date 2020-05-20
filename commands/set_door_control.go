@@ -81,3 +81,8 @@ func (c *SetDoorControl) Help() {
 	fmt.Println("    uhppote-cli set-door-control 12345678 3 'normally open'")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *SetDoorControl) RequiresConfig() bool {
+	return false
+}

@@ -54,3 +54,8 @@ func (c *Listen) Help() {
 	fmt.Println("Listens for access control events from UHPPOTE UT0311-L0x controllers configured to send events to this IP address and port")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *Listen) RequiresConfig() bool {
+	return false
+}

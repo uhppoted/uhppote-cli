@@ -48,3 +48,8 @@ func (c *GetStatus) Help() {
 	fmt.Println("    uhppote-cli get-status 12345678")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetStatus) RequiresConfig() bool {
+	return false
+}

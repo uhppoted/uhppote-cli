@@ -57,8 +57,9 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) help show
-	$(CLI) show $(CARD)
+	$(CLI) help
+	$(CLI) --debug get-devices
+	$(CLI) --debug show $(CARD)
 	
 usage: build
 	$(CLI)

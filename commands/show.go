@@ -85,3 +85,8 @@ func (c *Show) Help() {
 	fmt.Println("    uhppote-cli show 918273645")
 	fmt.Println()
 }
+
+// Returns true - configuration is not optional for this command to return valid information.
+func (c *Show) RequiresConfig() bool {
+	return true
+}

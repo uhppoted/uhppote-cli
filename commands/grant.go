@@ -109,3 +109,8 @@ func (c *Grant) Help() {
 	fmt.Println("    uhppote-cli grant 918273645 2020-01-01 2020-12-31 ALL")
 	fmt.Println()
 }
+
+// Returns true - configuration is not optional for this command to return valid information.
+func (c *Grant) RequiresConfig() bool {
+	return true
+}

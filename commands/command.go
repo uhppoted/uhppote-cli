@@ -25,4 +25,5 @@ type Command interface {
 	Description() string
 	Usage() string
 	Help()
+	RequiresConfig() bool
 }

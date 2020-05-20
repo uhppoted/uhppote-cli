@@ -49,3 +49,8 @@ func (c *GetListener) Help() {
 	fmt.Println("    uhppote-cli get-listener 12345678")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetListener) RequiresConfig() bool {
+	return false
+}

@@ -113,3 +113,8 @@ func (c *GetACL) Help() {
 	fmt.Println("    uhppote-cli --debug --config .config get-acl \"uhppote.tsv\"")
 	fmt.Println()
 }
+
+// Returns true - configuration is not optional for this command to return valid information.
+func (c *GetACL) RequiresConfig() bool {
+	return true
+}

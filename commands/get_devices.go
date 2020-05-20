@@ -46,3 +46,8 @@ func (c *GetDevices) Help() {
 	fmt.Println("    -debug  Displays vaguely useful internal information")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetDevices) RequiresConfig() bool {
+	return false
+}

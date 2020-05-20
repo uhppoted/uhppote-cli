@@ -59,3 +59,8 @@ func (c *GetCard) Help() {
 	fmt.Println("    uhppote-cli get-card 12345678 9876543")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetCard) RequiresConfig() bool {
+	return false
+}

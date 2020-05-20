@@ -55,3 +55,8 @@ func (c *DeleteAll) Help() {
 	fmt.Println("    uhppote-cli --debug --config .config delete-all 12345678")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *DeleteAll) RequiresConfig() bool {
+	return false
+}

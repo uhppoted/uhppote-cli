@@ -74,3 +74,8 @@ func (c *SetTime) Help() {
 	fmt.Println("    uhppote-cli set-time '2019-01-12 20:15:32'")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *SetTime) RequiresConfig() bool {
+	return false
+}

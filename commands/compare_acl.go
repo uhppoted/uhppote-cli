@@ -202,3 +202,8 @@ func (c *CompareACL) Help() {
 	fmt.Println("    uhppote-cli --debug --config .config compare-acl \"uhppote-2019-05-25.tsv\"")
 	fmt.Println()
 }
+
+// Returns true - configuration is not optional for this command to return valid information.
+func (c *CompareACL) RequiresConfig() bool {
+	return true
+}

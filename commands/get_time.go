@@ -50,3 +50,8 @@ func (c *GetTime) Help() {
 	fmt.Println("  Command options:")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetTime) RequiresConfig() bool {
+	return false
+}

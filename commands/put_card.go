@@ -89,3 +89,8 @@ func (c *PutCard) Help() {
 	fmt.Println("    uhppote-cli put-card 12345678 918273645 2020-01-01 2020-12-31 1,2,4")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *PutCard) RequiresConfig() bool {
+	return false
+}

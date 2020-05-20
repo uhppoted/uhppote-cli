@@ -84,3 +84,8 @@ func (c *SetAddress) Help() {
 	fmt.Println("    uhppote-cli set-address 12345678  192.168.1.100  255.255.255.0  0.0.0.0")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *SetAddress) RequiresConfig() bool {
+	return false
+}

@@ -60,3 +60,8 @@ func (c *GetDevice) Help() {
 	fmt.Println("    -debug  Displays a trace of request/response messages")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetDevice) RequiresConfig() bool {
+	return false
+}

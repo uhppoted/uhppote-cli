@@ -92,3 +92,8 @@ func (c *Revoke) Help() {
 	fmt.Println("    uhppote-cli -debug --config .config revoke 918273645 Front Door, Workshop")
 	fmt.Println()
 }
+
+// Returns true - configuration is not optional for this command to return valid information.
+func (c *Revoke) RequiresConfig() bool {
+	return true
+}

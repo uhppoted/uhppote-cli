@@ -66,3 +66,8 @@ func (c *SetListener) Help() {
 	fmt.Println("    uhppote-cli set-listener 12345678  192.168.1.100:54321")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *SetListener) RequiresConfig() bool {
+	return false
+}

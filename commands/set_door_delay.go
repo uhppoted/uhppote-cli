@@ -66,3 +66,8 @@ func (c *SetDoorDelay) Help() {
 	fmt.Println("    uhppote-cli set-door-delay 12345678 3 15")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *SetDoorDelay) RequiresConfig() bool {
+	return false
+}

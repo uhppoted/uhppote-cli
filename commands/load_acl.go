@@ -118,3 +118,8 @@ func (c *LoadACL) Help() {
 	fmt.Println("    uhppote-cli --debug --config .config load-acl \"uhppote-2019-05-25.tsv\"")
 	fmt.Println()
 }
+
+// Returns true - configuration is not optional for this command to return valid information.
+func (c *LoadACL) RequiresConfig() bool {
+	return true
+}

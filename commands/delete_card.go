@@ -61,3 +61,8 @@ func (c *DeleteCard) Help() {
 	fmt.Println("    uhppote-cli --debug --config .config delete-card 12345678 918273645")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *DeleteCard) RequiresConfig() bool {
+	return false
+}

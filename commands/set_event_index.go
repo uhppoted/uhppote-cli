@@ -55,3 +55,8 @@ func (c *SetEventIndex) Help() {
 	fmt.Println("    uhppote-cli set-event-index 12345678 15")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *SetEventIndex) RequiresConfig() bool {
+	return false
+}

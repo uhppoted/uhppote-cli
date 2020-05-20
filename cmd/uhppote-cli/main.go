@@ -53,7 +53,7 @@ var options = struct {
 	listen    addr
 	debug     bool
 }{
-	config:    config.DefaultConfig,
+	config:    "",
 	bind:      addr{nil},
 	broadcast: addr{nil},
 	listen:    addr{nil},
@@ -68,20 +68,59 @@ func main() {
 	flag.BoolVar(&options.debug, "debug", options.debug, "Displays vaguely useful information while processing a command")
 	flag.Parse()
 
-	u := uhppote.UHPPOTE{
-		Devices: make(map[uint32]*uhppote.Device),
-		Debug:   options.debug,
-	}
-
-	conf := config.NewConfig()
-	if err := conf.Load(options.config); err != nil {
+	cmd, err := parse()
+	if err != nil {
 		fmt.Printf("\n   ERROR: %v\n\n", err)
 		os.Exit(1)
+	}
+
+	if cmd == nil {
+		help()
+		return
+	}
+
+	// (optionally) load configuration from file
+	conf := config.NewConfig()
+
+	if options.config != "" {
+		if err := conf.Load(options.config); err != nil {
+			fmt.Printf("\n   ERROR: %v\n\n", err)
+			os.Exit(1)
+		}
+	} else {
+		info, err := os.Stat(config.DefaultConfig)
+		if err != nil {
+			if !os.IsNotExist(err) {
+				fmt.Printf("\n   WARN:  %v\n\n", err)
+			} else if cmd.RequiresConfig() {
+				fmt.Printf("\n   ERROR: '%s' requires a valid configuration file:\n", cmd.CLI())
+				fmt.Printf("          %v\n\n", err)
+				os.Exit(1)
+			}
+		} else if !info.IsDir() {
+			if err := conf.Load(config.DefaultConfig); err != nil {
+				if cmd.RequiresConfig() {
+					fmt.Printf("\n   ERROR: '%s' requires a valid configuration file:\n", cmd.CLI())
+					fmt.Printf("          %v\n\n", err)
+					os.Exit(1)
+				} else {
+					fmt.Printf("\n   WARN:  %v\n", err)
+				}
+			} else if options.debug || cmd.RequiresConfig() {
+				fmt.Printf("\n ... using default configuration from %v\n", config.DefaultConfig)
+			}
+		}
 	}
 
 	if err := conf.Validate(); err != nil {
 		fmt.Printf("\n   ERROR: %v\n\n", err)
 		os.Exit(1)
+	}
+
+	// initialise execution context
+	u := uhppote.UHPPOTE{
+		Devices: make(map[uint32]*uhppote.Device),
+		Debug:   options.debug,
 	}
 
 	u.BindAddress = conf.BindAddress
@@ -105,19 +144,9 @@ func main() {
 		u.ListenAddress = options.listen.address
 	}
 
-	cmd, err := parse()
-	if err != nil {
-		fmt.Printf("\n   ERROR: %v\n\n", err)
-		os.Exit(1)
-	}
-
-	if cmd == nil {
-		help()
-		return
-	}
-
 	ctx := commands.NewContext(&u, conf)
 
+	// execute command
 	err = cmd.Execute(ctx)
 	if err != nil {
 		fmt.Printf("\n   ERROR: %v\n\n", err)

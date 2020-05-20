@@ -39,3 +39,8 @@ func (c *Version) Help() {
 	fmt.Println("Displays the uhppote-cli version in the format v<major>.<minor>.<build> e.g. v1.00.10")
 	fmt.Println()
 }
+
+// Returns false - configuration is unused and optional.
+func (c *Version) RequiresConfig() bool {
+	return false
+}

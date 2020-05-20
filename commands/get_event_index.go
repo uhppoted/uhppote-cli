@@ -49,3 +49,8 @@ func (c *GetEventIndex) Help() {
 	fmt.Println("    uhppote-cli get-event-index 12345678")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetEventIndex) RequiresConfig() bool {
+	return false
+}

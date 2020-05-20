@@ -58,3 +58,8 @@ func (c *OpenDoor) Help() {
 	fmt.Println("    uhppote-cli open 12345678 2")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *OpenDoor) RequiresConfig() bool {
+	return false
+}

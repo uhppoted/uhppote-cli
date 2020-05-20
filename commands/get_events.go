@@ -69,3 +69,8 @@ func (c *GetEvents) Help() {
 	fmt.Println("    > 12345678  10  71")
 	fmt.Println()
 }
+
+// Returns false - configuration is useful but optional.
+func (c *GetEvents) RequiresConfig() bool {
+	return false
+}
