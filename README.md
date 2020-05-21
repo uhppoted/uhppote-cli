@@ -24,13 +24,7 @@ systems.
 
 ## Installation
 
-Executables for all the supported operating systems are packaged in the [releases](https://github.com/uhppoted/uhppote-cli/releases):
-
-- [tar.gz](https://github.com/uhppoted/uhppote-cli/releases/download/v0.6.0/uhppote-cli_v0.6.1.tar.gz)
-- [zip](https://github.com/uhppoted/uhppote-cli/releases/download/v0.6.0/uhppote-cli_v0.6.1.zip)
-
-The above archives contain the executables for all the operating systems - operating system specific tarballs can be found in the
-[uhppoted](https://github.com/uhppoted/uhppoted/releases) releases.
+Executables for all the supported operating systems are packaged in the [releases](https://github.com/uhppoted/uhppote-cli/releases). The provided archives contain the executables for all the operating systems - operating system specific tarballs can be found in the [uhppoted](https://github.com/uhppoted/uhppoted/releases) releases.
 
 Installation is straightforward - download the archive and extract it to a directory of your choice and place the executable in a directory in your PATH. 
 
