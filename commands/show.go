@@ -46,11 +46,13 @@ func (c *Show) Execute(ctx Context) error {
 		return p < q
 	})
 
+	fmt.Println()
 	format := fmt.Sprintf("%%-%ds  %%v  %%v\n", width)
 	for _, door := range doors {
 		v, _ := permissions[door]
 		fmt.Printf(format, door, v.From, v.To)
 	}
+	fmt.Println()
 
 	return nil
 }

@@ -2,6 +2,8 @@
 
 ## TODO
 
+- [ ] Progress messages for acl-load
+- [ ] Nicer formatting for acl-xxx
 - [ ] Human readable output for e.g. get-status
 - [ ] JSON formatted output for e.g. get-status
 - [ ] Interactive shell (https://drewdevault.com/2019/09/02/Interactive-SSH-programs.html)

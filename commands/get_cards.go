@@ -21,12 +21,20 @@ func (c *GetCards) Execute(ctx Context) error {
 		return err
 	}
 
-	for index := uint32(0); index < N.Records; index++ {
-		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index+1)
+	var index uint32 = 1
+	var records = int(N.Records)
+	for count := 0; count < records; {
+		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index)
 		if err != nil {
 			return err
 		}
-		fmt.Printf("%v\n", record)
+
+		if record != nil {
+			fmt.Printf("%v\n", record)
+			count++
+		}
+
+		index++
 	}
 
 	return nil
