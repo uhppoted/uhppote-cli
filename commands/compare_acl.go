@@ -71,8 +71,38 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return err
 	}
 
+	widths := map[string]int{}
 	for k, v := range diff {
-		fmt.Printf("   ... %v  same:%v  different:%v  missing:%v  extraneous:%v\n", k, len(v.Unchanged), len(v.Updated), len(v.Added), len(v.Deleted))
+		if w := len(fmt.Sprintf("%v", k)); w > widths["device"] {
+			widths["device"] = w
+		}
+
+		if w := len(fmt.Sprintf("%v", len(v.Unchanged))); w > widths["unchanged"] {
+			widths["unchanged"] = w
+		}
+
+		if w := len(fmt.Sprintf("%v", len(v.Updated))); w > widths["updated"] {
+			widths["updated"] = w
+		}
+
+		if w := len(fmt.Sprintf("%v", len(v.Added))); w > widths["added"] {
+			widths["added"] = w
+		}
+
+		if w := len(fmt.Sprintf("%v", len(v.Deleted))); w > widths["deleted"] {
+			widths["deleted"] = w
+		}
+	}
+
+	format := fmt.Sprintf("   ... %%-%vv  same:%%-%vv  different:%%-%vv  missing:%%-%vv  extraneous:%%-%vv\n",
+		widths["device"],
+		widths["unchanged"],
+		widths["updated"],
+		widths["added"],
+		widths["deleted"])
+
+	for k, v := range diff {
+		fmt.Printf(format, k, len(v.Unchanged), len(v.Updated), len(v.Added), len(v.Deleted))
 	}
 
 	var w bytes.Buffer

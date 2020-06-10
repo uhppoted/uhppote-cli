@@ -57,10 +57,9 @@ release-tar: release
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) help
-	$(CLI) --debug get-devices
-	$(CLI) --debug show $(CARD)
-	
+	$(CLI) load-acl    ../runtime/simulation/simulation.acl
+	$(CLI) compare-acl ../runtime/simulation/simulation.acl
+
 usage: build
 	$(CLI)
 
