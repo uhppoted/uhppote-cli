@@ -20,7 +20,7 @@ var CompareACLCmd = CompareACL{
 -----------------------------------
 ACL DIFF REPORT {{ .DateTime }}
 {{range $id,$value := .Diffs}}
-  DEVICE {{ $id }}{{if $value.Updated}}
+  DEVICE {{ $id }}{{if or $value.Updated $value.Added $value.Deleted}}{{else}} OK{{end}}{{if $value.Updated}}
     Incorrect:  {{range $value.Updated}}{{.}}
                 {{end}}{{end}}{{if $value.Added}}
     Missing:    {{range $value.Added}}{{.}}
