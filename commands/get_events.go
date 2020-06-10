@@ -3,7 +3,6 @@ package commands
 import (
 	"errors"
 	"fmt"
-	"github.com/uhppoted/uhppote-core/uhppote"
 )
 
 var GetEventsCmd = GetEvents{}
@@ -17,12 +16,12 @@ func (c *GetEvents) Execute(ctx Context) error {
 		return err
 	}
 
-	first, err := uhppote.GetEvent(ctx.uhppote, serialNumber, 0)
+	first, err := ctx.uhppote.GetEvent(serialNumber, 0)
 	if err != nil {
 		return err
 	}
 
-	last, err := uhppote.GetEvent(ctx.uhppote, serialNumber, 0xffffffff)
+	last, err := ctx.uhppote.GetEvent(serialNumber, 0xffffffff)
 	if err != nil {
 		return err
 	}
