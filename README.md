@@ -15,12 +15,13 @@ systems.
 
 ## Releases
 
-| *Version* | *Description*                                                                             |
-| --------- | ----------------------------------------------------------------------------------------- |
-| v0.6.2    | Fixed get-events for controllers without any retrievable events and improved configuration file handling      |
-| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers      |
-| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                     |
-| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules* |
+| *Version* | *Description*                                                                                            |
+| --------- | -------------------------------------------------------------------------------------------------------- |
+| v0.6.3    | Reworked get-cards to handle deleted records                                                             |
+| v0.6.2    | Fixed get-events for controllers without any retrievable events and improved configuration file handling |
+| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers                     |
+| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                                    |
+| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules*                |
 
 ## Installation
 
