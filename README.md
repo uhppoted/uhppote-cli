@@ -1,3 +1,5 @@
+![build](https://github.com/uhppoted/uhppote-cli/workflows/build/badge.svg)
+
 # uhppote-cli
 
 CLI for the *UHPPOTE UT0311-L0x* TCP/IP Wiegand access control boards. 
