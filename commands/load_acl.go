@@ -42,7 +42,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 		fmt.Printf("   ... %v  ACL has %v records\n", k, len(l))
 	}
 
-	rpt, err := acl.PutACL(ctx.uhppote, list)
+	rpt, err := acl.PutACL(ctx.uhppote, list, false)
 	for k, v := range rpt {
 		fmt.Printf("   ... %v  unchanged:%v  updated:%v  added:%v  deleted:%v  failed:%v\n", k, v.Unchanged, v.Updated, v.Added, v.Deleted, v.Failed)
 	}
