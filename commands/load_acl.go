@@ -44,7 +44,14 @@ func (c *LoadACL) Execute(ctx Context) error {
 
 	rpt, err := acl.PutACL(ctx.uhppote, list, false)
 	for k, v := range rpt {
-		fmt.Printf("   ... %v  unchanged:%v  updated:%v  added:%v  deleted:%v  failed:%v\n", k, v.Unchanged, v.Updated, v.Added, v.Deleted, v.Failed)
+		fmt.Printf("   ... %v  unchanged:%v  updated:%v  added:%v  deleted:%v  failed:%v  errors:%v\n",
+			k,
+			len(v.Unchanged),
+			len(v.Updated),
+			len(v.Added),
+			len(v.Deleted),
+			len(v.Failed),
+			len(v.Errors))
 	}
 
 	return err
