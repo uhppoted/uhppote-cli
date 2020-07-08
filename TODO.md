@@ -27,3 +27,7 @@
 2.  Integration tests
 3.  Verify fields in listen events/status replies against SDK:
     - battery status can be (at least) 0x00, 0x01 and 0x04
+
+### Miscellaneous
+
+1. [syncthing](https://tonsky.me/blog/syncthing/?utm_source=hackerbits.com&utm_medium=email&utm_campaign=issue54)
