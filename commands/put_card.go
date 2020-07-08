@@ -82,7 +82,7 @@ func (c *PutCard) Help() {
 	fmt.Println()
 	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
 	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
-	fmt.Println("    --debug   Displays vaguely useful internal information")
+	fmt.Println("    --debug   Displays internal information for diagnosing errors")
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()

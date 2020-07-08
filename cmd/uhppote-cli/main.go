@@ -65,7 +65,7 @@ func main() {
 	flag.Var(&options.bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
 	flag.Var(&options.broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
 	flag.Var(&options.listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
-	flag.BoolVar(&options.debug, "debug", options.debug, "Displays vaguely useful information while processing a command")
+	flag.BoolVar(&options.debug, "debug", options.debug, "Displays internal information for diagnosing errors")
 	flag.Parse()
 
 	cmd, err := parse()
@@ -238,7 +238,7 @@ func usage() {
 	fmt.Println("    --bind      Sets the local IP address and port to use")
 	fmt.Println("    --broadcast Sets the IP address and port to use for UDP broadcast")
 	fmt.Println("    --listen    Sets the local IP address and port to use for receiving device events")
-	fmt.Println("    --debug     Displays vaguely useful internal information")
+	fmt.Println("    --debug     Displays internal information for diagnosing errors")
 	fmt.Println()
 }
 
