@@ -11,9 +11,12 @@ import (
 	"os"
 )
 
-var LoadACLCmd = LoadACL{}
+var LoadACLCmd = LoadACL{
+	strict: false,
+}
 
 type LoadACL struct {
+	strict bool
 }
 
 func (c *LoadACL) Execute(ctx Context) error {
@@ -23,7 +26,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 
 	devices := getDevices(&ctx)
 
-	file, err := c.getACLFile()
+	file, err := c.parseArgs()
 	if err != nil {
 		return err
 	}
@@ -33,9 +36,13 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return err
 	}
 
-	list, err := acl.ParseTSV(bytes.NewReader(tsv), devices)
+	list, warnings, err := acl.ParseTSV(bytes.NewReader(tsv), devices, c.strict)
 	if err != nil {
 		return err
+	}
+
+	for _, w := range warnings {
+		fmt.Printf("   ... WARNING    %v\n", w)
 	}
 
 	for k, l := range list {
@@ -57,7 +64,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 	return err
 }
 
-func (c *LoadACL) getACLFile() (string, error) {
+func (c *LoadACL) parseArgs() (string, error) {
 	if len(flag.Args()) < 2 {
 		return "", fmt.Errorf("Please specify the TSV file from which to load the access control list ")
 	}
@@ -81,6 +88,11 @@ func (c *LoadACL) getACLFile() (string, error) {
 		return "", fmt.Errorf("File '%s' is not a real file", file)
 	}
 
+	for _, f := range flag.Args() {
+		if f == "--strict" {
+			c.strict = true
+		}
+	}
 	return file, nil
 }
 
@@ -97,9 +109,11 @@ func (c *LoadACL) Usage() string {
 }
 
 func (c *LoadACL) Help() {
-	fmt.Println("Usage: uhppote-cli [options] load-acl <TSV file>")
+	fmt.Println("Usage: uhppote-cli [options] load-acl <TSV file> [--strict]")
 	fmt.Println()
-	fmt.Println(" Downloads the access control list in the TSV file to the access controllers defined in the configuration file")
+	fmt.Println(" Downloads the access control list in the TSV file to the access controllers defined in the configuration")
+	fmt.Println(" file. Duplicate card numbers are ignored (or deleted if they exist) with a warning message unless the")
+	fmt.Println(" --strict option is specified")
 	fmt.Println()
 	fmt.Println("  <TSV file>  (required) TSV file with access control list")
 	fmt.Println()
@@ -113,6 +127,8 @@ func (c *LoadACL) Help() {
 	fmt.Println("              adding cards where necessary and deleting cards not listed in the TSV file. Making")
 	fmt.Println("              a backup copy of the existing permissions (using e.g. get-cards) before executing this")
 	fmt.Println("              is highly recommended.")
+	fmt.Println()
+	fmt.Println("    --strict  Fails the load with an error if the provided ACL contains duplicate cards")
 	fmt.Println()
 	fmt.Println("  Options:")
 	fmt.Println()

@@ -57,8 +57,10 @@ release: build-all
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) load-acl    ../runtime/simulation/simulation.acl
-	$(CLI) compare-acl ../runtime/simulation/simulation.acl
+#	$(CLI) load-acl    ../runtime/simulation/simulation.acl
+#	$(CLI) compare-acl ../runtime/simulation/simulation.acl
+	$(CLI) --config ../runtime/sheets/uhppoted.conf compare-acl ../runtime/sheets/debug.acl
+	$(CLI) --config ../runtime/sheets/uhppoted.conf load-acl ../runtime/sheets/debug.acl
 
 usage: build
 	$(CLI)

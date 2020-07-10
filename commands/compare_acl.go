@@ -52,9 +52,13 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return err
 	}
 
-	list, err := acl.ParseTSV(bytes.NewReader(tsv), devices)
+	list, warnings, err := acl.ParseTSV(bytes.NewReader(tsv), devices, false)
 	if err != nil {
 		return err
+	}
+
+	for _, w := range warnings {
+		fmt.Printf("   ... WARNING    %v\n", w)
 	}
 
 	for k, l := range list {
@@ -208,6 +212,7 @@ func (c *CompareACL) Help() {
 	fmt.Println("Usage: uhppote-cli [options] compare-acl <TSV file> <report file>")
 	fmt.Println()
 	fmt.Println(" Compares the card lists in the configurated controllers to the authoritative access control list in the TSV file")
+	fmt.Println(" Duplicate card numbers are ignored (with a warning message)")
 	fmt.Println()
 	fmt.Println("  <TSV file>    (required) TSV file with access control list")
 	fmt.Println()
