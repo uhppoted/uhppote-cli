@@ -40,6 +40,7 @@ var cli = []commands.Command{
 	&commands.GetACLCmd,
 	&commands.CompareACLCmd,
 	&commands.GetEventsCmd,
+	&commands.GetEventCmd,
 	&commands.GetEventIndexCmd,
 	&commands.SetEventIndexCmd,
 	&commands.OpenDoorCmd,

@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"strings"
+
 	"github.com/uhppoted/uhppote-core/uhppote"
 	"github.com/uhppoted/uhppoted-api/config"
 )
@@ -26,4 +28,8 @@ type Command interface {
 	Usage() string
 	Help()
 	RequiresConfig() bool
+}
+
+func clean(s string) string {
+	return strings.ToLower(strings.TrimSpace(s))
 }

@@ -20,7 +20,7 @@ func (c *GetEventIndex) Execute(ctx Context) error {
 		return err
 	}
 
-	fmt.Printf("%s\n", index.String())
+	fmt.Printf("%v\n", index)
 
 	return nil
 }

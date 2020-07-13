@@ -57,10 +57,12 @@ release: build-all
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-#	$(CLI) load-acl    ../runtime/simulation/simulation.acl
-#	$(CLI) compare-acl ../runtime/simulation/simulation.acl
-	$(CLI) --config ../runtime/sheets/uhppoted.conf compare-acl ../runtime/sheets/debug.acl
-	$(CLI) --config ../runtime/sheets/uhppoted.conf load-acl ../runtime/sheets/debug.acl
+	$(CLI) help get-event
+#	$(CLI) $(DEBUG) get-event $(SERIALNO) 17
+#	$(CLI) $(DEBUG) get-event $(SERIALNO)
+#	$(CLI) $(DEBUG) get-event $(SERIALNO) 17263
+#	$(CLI) $(DEBUG) get-event $(SERIALNO) first
+	$(CLI) $(DEBUG) get-event $(SERIALNO) last
 
 usage: build
 	$(CLI)
@@ -128,6 +130,13 @@ delete-all: build
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)
+
+get-event: build
+#	$(CLI) get-event $(SERIALNO) 17
+#	$(CLI) get-event $(SERIALNO) 17263
+#	$(CLI) get-event $(SERIALNO) first
+#	$(CLI) get-event $(SERIALNO) last
+	$(CLI) get-event $(SERIALNO)
 
 get-event-index: build
 	$(CLI) $(DEBUG) get-event-index $(SERIALNO)
