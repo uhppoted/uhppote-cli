@@ -36,3 +36,20 @@
 ### Miscellaneous
 
 1. [syncthing](https://tonsky.me/blog/syncthing/?utm_source=hackerbits.com&utm_medium=email&utm_campaign=issue54)
+2. bash scripts to retrieve all events:
+   ```
+   -- get-event
+   #/bin/bash
+   ./bin/uhppote-cli get-event $1
+
+   -- get-events
+   #/bin/bash
+   N=1
+   while [ $n -le 5 ]
+   do
+      ./get-event 405419896
+      N=$(( N+1 ))
+   done
+
+   ./get-events 1> >(tee -a x.log y.log 1> /dev/null) 2>> errors.log
+   ```
