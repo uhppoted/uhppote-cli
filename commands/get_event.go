@@ -35,7 +35,10 @@ func (c *GetEvent) Execute(ctx Context) error {
 	}
 
 	if len(flag.Args()) < 3 {
-		next := ((index + 1) % 100001) + 1
+		next := index + 1
+		if next > 100000 {
+			next = 1
+		}
 		_, err := ctx.uhppote.SetEventIndex(serialNumber, next)
 		if err != nil {
 			return err

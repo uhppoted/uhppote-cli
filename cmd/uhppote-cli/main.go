@@ -71,7 +71,7 @@ func main() {
 
 	cmd, err := parse()
 	if err != nil {
-		fmt.Printf("\n   ERROR: %v\n\n", err)
+		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}
 
@@ -113,7 +113,7 @@ func main() {
 	// execute command
 	err = cmd.Execute(ctx)
 	if err != nil {
-		fmt.Printf("\n   ERROR: %v\n\n", err)
+		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}
 }
@@ -129,36 +129,36 @@ func configuration(cmd commands.Command) *config.Config {
 
 	if options.config != "" {
 		if err := conf.Load(options.config); err != nil {
-			fmt.Printf("\n   ERROR: %v\n\n", err)
+			fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 			os.Exit(1)
 		}
 	} else {
 		info, err := os.Stat(config.DefaultConfig)
 		if err != nil {
 			if !os.IsNotExist(err) {
-				fmt.Printf("\n   WARN:  %v\n\n", err)
+				fmt.Fprintf(os.Stderr, "\n   WARN:  %v\n\n", err)
 			} else if cmd.RequiresConfig() {
-				fmt.Printf("\n   ERROR: '%s' requires a valid configuration file:\n", cmd.CLI())
-				fmt.Printf("          %v\n\n", err)
+				fmt.Fprintf(os.Stderr, "\n   ERROR: '%s' requires a valid configuration file:\n", cmd.CLI())
+				fmt.Fprintf(os.Stderr, "          %v\n\n", err)
 				os.Exit(1)
 			}
 		} else if !info.IsDir() {
 			if err := conf.Load(config.DefaultConfig); err != nil {
 				if cmd.RequiresConfig() {
-					fmt.Printf("\n   ERROR: '%s' requires a valid configuration file:\n", cmd.CLI())
-					fmt.Printf("          %v\n\n", err)
+					fmt.Fprintf(os.Stderr, "\n   ERROR: '%s' requires a valid configuration file:\n", cmd.CLI())
+					fmt.Fprintf(os.Stderr, "          %v\n\n", err)
 					os.Exit(1)
 				} else {
-					fmt.Printf("\n   WARN:  %v\n", err)
+					fmt.Fprintf(os.Stderr, "\n   WARN:  %v\n", err)
 				}
 			} else if options.debug || cmd.RequiresConfig() {
-				fmt.Printf("\n ... using default configuration from %v\n", config.DefaultConfig)
+				fmt.Fprintf(os.Stderr, "\n ... using default configuration from %v\n", config.DefaultConfig)
 			}
 		}
 	}
 
 	if err := conf.Validate(); err != nil {
-		fmt.Printf("\n   ERROR: %v\n\n", err)
+		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}
 
@@ -211,7 +211,7 @@ func help() {
 				}
 			}
 
-			fmt.Printf("Invalid command: %v. Type 'help commands' to get a list of supported commands\n", flag.Arg(1))
+			fmt.Fprintf(os.Stderr, "Invalid command: %v. Type 'help commands' to get a list of supported commands\n", flag.Arg(1))
 			return
 		}
 	}

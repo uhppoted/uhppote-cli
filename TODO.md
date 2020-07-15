@@ -1,4 +1,10 @@
-## v0.6x
+## v0.6.x
+
+## IN PROGRESS
+
+- [ ] Route error and debugging to stderr
+- [ ] get-events --fetch
+- [ ] listener: retrieve and show actual events
 
 ## TODO
 
@@ -10,7 +16,6 @@
 - [ ] use flag.FlagSet for commands
 - [ ] Use (loadable) text/template for output formats
 - [ ] Rework GetDevices to also find 'known' devices
-- [ ] events: retrieve and show actual events
 - [ ] Generate OTP secret + QR code
 - [ ] --no-log option to suppress progress messages
 
