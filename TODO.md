@@ -2,7 +2,8 @@
 
 ## IN PROGRESS
 
-- [ ] Route error and debugging to stderr
+- [x] Route errors to stderr
+- [ ] Route debugging to stderr
 - [ ] get-events --fetch
 - [ ] listener: retrieve and show actual events
 

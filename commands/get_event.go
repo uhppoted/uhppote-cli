@@ -27,11 +27,11 @@ func (c *GetEvent) Execute(ctx Context) error {
 	}
 
 	if event == nil {
-		return fmt.Errorf("No event at index: %v", index)
+		return fmt.Errorf("%v:  no event at index: %v", serialNumber, index)
 	}
 
 	if event.Index != index {
-		return fmt.Errorf("Event index %v out of range", index)
+		return fmt.Errorf("%v:  event index %v out of range", serialNumber, index)
 	}
 
 	if len(flag.Args()) < 3 {
