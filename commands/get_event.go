@@ -152,9 +152,5 @@ func (c *GetEvent) getIndex(ctx Context, serialNumber uint32) (uint32, error) {
 		return 0, fmt.Errorf("Failed to retrieve controller event index")
 	}
 
-	if index.Index == 0 {
-		return 1, nil
-	}
-
 	return index.Index, nil
 }
