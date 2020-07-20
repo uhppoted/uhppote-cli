@@ -21,24 +21,25 @@ func (c *GetEvent) Execute(ctx Context) error {
 		return err
 	}
 
-	event, err := ctx.uhppote.GetEvent(serialNumber, index)
+	next := index + 1
+	if next > 100000 {
+		next = 1
+	}
+
+	event, err := ctx.uhppote.GetEvent(serialNumber, next)
 	if err != nil {
 		return err
 	}
 
 	if event == nil {
-		return fmt.Errorf("%v:  no event at index: %v", serialNumber, index)
+		return fmt.Errorf("%v:  no event at index: %v", serialNumber, next)
 	}
 
-	if event.Index != index {
-		return fmt.Errorf("%v:  event index %v out of range", serialNumber, index)
+	if event.Index != next {
+		return fmt.Errorf("%v:  event index %v out of range", serialNumber, next)
 	}
 
 	if len(flag.Args()) < 3 {
-		next := index + 1
-		if next > 100000 {
-			next = 1
-		}
 		_, err := ctx.uhppote.SetEventIndex(serialNumber, next)
 		if err != nil {
 			return err
