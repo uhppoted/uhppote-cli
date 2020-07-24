@@ -1,2 +1,0 @@
-#/bin/bash
-./bin/uhppote-cli get-event $1
