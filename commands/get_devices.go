@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"sync"
 )
 
 var GetDevicesCmd = GetDevices{}
@@ -10,15 +11,38 @@ type GetDevices struct {
 }
 
 func (c *GetDevices) Execute(ctx Context) error {
-	devices, err := ctx.uhppote.FindDevices()
+	wg := sync.WaitGroup{}
+	list := sync.Map{}
 
-	if err == nil {
-		for _, device := range devices {
-			fmt.Printf("%s\n", device.String())
-		}
+	for id, _ := range ctx.uhppote.Devices {
+		deviceId := id
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if device, err := ctx.uhppote.FindDevice(deviceId); err == nil && device != nil {
+				list.Store(deviceId, device.String())
+			}
+		}()
 	}
 
-	return err
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		if devices, err := ctx.uhppote.FindDevices(); err == nil && devices != nil {
+			for _, d := range devices {
+				list.Store(uint32(d.SerialNumber), d.String())
+			}
+		}
+	}()
+
+	wg.Wait()
+
+	list.Range(func(key, value interface{}) bool {
+		fmt.Printf("%v\n", value)
+		return true
+	})
+
+	return nil
 }
 
 func (c *GetDevices) CLI() string {
@@ -42,8 +66,8 @@ func (c *GetDevices) Help() {
 	fmt.Println(" <serial number> <IP address> <subnet mask> <gateway> <MAC address> <hexadecimal version> <firmware date>")
 	fmt.Println()
 	fmt.Println("  Options:")
-	fmt.Println()
-	fmt.Println("    -debug  Displays internal information for diagnosing errors")
+	fmt.Println("    --debug   Displays internal information for diagnosing errors")
+	fmt.Println("    --config  (optional) configuration file for device specific information")
 	fmt.Println()
 }
 
