@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"os"
 	"sync"
 )
 
@@ -19,7 +20,9 @@ func (c *GetDevices) Execute(ctx Context) error {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			if device, err := ctx.uhppote.FindDevice(deviceId); err == nil && device != nil {
+			if device, err := ctx.uhppote.FindDevice(deviceId); err != nil {
+				fmt.Fprintf(os.Stderr, "   WARN:  %v\n", err)
+			} else if device != nil {
 				list.Store(deviceId, device.String())
 			}
 		}()
@@ -28,7 +31,9 @@ func (c *GetDevices) Execute(ctx Context) error {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if devices, err := ctx.uhppote.FindDevices(); err == nil && devices != nil {
+		if devices, err := ctx.uhppote.FindDevices(); err != nil {
+			fmt.Fprintf(os.Stderr, "   WARN:  %v\n", err)
+		} else if devices != nil {
 			for _, d := range devices {
 				list.Store(uint32(d.SerialNumber), d.String())
 			}

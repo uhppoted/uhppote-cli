@@ -2,6 +2,7 @@
 
 ## IN PROGRESS
 
+- [x] Rework GetDevices to also find 'known' devices
 - [x] Route errors to stderr
 - [ ] Route debugging to stderr
 - [ ] get-events --fetch
@@ -16,7 +17,6 @@
 - [ ] Interactive shell (https://drewdevault.com/2019/09/02/Interactive-SSH-programs.html)
 - [ ] use flag.FlagSet for commands
 - [ ] Use (loadable) text/template for output formats
-- [ ] Rework GetDevices to also find 'known' devices
 - [ ] Generate OTP secret + QR code
 - [ ] --no-log option to suppress progress messages
 
