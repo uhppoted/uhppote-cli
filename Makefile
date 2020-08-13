@@ -57,12 +57,8 @@ release: build-all
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) help get-event
-#	$(CLI) $(DEBUG) get-event $(SERIALNO) 17
-#	$(CLI) $(DEBUG) get-event $(SERIALNO)
-#	$(CLI) $(DEBUG) get-event $(SERIALNO) 17263
-#	$(CLI) $(DEBUG) get-event $(SERIALNO) first
-	$(CLI) $(DEBUG) get-event $(SERIALNO) last
+	$(CLI) --debug get-device $(SERIALNO)
+	$(CLI) --debug get-device 0
 
 usage: build
 	$(CLI)
