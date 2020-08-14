@@ -11,6 +11,8 @@ DATETIME  = $(shell date "+%Y-%m-%d %H:%M:%S")
 LISTEN   ?= 192.168.1.100:60001
 DEBUG    ?= --debug
 
+.PHONY: bump
+
 all: test      \
 	 benchmark \
      coverage
@@ -55,6 +57,10 @@ release: build-all
 	find . -name ".DS_Store" -delete
 	tar --directory=dist --exclude=".DS_Store" -cvzf dist/$(DIST).tar.gz $(DIST)
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
+
+bump:
+	go get -u github.com/uhppoted/uhppote-core
+	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
 	$(CLI) --debug get-device $(SERIALNO)
