@@ -1,9 +1,7 @@
 ## v0.6.x
 
-## IN PROGRESS
+### IN PROGRESS
 
-- [x] Rework GetDevices to also find 'known' devices
-- [x] Route errors to stderr
 - [ ] Route debugging to stderr
 - [ ] get-events --fetch
 - [ ] listener: retrieve and show actual events
