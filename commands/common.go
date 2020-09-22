@@ -118,8 +118,8 @@ func getDoor(index int, missing, invalid string) (byte, error) {
 	return byte(door), nil
 }
 
-func getPermissions(index int) ([]bool, error) {
-	doors := []bool{false, false, false, false}
+func getPermissions(index int) (map[uint8]bool, error) {
+	doors := map[uint8]bool{1: false, 2: false, 3: false, 4: false}
 
 	if len(flag.Args()) > index {
 		matches := strings.Split(flag.Arg(index), ",")
@@ -131,7 +131,7 @@ func getPermissions(index int) ([]bool, error) {
 			}
 
 			if door > 0 && door < 5 {
-				doors[door-1] = true
+				doors[uint8(door)] = true
 			}
 
 		}

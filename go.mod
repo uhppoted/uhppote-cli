@@ -6,3 +6,8 @@ require (
 	github.com/uhppoted/uhppote-core v0.6.4
 	github.com/uhppoted/uhppoted-api v0.6.4
 )
+
+replace (
+	github.com/uhppoted/uhppote-core => ../uhppote-core
+	github.com/uhppoted/uhppoted-api => ../uhppoted-api
+)
