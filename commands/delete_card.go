@@ -11,7 +11,7 @@ type DeleteCard struct {
 }
 
 func (c *DeleteCard) Execute(ctx Context) error {
-	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
+	deviceID, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
 	}
@@ -21,10 +21,10 @@ func (c *DeleteCard) Execute(ctx Context) error {
 		return err
 	}
 
-	result, err := ctx.uhppote.DeleteCard(serialNumber, cardNumber)
+	deleted, err := ctx.uhppote.DeleteCard(deviceID, cardNumber)
 
 	if err == nil {
-		fmt.Printf("%v\n", result)
+		fmt.Printf("%v %v %v\n", deviceID, cardNumber, deleted)
 	}
 
 	return err
