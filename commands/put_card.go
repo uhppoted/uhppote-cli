@@ -12,7 +12,7 @@ type PutCard struct {
 }
 
 func (c *PutCard) Execute(ctx Context) error {
-	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
+	deviceID, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
 		return err
 	}
@@ -40,7 +40,7 @@ func (c *PutCard) Execute(ctx Context) error {
 	start := types.Date(*from)
 	end := types.Date(*to)
 
-	authorised, err := ctx.uhppote.PutCard(serialNumber, types.Card{
+	authorised, err := ctx.uhppote.PutCard(deviceID, types.Card{
 		CardNumber: cardNumber,
 		From:       &start,
 		To:         &end,
@@ -51,7 +51,8 @@ func (c *PutCard) Execute(ctx Context) error {
 		return err
 	}
 
-	fmt.Printf("%v\n", authorised)
+	fmt.Printf("%v %v %v\n", deviceID, cardNumber, authorised)
+
 	return nil
 }
 
