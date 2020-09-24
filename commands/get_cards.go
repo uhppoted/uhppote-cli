@@ -16,14 +16,12 @@ func (c *GetCards) Execute(ctx Context) error {
 	}
 
 	N, err := ctx.uhppote.GetCards(serialNumber)
-
 	if err != nil {
 		return err
 	}
 
 	var index uint32 = 1
-	var records = int(N.Records)
-	for count := 0; count < records; {
+	for count := uint32(0); count < N; {
 		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index)
 		if err != nil {
 			return err

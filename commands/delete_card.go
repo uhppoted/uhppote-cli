@@ -22,7 +22,6 @@ func (c *DeleteCard) Execute(ctx Context) error {
 	}
 
 	deleted, err := ctx.uhppote.DeleteCard(deviceID, cardNumber)
-
 	if err == nil {
 		fmt.Printf("%v %v %v\n", deviceID, cardNumber, deleted)
 	}
