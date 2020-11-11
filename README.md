@@ -19,6 +19,8 @@ systems.
 
 | *Version* | *Description*                                                                                            |
 | --------- | -------------------------------------------------------------------------------------------------------- |
+| v0.6.5    | Maintenance release for version compatibility with `node-red-contrib-uhppoted`                           |
+| v0.6.4    | Maintenance release for version compatibility with `uhppoted-app-sheets`                                 |
 | v0.6.3    | Reworked get-cards to handle deleted records                                                             |
 | v0.6.2    | Fixed get-events for controllers without any retrievable events and improved configuration file handling |
 | v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers                     |
