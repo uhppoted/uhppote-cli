@@ -43,6 +43,7 @@ var cli = []commands.Command{
 	&commands.GetEventCmd,
 	&commands.GetEventIndexCmd,
 	&commands.SetEventIndexCmd,
+	&commands.RecordSpecialEventsCmd,
 	&commands.OpenDoorCmd,
 	&commands.ListenCmd,
 }
@@ -220,16 +221,18 @@ func help() {
 }
 
 func usage() {
+	format := "    %-22s %s\n"
 	fmt.Println()
 	fmt.Println("  Usage: uhppote-cli [options] <command>")
 	fmt.Println()
 	fmt.Println("  Commands:")
 	fmt.Println()
-	fmt.Println("    help             Displays this message")
-	fmt.Println("                     For help on a specific command use 'uhppote-cli help <command>'")
+	fmt.Printf(format, "help", "Displays this message")
+	fmt.Printf(format, "", "For help on a specific command use 'uhppote-cli help <command>'")
+	fmt.Println()
 
 	for _, c := range cli {
-		fmt.Printf("    %-16s %s\n", c.CLI(), c.Description())
+		fmt.Printf(format, c.CLI(), c.Description())
 	}
 
 	fmt.Println()

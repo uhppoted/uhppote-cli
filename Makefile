@@ -72,6 +72,7 @@ usage: build
 help: build
 	$(CLI) help
 	$(CLI) help get-devices
+	$(CLI) help record-special-events
 
 version: build
 	$(CLI) version
@@ -145,6 +146,9 @@ get-event-index: build
 
 set-event-index: build
 	$(CLI) $(DEBUG) set-event-index $(SERIALNO) 23
+
+record-special-events: build
+	$(CLI) $(DEBUG) record-special-events $(SERIALNO) true
 
 open: build
 	$(CLI) $(DEBUG) open $(SERIALNO) 1
