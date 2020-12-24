@@ -63,8 +63,13 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) --debug get-device $(SERIALNO)
-	$(CLI) --debug get-device 0
+	$(CLI) get-event $(SERIALNO) 17
+	$(CLI) get-event $(SERIALNO) first
+	$(CLI) get-event $(SERIALNO) last
+	$(CLI) get-event $(SERIALNO)
+	$(CLI) get-event $(SERIALNO)
+	$(CLI) get-event $(SERIALNO)
+	$(CLI) get-event $(SERIALNO) 17263
 
 usage: build
 	$(CLI)
