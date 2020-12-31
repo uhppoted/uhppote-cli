@@ -71,6 +71,9 @@ debug: build
 	$(CLI) get-event $(SERIALNO)
 	$(CLI) get-event $(SERIALNO) 17263
 
+godoc:
+	godoc -http=:80	-index_interval=60s
+
 usage: build
 	$(CLI)
 

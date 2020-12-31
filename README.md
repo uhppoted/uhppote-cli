@@ -103,6 +103,7 @@ Device commands:
 - `put-card`
 - `delete-card`
 - `delete-all`
+- `record-special-events`
 - `get-events`
 - `get-swipe-index`
 - `set-event-index`
@@ -499,6 +500,33 @@ uhppote-cli [options] set-listener <device> <address:port>
 #### `delete-card`
 
 #### `delete-all`
+
+#### `record-special-events`
+
+Enables or disables events for door open, door closed and door button pressed for a single controller accessible on either the
+local LAN or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command 
+returns the result as a fixed width columnar table with:
+
+- `serial number`
+- `succeeded` _true/false_
+
+```
+uhppote-cli [options] record-special-events <device> <enable>
+
+  <device>      (required) Controller serial number
+  <enable>      (optional) Enables or disables door open, closed and button pressed events. Defaults to `true`
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the controllers
+
+  Example:
+
+  > uhppote-cli record-special-events 405419896 false
+  >
+  > 405419896  true
+```
 
 #### `get-events`
 

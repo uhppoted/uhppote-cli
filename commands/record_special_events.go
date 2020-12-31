@@ -11,9 +11,13 @@ import (
 
 var RecordSpecialEventsCmd = RecordSpecialEvents{}
 
+// Command implementation for record-special-events to enable or disable
+// events for door open, door closed and door button pressed.
 type RecordSpecialEvents struct {
 }
 
+// Gets the device ID and enable/disable value from the command line
+// and sends a record-special-events to the designated controller.
 func (c *RecordSpecialEvents) Execute(ctx Context) error {
 	deviceID, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
 	if err != nil {
@@ -50,18 +54,22 @@ func (c *RecordSpecialEvents) Execute(ctx Context) error {
 	return nil
 }
 
+// Returns the 'record-special-events' command string for the CLI interface.
 func (c *RecordSpecialEvents) CLI() string {
 	return "record-special-events"
 }
 
+// Returns the 'record-special-events' command summary for the CLI interface.
 func (c *RecordSpecialEvents) Description() string {
 	return "Enables or disables door and pushbutton events"
 }
 
+// Returns the 'record-special-events' command parameters for the CLI interface.
 func (c *RecordSpecialEvents) Usage() string {
 	return "<serial number> <enabled>"
 }
 
+// Outputs the 'record-special-events' command help for the CLI interface.
 func (c *RecordSpecialEvents) Help() {
 	fmt.Println("Usage: uhppote-cli [options] record-special-events <serial number> <enable>")
 	fmt.Println()

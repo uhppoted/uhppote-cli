@@ -1,6 +1,8 @@
-## v0.7.x
+## v0.6.x
 
 ### IN PROGRESS
+
+- [x] Implement record-special-events
 
 - [ ] Route debugging to stderr
 - [ ] get-events --fetch
