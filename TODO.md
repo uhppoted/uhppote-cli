@@ -2,13 +2,11 @@
 
 ### IN PROGRESS
 
-- [x] Implement record-special-events
+## TODO
 
 - [ ] Route debugging to stderr
 - [ ] get-events --fetch
 - [ ] listener: retrieve and show actual events
-
-## TODO
 
 - [ ] Progress messages for acl-load
 - [ ] Nicer formatting for acl-xxx
