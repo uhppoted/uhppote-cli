@@ -22,9 +22,9 @@ func (c *GetACL) Execute(ctx Context) error {
 	}
 
 	devices := getDevices(&ctx)
-	list, err := acl.GetACL(ctx.uhppote, devices)
-	if err != nil {
-		return err
+	list, errors := acl.GetACL(ctx.uhppote, devices)
+	if len(errors) > 0 {
+		return fmt.Errorf("%v", errors)
 	}
 
 	for k, l := range list {

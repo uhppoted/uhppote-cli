@@ -65,9 +65,9 @@ func (c *CompareACL) Execute(ctx Context) error {
 		fmt.Printf("   ... %v  ACL has %v records\n", k, len(l))
 	}
 
-	current, err := acl.GetACL(ctx.uhppote, devices)
-	if err != nil {
-		return err
+	current, errors := acl.GetACL(ctx.uhppote, devices)
+	if len(errors) > 0 {
+		return fmt.Errorf("%v", errors)
 	}
 
 	diff, err := acl.Compare(current, list)

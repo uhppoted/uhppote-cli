@@ -49,7 +49,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 		fmt.Printf("   ... %v  ACL has %v records\n", k, len(l))
 	}
 
-	rpt, err := acl.PutACL(ctx.uhppote, list, false)
+	rpt, errors := acl.PutACL(ctx.uhppote, list, false)
 	for k, v := range rpt {
 		fmt.Printf("   ... %v  unchanged:%v  updated:%v  added:%v  deleted:%v  failed:%v  errors:%v\n",
 			k,
@@ -61,7 +61,11 @@ func (c *LoadACL) Execute(ctx Context) error {
 			len(v.Errors))
 	}
 
-	return err
+	if len(errors) > 0 {
+		return fmt.Errorf("%v", errors)
+	}
+
+	return nil
 }
 
 func (c *LoadACL) parseArgs() (string, error) {
