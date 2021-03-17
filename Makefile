@@ -63,13 +63,7 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) get-event $(SERIALNO) 17
-	$(CLI) get-event $(SERIALNO) first
-	$(CLI) get-event $(SERIALNO) last
-	$(CLI) get-event $(SERIALNO)
-	$(CLI) get-event $(SERIALNO)
-	$(CLI) get-event $(SERIALNO)
-	$(CLI) get-event $(SERIALNO) 17263
+	$(CLI) get-acl
 
 godoc:
 	godoc -http=:80	-index_interval=60s
