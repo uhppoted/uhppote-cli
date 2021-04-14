@@ -63,7 +63,7 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) get-acl
+	$(CLI) --debug --bind 0.0.0.0:54321 --broadcast 192.168.1.255:54321 get-devices
 
 godoc:
 	godoc -http=:80	-index_interval=60s

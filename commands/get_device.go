@@ -15,7 +15,7 @@ func (c *GetDevice) Execute(ctx Context) error {
 		return err
 	}
 
-	device, err := ctx.uhppote.FindDevice(serialNumber)
+	device, err := ctx.uhppote.GetDevice(serialNumber)
 	if err != nil {
 		return err
 	} else if device == nil {
