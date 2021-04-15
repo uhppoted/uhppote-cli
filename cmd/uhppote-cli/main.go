@@ -109,14 +109,47 @@ func main() {
 		u.ListenAddress = options.listen.address
 	}
 
-	ctx := commands.NewContext(&u, conf)
+	if err := validate(u.BindAddress, u.BroadcastAddress, u.ListenAddress); err != nil {
+		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
+		os.Exit(1)
+	}
 
 	// execute command
+	ctx := commands.NewContext(&u, conf)
 	err = cmd.Execute(ctx)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}
+}
+
+func validate(bind, broadcast, listen *net.UDPAddr) error {
+	// validate bind.address port
+	port := bind.Port
+
+	if port == 60000 {
+		return fmt.Errorf("port %v is not a valid port for the bind address", bind.Port)
+	}
+
+	if port != 0 && port == broadcast.Port {
+		return fmt.Errorf("bind address port (%v) must not be the same as the broadcast address port", bind.Port)
+	}
+
+	if port != 0 && port == listen.Port {
+		return fmt.Errorf("bind address port (%v) must not be the same as the listen address port", bind.Port)
+	}
+
+	// validate broadcast.address port
+	if broadcast.Port == 0 {
+		return fmt.Errorf("port %v is not a valid port for the broadcast address", broadcast.Port)
+	}
+
+	// validate listen.address port
+	if listen.Port == 0 {
+		return fmt.Errorf("port %v is not a valid port for the listen address", listen.Port)
+	}
+
+	return nil
 }
 
 // Optionally loads the configuration from file, falling back to the default configuration file

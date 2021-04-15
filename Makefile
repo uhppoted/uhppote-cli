@@ -63,7 +63,11 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) --debug --bind 0.0.0.0:54321 --broadcast 192.168.1.255:54321 get-devices
+#	$(CLI) --debug --bind 0.0.0.0:60000 get-device $(SERIALNO)
+#	$(CLI) --debug --bind 0.0.0.0:54321 --broadcast 192.168.1.255:54321 get-devices
+#	$(CLI) --debug --bind 0.0.0.0:54321 --listen 192.168.1.255:54321 get-devices
+#	$(CLI) --debug --broadcast 192.168.1.255:0 get-devices
+	$(CLI) --debug --listen 192.168.1.255:0 get-devices
 
 godoc:
 	godoc -http=:80	-index_interval=60s
