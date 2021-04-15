@@ -2,6 +2,8 @@
 
 ### IN PROGRESS
 
+- [x] Validate bind, broadcast and listen ports
+
 ## TODO
 
 - [ ] Route debugging to stderr
