@@ -1,4 +1,4 @@
-![build](https://github.com/uhppoted/uhppote-cli/workflows/build/badge.svg)
+# New Document![build](https://github.com/uhppoted/uhppote-cli/workflows/build/badge.svg)
 
 # uhppote-cli
 
@@ -8,12 +8,11 @@ Supported operating systems:
 - Linux
 - MacOS
 - Windows
-- ARM7
+- Raspberry Pi (ARM7)
 
 ## Raison d'être
 
-The manufacturer supplied application is _Windows-only_ and provides limited support for integration with other
-systems.
+The manufacturer supplied application is _Windows-only_ and provides limited support for integration with other systems.
 
 ## Releases
 
@@ -32,15 +31,15 @@ systems.
 
 ## Installation
 
-Executables for all the supported operating systems are packaged in the [releases](https://github.com/uhppoted/uhppote-cli/releases). The provided archives contain the executables for all the operating systems - operating system specific tarballs can be found in the [uhppoted](https://github.com/uhppoted/uhppoted/releases) releases.
+An archive containing executables for all the supported operating systems can be downloaded from the [releases](https://github.com/uhppoted/uhppote-cli/releases) page. Alternatively, operating system specific tarballs can be found in the [uhppoted](https://github.com/uhppoted/uhppoted/releases) releases.
 
 Installation is straightforward - download the archive and extract it to a directory of your choice and place the executable in a directory in your PATH. 
 
 ### `uhppoted.conf`
 
-By default, `uhppote-cli` uses the communal `uhppoted.conf` configuration file shared by all the `uhppoted` project modules which is (or will eventually be) documented in [uhppoted](https://github.com/uhppoted/uhppoted). 
+By default, `uhppote-cli` uses the communal `uhppoted.conf` configuration file shared by all the `uhppoted` project modules which is (_or will eventually be_) documented in [uhppoted](https://github.com/uhppoted/uhppoted). 
 
-A valid configuration file is required **only** for system configurations where controllers are not findable on the local LAN (i.e. cannot receive and reply to UDP broadcasts) or for use with the _ACL_ commands which require a valid `uhppoted.conf` to resolve the door ID to controller + door number. For _device_ commands the configuration file will used if present otherwise the internal default configuration will be used.
+A valid configuration file is required **only** for system configurations where controllers are not findable on the local LAN (i.e. cannot receive and reply to UDP broadcasts) or for use with the _ACL_ commands which do require a valid `uhppoted.conf` to resolve the door ID to controller + door number. For _device_ commands the configuration file will used if present otherwise the internal default configuration will be used.
 
 An alternative configuration file can be specified with the `--config` command line option, e.g.:
 
@@ -260,14 +259,6 @@ uhppote-cli [options] set-address <device> <address> [mask] [gateway]
 Retrieves the controller status for a single controller accessible on the local LAN (i.e. can receive and respond to UDP broadcasts) or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command returns a fixed width columnar table with:
 
 - `serial number`
-- `last event: index`
-- `last event: type`
-- `last event: access granted`
-- `last event: door`
-- `last event: door opened`
-- `last event: user ID`
-- `last event: timestamp`
-- `last event: result code`
 - `door states` [1..4]
 - `door button states` [1..4]
 - `system state`
@@ -277,6 +268,14 @@ Retrieves the controller status for a single controller accessible on the local 
 - `special message` _(? TBC)_
 - `battery status` _(? TBC)_
 - `fire alarm status` _(? TBC)_
+- `last event: index`
+- `last event: type`
+- `last event: access granted`
+- `last event: door`
+- `last event: door opened`
+- `last event: user ID`
+- `last event: timestamp`
+- `last event: result code`
 ```
 uhppote-cli [options] get-status <device>
 
@@ -291,8 +290,12 @@ uhppote-cli [options] get-status <device>
 
   uhppote-cli get-status 405419896
   
-  405419896  69    2   true  1 true  3922570474 2019-08-10 10:28:32 44  false false false false false false false false 0 2020-05-21 09:42:21 0 0 0 0 0
+  405419896  false false false false false false false false 0    2021-04-24 09:11:17 0          0 00 00 | 69    2   true  1 1     0          2019-08-10 10:28:32 44
 ```
+
+**NOTE**  
+The event fields are seperated from the static data by a '|' and are not displayed if the controller does not
+have a valid 'last event'.
 
 #### `get-time`
 
