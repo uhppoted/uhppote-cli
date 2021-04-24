@@ -669,9 +669,9 @@ Loads the access permissions from an ACL file to the set of configured UHPPOTE c
 
 ```
 
-### `store-acl`
+### `get-acl`
 
-Fetches the cards stored in the set of configured UHPPOTE controllers, and creates a matching ACL file from the UHPPOTED controller configuration and write it to a TSV file. 
+Fetches the cards stored in the set of configured UHPPOTE controllers, creates a matching ACL file from the UHPPOTED controller configuration and writes it to a TSV file. 
 
 ```
   uhppote-cli [options] get-acl <file>
