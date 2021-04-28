@@ -18,6 +18,7 @@ The manufacturer supplied application is _Windows-only_ and provides limited sup
 
 | *Version* | *Description*                                                                                            |
 | --------- | -------------------------------------------------------------------------------------------------------- |
+| v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                              |
 | v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                           |
 | v0.6.8    | Maintenance release for version compatibility with `uhppote-core` `v0.6.8`                               |
 | v0.6.7    | Implements `record-special-events` command to enable/disable door events                                 |

@@ -22,6 +22,8 @@ github.com/uhppoted/uhppote-core v0.6.11-0.20210415175657-979d155e011f/go.mod h1
 github.com/uhppoted/uhppote-core v0.6.11-0.20210426175238-bffb5018bad2 h1:KeNgupqfKDgEP2urKDuhITieUxtiZqEnW1lpYqZkeP4=
 github.com/uhppoted/uhppote-core v0.6.11-0.20210426175238-bffb5018bad2/go.mod h1:JotMSKgzWKGxdI1tWWGeajdCmWHJGsw5jSGmLCJ/xuU=
 github.com/uhppoted/uhppote-core v0.6.11/go.mod h1:CDoDTRrLF5pPI2G6PxpJ+AXDg/yvMDE+XGsYA0WUY1g=
+github.com/uhppoted/uhppote-core v0.6.12 h1:So53J2LaVdJ80YJWOKjmaudrcjUwSJN1GsVLGhiu4pc=
+github.com/uhppoted/uhppote-core v0.6.12/go.mod h1:trhONXGxYU0V5kOzBShTedYcRY98p9uV99JBZ7F1M0k=
 github.com/uhppoted/uhppoted-api v0.6.8 h1:AwIuMJZRAlfE3KPl1UL5aVQxgk+6/dvMV0sgEx/ghwY=
 github.com/uhppoted/uhppoted-api v0.6.8/go.mod h1:K0LpMUKu/mExDu9d5ndUeF+5MIaqUmtre2jmE/iOzmU=
 github.com/uhppoted/uhppoted-api v0.6.10 h1:b8KOmNwcilKDyYl21Mx2fgXJ19OV/TryhB8BeKxQQio=
@@ -46,7 +48,11 @@ github.com/uhppoted/uhppoted-api v0.6.11-0.20210426181519-7a5fd26b61e5 h1:c7awx+
 github.com/uhppoted/uhppoted-api v0.6.11-0.20210426181519-7a5fd26b61e5/go.mod h1:6/jGGDKHl/oJzmHyv7NN1XOyDK+0wh+B6qx3lbFc44I=
 github.com/uhppoted/uhppoted-api v0.6.11 h1:kkc3y5xKQhTdonb9DmBquOQ4wHauOx1qpyHiHksNCzQ=
 github.com/uhppoted/uhppoted-api v0.6.11/go.mod h1:Gbo5J8AozBrB3tr5p476LmlukQ1dPHeDJLJTFoIyDe4=
+github.com/uhppoted/uhppoted-api v0.6.12 h1:yZ4xzMFXHSd9bevj5/pLQ59B8kvPWjH76bAMKBjvLtE=
+github.com/uhppoted/uhppoted-api v0.6.12/go.mod h1:CiprOVtqNMDwRcFcszQ3ub1rqTT0sNjQfxX6Z+XkghE=
 golang.org/x/sys v0.0.0-20200812155832-6a926be9bd1d h1:QQrM/CCYEzTs91GZylDCQjGHudbPTxF/1fvXdVh5lMo=
 golang.org/x/sys v0.0.0-20200812155832-6a926be9bd1d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20210217105451-b926d437f341 h1:2/QtM1mL37YmcsT8HaDNHDgTqqFVw+zr8UzMiBVLzYU=
 golang.org/x/sys v0.0.0-20210217105451-b926d437f341/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210426230700-d19ff857e887 h1:dXfMednGJh/SUUFjTLsWJz3P+TQt9qnR11GgeI3vWKs=
+golang.org/x/sys v0.0.0-20210426230700-d19ff857e887/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
