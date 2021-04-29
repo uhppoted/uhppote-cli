@@ -1,8 +1,10 @@
-## v0.6.12
+## v0.6.x
 
 ### IN PROGRESS
 
-- [x] Validate bind, broadcast and listen ports
+- [ ] Implement get-time-profile 
+- [ ] Implement set-time-profile 
+- [ ] Implement clear-time-profiles
 
 ## TODO
 
