@@ -1,4 +1,4 @@
-VERSION = v0.6.x
+VERSION = v0.7.x
 LDFLAGS = -ldflags "-X uhppote.VERSION=$(VERSION)" 
 DIST   ?= development
 CLI     = ./bin/uhppote-cli
@@ -63,11 +63,12 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-#	$(CLI) --debug --bind 0.0.0.0:60000 get-device $(SERIALNO)
-#	$(CLI) --debug --bind 0.0.0.0:54321 --broadcast 192.168.1.255:54321 get-devices
-#	$(CLI) --debug --bind 0.0.0.0:54321 --listen 192.168.1.255:54321 get-devices
-#	$(CLI) --debug --broadcast 192.168.1.255:0 get-devices
-	$(CLI) --debug --listen 192.168.1.255:0 get-devices
+	# $(CLI) help
+	# $(CLI) commands
+	# $(CLI) help get-time-profile
+	# $(CLI) --debug get-time-profile 423187757 1
+	# $(CLI) --debug get-time-profile 423187757 255
+	$(CLI) --debug get-time-profile 423187757 2
 
 godoc:
 	godoc -http=:80	-index_interval=60s
@@ -136,6 +137,9 @@ delete-card: build
 
 delete-all: build
 	$(CLI) $(DEBUG) delete-all $(SERIALNO)
+
+get-time-profile: build
+	$(CLI) --debug get-time-profile $(SERIALNO) 2
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

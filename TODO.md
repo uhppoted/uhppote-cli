@@ -1,8 +1,10 @@
-## v0.6.x
+## v0.7.x
 
 ### IN PROGRESS
 
+- [ ] Use device name from conf file
 - [ ] Implement get-time-profile 
+- [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
 - [ ] Implement clear-time-profiles
 
