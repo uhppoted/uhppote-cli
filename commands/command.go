@@ -1,6 +1,10 @@
 package commands
 
 import (
+	"flag"
+	"fmt"
+	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/uhppoted/uhppote-core/uhppote"
@@ -31,5 +35,33 @@ type Command interface {
 }
 
 func clean(s string) string {
-	return strings.ToLower(strings.TrimSpace(s))
+	return regexp.MustCompile(`[\s\t]+`).ReplaceAllString(strings.ToLower(s), "")
+}
+
+func getSerialNumber(ctx Context) (uint32, error) {
+	if len(flag.Args()) < 2 {
+		return 0, fmt.Errorf("Missing controller serial number")
+	}
+
+	arg := flag.Arg(1)
+
+	// lookup controller by name
+	if ctx.config != nil {
+		for k, v := range ctx.config.Devices {
+			if clean(arg) == clean(v.Name) {
+				return k, nil
+			}
+		}
+	}
+
+	// numeric serial number?
+	if valid, _ := regexp.MatchString("[0-9]+", arg); !valid {
+		return 0, fmt.Errorf("Invalid controller serial number:%v", arg)
+	}
+
+	if N, err := strconv.ParseUint(arg, 10, 32); err != nil {
+		return 0, fmt.Errorf("Invalid controller serial number (%v)", arg)
+	} else {
+		return uint32(N), nil
+	}
 }

@@ -11,18 +11,19 @@ type DeleteAll struct {
 }
 
 func (c *DeleteAll) Execute(ctx Context) error {
-	deviceID, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
+	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
 	}
 
-	deleted, err := ctx.uhppote.DeleteCards(deviceID)
-
-	if err == nil {
-		fmt.Printf("%v %v\n", deviceID, deleted)
+	deleted, err := ctx.uhppote.DeleteCards(serialNumber)
+	if err != nil {
+		return err
 	}
 
-	return err
+	fmt.Printf("%v %v\n", serialNumber, deleted)
+
+	return nil
 }
 
 func (c *DeleteAll) CLI() string {

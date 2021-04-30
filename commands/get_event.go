@@ -11,7 +11,7 @@ type GetEvent struct {
 }
 
 func (c *GetEvent) Execute(ctx Context) error {
-	serialNumber, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
+	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
 	}

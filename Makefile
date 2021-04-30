@@ -3,6 +3,7 @@ LDFLAGS = -ldflags "-X uhppote.VERSION=$(VERSION)"
 DIST   ?= development
 CLI     = ./bin/uhppote-cli
 
+CONTROLLER ?= Alpha
 SERIALNO ?= 405419896
 CARD     ?= 65538
 DOOR     ?= 3
@@ -68,7 +69,7 @@ debug: build
 	# $(CLI) help get-time-profile
 	# $(CLI) --debug get-time-profile 423187757 1
 	# $(CLI) --debug get-time-profile 423187757 255
-	$(CLI) --debug get-time-profile 423187757 2
+	$(CLI) --debug get-time-profile devx 2
 
 godoc:
 	godoc -http=:80	-index_interval=60s
@@ -140,6 +141,7 @@ delete-all: build
 
 get-time-profile: build
 	$(CLI) --debug get-time-profile $(SERIALNO) 2
+	$(CLI) --debug get-time-profile $(CONTROLLER) 2
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

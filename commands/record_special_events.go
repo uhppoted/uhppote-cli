@@ -19,7 +19,7 @@ type RecordSpecialEvents struct {
 // Gets the device ID and enable/disable value from the command line
 // and sends a record-special-events to the designated controller.
 func (c *RecordSpecialEvents) Execute(ctx Context) error {
-	deviceID, err := getUint32(1, "Missing serial number", "Invalid serial number: %v")
+	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
 	}
@@ -36,20 +36,20 @@ func (c *RecordSpecialEvents) Execute(ctx Context) error {
 		}
 	}
 
-	succeeded, err := ctx.uhppote.RecordSpecialEvents(deviceID, enable)
+	succeeded, err := ctx.uhppote.RecordSpecialEvents(serialNumber, enable)
 	if err != nil {
 		return err
 	}
 
 	if !succeeded {
 		if enable {
-			return fmt.Errorf("Failed enable 'record special events' on %v", deviceID)
+			return fmt.Errorf("Failed enable 'record special events' on %v", serialNumber)
 		} else {
-			return fmt.Errorf("Failed disable 'record special events' on %v", deviceID)
+			return fmt.Errorf("Failed disable 'record special events' on %v", serialNumber)
 		}
 	}
 
-	fmt.Printf("%v %v\n", deviceID, enable)
+	fmt.Printf("%v %v\n", serialNumber, enable)
 
 	return nil
 }
