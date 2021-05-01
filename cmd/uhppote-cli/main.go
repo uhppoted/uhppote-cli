@@ -34,6 +34,7 @@ var cli = []commands.Command{
 	&commands.DeleteCardCmd,
 	&commands.DeleteAllCmd,
 	&commands.GetTimeProfileCmd,
+	&commands.SetTimeProfileCmd,
 	&commands.ShowCmd,
 	&commands.GrantCmd,
 	&commands.RevokeCmd,
