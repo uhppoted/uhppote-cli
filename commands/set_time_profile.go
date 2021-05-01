@@ -113,28 +113,17 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		From:            from,
 		To:              to,
 
-		Weekdays: struct {
-			Monday    bool `json:"monday"`
-			Tuesday   bool `json:"tuesday"`
-			Wednesday bool `json:"wednesday"`
-			Thursday  bool `json:"thursday"`
-			Friday    bool `json:"friday"`
-			Saturday  bool `json:"saturday"`
-			Sunday    bool `json:"sunday"`
-		}{
-			Monday:    weekdays["Monday"],
-			Tuesday:   weekdays["Tuesday"],
-			Wednesday: weekdays["Wednesday"],
-			Thursday:  weekdays["Thursday"],
-			Friday:    weekdays["Friday"],
-			Saturday:  weekdays["Saturday"],
-			Sunday:    weekdays["Sunday"],
+		Weekdays: types.Weekdays{
+			types.Monday:    weekdays["Monday"],
+			types.Tuesday:   weekdays["Tuesday"],
+			types.Wednesday: weekdays["Wednesday"],
+			types.Thursday:  weekdays["Thursday"],
+			types.Friday:    weekdays["Friday"],
+			types.Saturday:  weekdays["Saturday"],
+			types.Sunday:    weekdays["Sunday"],
 		},
 
-		Segments: map[uint8]struct {
-			Start *types.HHmm `json:"start"`
-			End   *types.HHmm `json:"end"`
-		}{},
+		Segments: types.Segments{},
 	}
 
 	for _, ix := range []int{1, 2, 3} {
