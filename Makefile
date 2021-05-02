@@ -67,6 +67,7 @@ debug: build
 	# $(CLI) help
 	# $(CLI) commands
 	# $(CLI) help set-time-profile
+	# $(CLI) --debug get-time-profile 423187757 2
 	# $(CLI) --debug set-time-profile 423187757 1   2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 27
 	# $(CLI) --debug set-time-profile 423187757 255 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 27
 	$(CLI) --debug set-time-profile 423187757 2   2021-04-01:2021-12-31 Mon,Wed,Thursday,Fri 08:30-11:30,,13:45-17:00 27
@@ -80,6 +81,7 @@ debug: build
 	# $(CLI) --debug set-time-profile devx      2   2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00
 	# $(CLI) --debug set-time-profile devx      2   2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 27
 	# $(CLI) --debug set-time-profile devx      2   08:30-11:30,,13:45-17:00 Mon,Wed,Fri 2021-04-01:2021-12-31 27
+	# $(CLI) --debug clear-time-profiles 423187757
 
 godoc:
 	godoc -http=:80	-index_interval=60s
@@ -150,13 +152,19 @@ delete-all: build
 	$(CLI) $(DEBUG) delete-all $(SERIALNO)
 
 get-time-profile: build
-	$(CLI) --debug get-time-profile 423187757   2
 	# $(CLI) --debug get-time-profile $(SERIALNO)   2
 	# $(CLI) --debug get-time-profile $(CONTROLLER) 2
+	$(CLI) --debug get-time-profile 423187757   2
 
 set-time-profile: build
-	$(CLI) --debug set-time-profile $(SERIALNO)   2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
-	$(CLI) --debug set-time-profile $(CONTROLLER) 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	# $(CLI) --debug set-time-profile $(SERIALNO)   2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	# $(CLI) --debug set-time-profile $(CONTROLLER) 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) --debug set-time-profile 423187757 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+
+clear-time-profiles: build
+	# $(CLI) --debug clear-time-profiles $(SERIALNO)
+	# $(CLI) --debug clear-time-profiles $(CONTROLLER)
+	$(CLI) --debug clear-time-profiles 423187757
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

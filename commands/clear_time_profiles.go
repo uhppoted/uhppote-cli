@@ -2,46 +2,47 @@ package commands
 
 import (
 	"fmt"
+
 	"github.com/uhppoted/uhppoted-api/config"
 )
 
-var DeleteAllCmd = DeleteAll{}
+var ClearTimeProfilesCmd = ClearTimeProfiles{}
 
-type DeleteAll struct {
+type ClearTimeProfiles struct {
 }
 
-func (c *DeleteAll) Execute(ctx Context) error {
+func (c *ClearTimeProfiles) Execute(ctx Context) error {
 	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
 	}
 
-	deleted, err := ctx.uhppote.DeleteCards(serialNumber)
+	cleared, err := ctx.uhppote.ClearTimeProfiles(serialNumber)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("%v %v\n", serialNumber, deleted)
+	fmt.Printf("%v %v\n", serialNumber, cleared)
 
 	return nil
 }
 
-func (c *DeleteAll) CLI() string {
-	return "delete-all"
+func (c *ClearTimeProfiles) CLI() string {
+	return "clear-time-profiles"
 }
 
-func (c *DeleteAll) Description() string {
-	return "Clears all cards stored on the controller"
+func (c *ClearTimeProfiles) Description() string {
+	return "Clears all time profiles on the controller"
 }
 
-func (c *DeleteAll) Usage() string {
+func (c *ClearTimeProfiles) Usage() string {
 	return "<serial number>"
 }
 
-func (c *DeleteAll) Help() {
-	fmt.Println("Usage: uhppote-cli [options] delete-all <serial number>")
+func (c *ClearTimeProfiles) Help() {
+	fmt.Println("Usage: uhppote-cli [options] clear-time-profiles <serial number>")
 	fmt.Println()
-	fmt.Println(" Removes all cards from the controller internal card list")
+	fmt.Println(" Clears all time profiles from the controller")
 	fmt.Println()
 	fmt.Println("  <serial number>  (required) controller serial number")
 	fmt.Println()
@@ -53,11 +54,11 @@ func (c *DeleteAll) Help() {
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli --debug --config .config delete-all 12345678")
+	fmt.Println("    uhppote-cli --debug clear-time-profiles 9876543210")
 	fmt.Println()
 }
 
 // Returns false - configuration is useful but optional.
-func (c *DeleteAll) RequiresConfig() bool {
+func (c *ClearTimeProfiles) RequiresConfig() bool {
 	return false
 }

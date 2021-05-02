@@ -90,6 +90,7 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 	}
 
 	if ctx.uhppote != nil && ctx.uhppote.Debug {
+		fmt.Println(" ...")
 		fmt.Printf(" ... serial number: %v\n", serialNumber)
 		fmt.Printf(" ... profile ID:    %v\n", profileID)
 		fmt.Printf(" ... from:          %v\n", from)
@@ -97,6 +98,7 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		fmt.Printf(" ... weekdays:      %v\n", weekdays)
 		fmt.Printf(" ... schedule:      %v\n", schedule)
 		fmt.Printf(" ... linked:        %v\n", linked)
+		fmt.Println(" ...")
 	}
 
 	if from == nil {

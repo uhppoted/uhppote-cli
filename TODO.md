@@ -2,11 +2,14 @@
 
 ### IN PROGRESS
 
-- [ ] Use device name from conf file
 - [ ] Implement get-time-profile 
 - [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
+- [ ] Implement set-time-profiles
 - [ ] Implement clear-time-profiles
+- [x] Use device name from conf file
+- [ ] Print device name for get-device/get-devices
+- [ ] Tabuluate output for get-devices
 
 ## TODO
 
