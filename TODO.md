@@ -2,7 +2,8 @@
 
 ### IN PROGRESS
 
-- [ ] Implement get-time-profile 
+- [ ] Add time profiles to put-card
+- [x] Implement get-time-profile 
 - [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
 - [ ] Implement set-time-profiles

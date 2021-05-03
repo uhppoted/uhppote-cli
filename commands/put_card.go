@@ -1,7 +1,12 @@
 package commands
 
 import (
+	"flag"
 	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+
 	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppoted-api/config"
 )
@@ -32,14 +37,25 @@ func (c *PutCard) Execute(ctx Context) error {
 		return err
 	}
 
-	permissions, err := getPermissions(5)
+	permissions, err := getPermissions()
 	if err != nil {
 		return err
 	}
 
+	for _, door := range []uint8{1, 2, 3, 4} {
+		if p, ok := permissions[door]; ok {
+			if v, ok := p.(uint8); ok {
+				if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, v); err != nil {
+					return err
+				} else if profile == nil {
+					return fmt.Errorf("Time profile %v is not defined", v)
+				}
+			}
+		}
+	}
+
 	start := types.Date(*from)
 	end := types.Date(*to)
-
 	authorised, err := ctx.uhppote.PutCard(serialNumber, types.Card{
 		CardNumber: cardNumber,
 		From:       &start,
@@ -94,4 +110,40 @@ func (c *PutCard) Help() {
 // Returns false - configuration is useful but optional.
 func (c *PutCard) RequiresConfig() bool {
 	return false
+}
+
+func getPermissions() (map[uint8]types.Permission, error) {
+	index := 5
+	permissions := map[uint8]types.Permission{1: false, 2: false, 3: false, 4: false}
+
+	if len(flag.Args()) > index {
+		tokens := strings.Split(flag.Arg(index), ",")
+
+		for _, token := range tokens {
+			match := regexp.MustCompile("([1-4])(?::([0-9]+))?").FindStringSubmatch(token)
+			if match == nil || len(match) < 3 {
+				return nil, fmt.Errorf("Invalid door '%v'", token)
+			}
+
+			door, err := strconv.ParseInt(match[1], 10, 8)
+			if err != nil {
+				return nil, fmt.Errorf("Invalid door ID '%v' (%v)", match[1], err)
+			}
+
+			if match[2] == "" {
+				permissions[uint8(door)] = true
+			} else {
+				profile, err := strconv.ParseUint(match[2], 10, 8)
+				if err != nil {
+					return nil, fmt.Errorf("Invalid time profile '%v' (%v)", match[2], err)
+				} else if profile < 2 || profile > 254 {
+					return nil, fmt.Errorf("Invalid time profile '%v' (valid profiles are in the range 2 to 254)", match[2])
+				}
+
+				permissions[uint8(door)] = uint8(profile)
+			}
+		}
+	}
+
+	return permissions, nil
 }

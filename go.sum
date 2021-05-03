@@ -34,6 +34,10 @@ github.com/uhppoted/uhppote-core v0.6.13-0.20210501173731-372d106335ee h1:seL0Ur
 github.com/uhppoted/uhppote-core v0.6.13-0.20210501173731-372d106335ee/go.mod h1:trhONXGxYU0V5kOzBShTedYcRY98p9uV99JBZ7F1M0k=
 github.com/uhppoted/uhppote-core v0.6.13-0.20210502212116-5742620a5f93 h1:iZ3duhTVBfAqr9rMtU699AySzGZk2xw0PRA/Pc+H4iw=
 github.com/uhppoted/uhppote-core v0.6.13-0.20210502212116-5742620a5f93/go.mod h1:trhONXGxYU0V5kOzBShTedYcRY98p9uV99JBZ7F1M0k=
+github.com/uhppoted/uhppote-core v0.6.13-0.20210503174838-4d3a0729bb03 h1:wnuIDaH66Kw1W37kLAncN1D8oHkf/vKVNFi455vx0Yc=
+github.com/uhppoted/uhppote-core v0.6.13-0.20210503174838-4d3a0729bb03/go.mod h1:trhONXGxYU0V5kOzBShTedYcRY98p9uV99JBZ7F1M0k=
+github.com/uhppoted/uhppote-core v0.6.13-0.20210503212520-b5d8b1ab0bee h1:JCHjHmpPmtOKN7UiSGBpvhujXvTB6XDRXxubkk44z8Y=
+github.com/uhppoted/uhppote-core v0.6.13-0.20210503212520-b5d8b1ab0bee/go.mod h1:trhONXGxYU0V5kOzBShTedYcRY98p9uV99JBZ7F1M0k=
 github.com/uhppoted/uhppoted-api v0.6.8 h1:AwIuMJZRAlfE3KPl1UL5aVQxgk+6/dvMV0sgEx/ghwY=
 github.com/uhppoted/uhppoted-api v0.6.8/go.mod h1:K0LpMUKu/mExDu9d5ndUeF+5MIaqUmtre2jmE/iOzmU=
 github.com/uhppoted/uhppoted-api v0.6.10 h1:b8KOmNwcilKDyYl21Mx2fgXJ19OV/TryhB8BeKxQQio=
@@ -60,6 +64,8 @@ github.com/uhppoted/uhppoted-api v0.6.11 h1:kkc3y5xKQhTdonb9DmBquOQ4wHauOx1qpyHi
 github.com/uhppoted/uhppoted-api v0.6.11/go.mod h1:Gbo5J8AozBrB3tr5p476LmlukQ1dPHeDJLJTFoIyDe4=
 github.com/uhppoted/uhppoted-api v0.6.12 h1:yZ4xzMFXHSd9bevj5/pLQ59B8kvPWjH76bAMKBjvLtE=
 github.com/uhppoted/uhppoted-api v0.6.12/go.mod h1:CiprOVtqNMDwRcFcszQ3ub1rqTT0sNjQfxX6Z+XkghE=
+github.com/uhppoted/uhppoted-api v0.6.13-0.20210503182913-ed47fc494707 h1:0jH8K2aEjddulEYMClS+f13c8KW9XMEIC4nTzsAec5g=
+github.com/uhppoted/uhppoted-api v0.6.13-0.20210503182913-ed47fc494707/go.mod h1:TAkpzMkQnzfZSPP4VCjzWHBMX8UxNAnCR6uEPYwhHIk=
 golang.org/x/sys v0.0.0-20200812155832-6a926be9bd1d h1:QQrM/CCYEzTs91GZylDCQjGHudbPTxF/1fvXdVh5lMo=
 golang.org/x/sys v0.0.0-20200812155832-6a926be9bd1d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20210217105451-b926d437f341 h1:2/QtM1mL37YmcsT8HaDNHDgTqqFVw+zr8UzMiBVLzYU=

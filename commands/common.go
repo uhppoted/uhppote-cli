@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -116,26 +115,4 @@ func getDoor(index int, missing, invalid string) (byte, error) {
 	}
 
 	return byte(door), nil
-}
-
-func getPermissions(index int) (map[uint8]bool, error) {
-	doors := map[uint8]bool{1: false, 2: false, 3: false, 4: false}
-
-	if len(flag.Args()) > index {
-		matches := strings.Split(flag.Arg(index), ",")
-
-		for _, match := range matches {
-			door, err := strconv.Atoi(match)
-			if err != nil {
-				return nil, fmt.Errorf("Invalid door '%v'", match)
-			}
-
-			if door > 0 && door < 5 {
-				doors[uint8(door)] = true
-			}
-
-		}
-	}
-
-	return doors, nil
 }

@@ -109,6 +109,14 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		return fmt.Errorf("Missing 'to' date")
 	}
 
+	if linked != 0 {
+		if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, linked); err != nil {
+			return err
+		} else if profile == nil {
+			return fmt.Errorf("Linked time profile %v is not defined", linked)
+		}
+	}
+
 	profile := types.TimeProfile{
 		ProfileID:       profileID,
 		LinkedProfileID: linked,
