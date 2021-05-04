@@ -163,9 +163,9 @@ get-time-profile: build
 	$(CLI) --debug get-time-profile 423187757   29
 
 set-time-profile: build
-	# $(CLI) --debug set-time-profile $(SERIALNO)   2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) --debug set-time-profile $(SERIALNO)   29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 	# $(CLI) --debug set-time-profile $(CONTROLLER) 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
-	$(CLI) --debug set-time-profile 423187757 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	# $(CLI) --debug set-time-profile 423187757 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 
 clear-time-profiles: build
 	# $(CLI) --debug clear-time-profiles $(SERIALNO)

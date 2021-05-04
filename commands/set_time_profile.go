@@ -80,7 +80,7 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 			if regexp.MustCompile("^[0-9]+$").MatchString(arg) {
 				if v, err := strconv.ParseUint(arg, 10, 8); err != nil {
 					return fmt.Errorf("%v: invalid linked profile (%v)", arg, err)
-				} else if v < 2 || v > 254 {
+				} else if v != 0 && v < 2 || v > 254 {
 					return fmt.Errorf("%v: invalid linked profile (valid range is from 2 to 254)", arg)
 				} else {
 					linked = uint8(v)
