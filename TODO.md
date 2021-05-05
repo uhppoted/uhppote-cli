@@ -2,8 +2,9 @@
 
 ### IN PROGRESS
 
-- [ ] Add time profiles to put-card
+- [x] Add time profiles to put-card
 - [x] Implement get-time-profile 
+- [ ] Check for linked circular references in set-time-profile
 - [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
 - [ ] Implement set-time-profiles

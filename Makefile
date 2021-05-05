@@ -5,7 +5,7 @@ CLI     = ./bin/uhppote-cli
 
 CONTROLLER ?= Alpha
 SERIALNO ?= 405419896
-CARD     ?= 65538
+CARD     ?= 8165538
 DOOR     ?= 3
 DEVICEIP ?= 192.168.1.125
 DATETIME  = $(shell date "+%Y-%m-%d %H:%M:%S")
@@ -149,7 +149,7 @@ get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
 put-card: build
-	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2020-01-01 2020-12-31 1,2,3,4
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2021-01-01 2021-12-31 1,2,3,4:29
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
@@ -158,9 +158,9 @@ delete-all: build
 	$(CLI) $(DEBUG) delete-all $(SERIALNO)
 
 get-time-profile: build
-	# $(CLI) --debug get-time-profile $(SERIALNO)   2
+	$(CLI) --debug get-time-profile $(SERIALNO)   29
 	# $(CLI) --debug get-time-profile $(CONTROLLER) 2
-	$(CLI) --debug get-time-profile 423187757   29
+	# $(CLI) --debug get-time-profile 423187757   29
 
 set-time-profile: build
 	$(CLI) --debug set-time-profile $(SERIALNO)   29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
@@ -168,9 +168,9 @@ set-time-profile: build
 	# $(CLI) --debug set-time-profile 423187757 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 
 clear-time-profiles: build
-	# $(CLI) --debug clear-time-profiles $(SERIALNO)
+	$(CLI) --debug clear-time-profiles $(SERIALNO)
 	# $(CLI) --debug clear-time-profiles $(CONTROLLER)
-	$(CLI) --debug clear-time-profiles 423187757
+	# $(CLI) --debug clear-time-profiles 423187757
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/uhppoted/uhppote-core/types"
 )
@@ -118,19 +119,19 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 	}
 
 	profile := types.TimeProfile{
-		ProfileID:       profileID,
+		ID:              profileID,
 		LinkedProfileID: linked,
 		From:            from,
 		To:              to,
 
 		Weekdays: types.Weekdays{
-			types.Monday:    weekdays["Monday"],
-			types.Tuesday:   weekdays["Tuesday"],
-			types.Wednesday: weekdays["Wednesday"],
-			types.Thursday:  weekdays["Thursday"],
-			types.Friday:    weekdays["Friday"],
-			types.Saturday:  weekdays["Saturday"],
-			types.Sunday:    weekdays["Sunday"],
+			time.Monday:    weekdays["Monday"],
+			time.Tuesday:   weekdays["Tuesday"],
+			time.Wednesday: weekdays["Wednesday"],
+			time.Thursday:  weekdays["Thursday"],
+			time.Friday:    weekdays["Friday"],
+			time.Saturday:  weekdays["Saturday"],
+			time.Sunday:    weekdays["Sunday"],
 		},
 
 		Segments: types.Segments{},
@@ -138,18 +139,12 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 
 	for _, ix := range []int{1, 2, 3} {
 		if s, ok := schedule[ix]; ok {
-			profile.Segments[uint8(ix)] = struct {
-				Start *types.HHmm `json:"start"`
-				End   *types.HHmm `json:"end"`
-			}{
+			profile.Segments[uint8(ix)] = types.Segment{
 				Start: s.start,
 				End:   s.end,
 			}
 		} else {
-			profile.Segments[uint8(ix)] = struct {
-				Start *types.HHmm `json:"start"`
-				End   *types.HHmm `json:"end"`
-			}{
+			profile.Segments[uint8(ix)] = types.Segment{
 				Start: &types.HHmm{},
 				End:   &types.HHmm{},
 			}
