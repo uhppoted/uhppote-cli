@@ -83,6 +83,8 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 					return fmt.Errorf("%v: invalid linked profile (%v)", arg, err)
 				} else if v != 0 && v < 2 || v > 254 {
 					return fmt.Errorf("%v: invalid linked profile (valid range is from 2 to 254)", arg)
+				} else if uint8(v) == profileID {
+					return fmt.Errorf("%v: invalid linked profile (link to self creates circular reference)", arg)
 				} else {
 					linked = uint8(v)
 				}
@@ -115,6 +117,24 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 			return err
 		} else if profile == nil {
 			return fmt.Errorf("Linked time profile %v is not defined", linked)
+		}
+
+		profiles := map[uint8]bool{profileID: true}
+		links := []uint8{profileID}
+		for l := linked; l != 0; {
+			if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, l); err != nil {
+				return err
+			} else if profile == nil {
+				return fmt.Errorf("Linked time profile %v is not defined", l)
+			} else {
+				links = append(links, profile.ID)
+				if profiles[profile.ID] {
+					return fmt.Errorf("Linking to time profile %v creates a circular reference (%v)", linked, links)
+				}
+
+				profiles[profile.ID] = true
+				l = profile.LinkedProfileID
+			}
 		}
 	}
 
