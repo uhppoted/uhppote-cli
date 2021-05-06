@@ -218,8 +218,9 @@ load-acl: build
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
 
 get-acl: build
-	$(CLI) get-acl
-	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
+	./bin/uhppote-cli get-acl
+#	$(CLI) get-acl
+#	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
 
 compare-acl: build
 	$(CLI) $(DEBUG) compare-acl ../runtime/simulation/simulation.acl

@@ -4,14 +4,14 @@
 
 - [x] Add time profiles to put-card
 - [x] Implement get-time-profile 
-- [ ] Check for linked circular references in set-time-profile
+- [x] Check for linked circular references in set-time-profile
 - [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
 - [ ] Implement set-time-profiles
-- [ ] Implement clear-time-profiles
+- [x] Implement clear-time-profiles
 - [x] Use device name from conf file
 - [ ] Print device name for get-device/get-devices
-- [ ] Tabuluate output for get-devices
+- [ ] Tabulate output for get-devices
 
 ## TODO
 
