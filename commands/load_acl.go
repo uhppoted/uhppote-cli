@@ -65,6 +65,29 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return fmt.Errorf("%v", errors)
 	}
 
+	fmt.Println()
+
+loop:
+	for _, r := range rpt {
+		if r.Errors != nil {
+			count := 0
+			for _, v := range rpt {
+				for _, err := range v.Errors {
+					if count < 5 {
+						fmt.Printf("   WARNING: %v\n", err)
+						count += 1
+					} else {
+						fmt.Printf("   WARNING: ... etc\n")
+						break loop
+					}
+				}
+			}
+
+			fmt.Println()
+			break
+		}
+	}
+
 	return nil
 }
 

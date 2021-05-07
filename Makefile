@@ -155,7 +155,9 @@ delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
 
 delete-all: build
-	$(CLI) $(DEBUG) delete-all $(SERIALNO)
+#	$(CLI) $(DEBUG) delete-all $(SERIALNO)
+	$(CLI) $(DEBUG) delete-all 405419896
+	$(CLI) $(DEBUG) delete-all 303986753
 
 get-time-profile: build
 	$(CLI) --debug get-time-profile $(SERIALNO)   29
@@ -163,7 +165,8 @@ get-time-profile: build
 	# $(CLI) --debug get-time-profile 423187757   29
 
 set-time-profile: build
-	$(CLI) --debug set-time-profile $(SERIALNO)   29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) --debug set-time-profile 303986753 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) --debug set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 	# $(CLI) --debug set-time-profile $(CONTROLLER) 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 	# $(CLI) --debug set-time-profile 423187757 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 
@@ -215,11 +218,10 @@ revoke-all: build
 	$(CLI) $(DEBUG) revoke $(CARD) ALL
 	
 load-acl: build
-	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
+	$(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
 
 get-acl: build
-	./bin/uhppote-cli get-acl
-#	$(CLI) get-acl
+	$(CLI) get-acl
 #	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
 
 compare-acl: build
