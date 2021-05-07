@@ -2,16 +2,20 @@
 
 ### IN PROGRESS
 
-- [x] Add time profiles to put-card
-- [x] Implement get-time-profile 
-- [x] Check for linked circular references in set-time-profile
+- [ ] `put-acl` with time profiles
+- [ ] `compare-acl` with time profiles
 - [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
 - [ ] Implement set-time-profiles
-- [x] Implement clear-time-profiles
-- [x] Use device name from conf file
 - [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices
+
+- [x] `get-acl` with time profiles
+- [x] Add time profiles to put-card
+- [x] Implement get-time-profile 
+- [x] Check for linked circular references in set-time-profile
+- [x] Implement clear-time-profiles
+- [x] Use device name from conf file
 
 ## TODO
 

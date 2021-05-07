@@ -85,37 +85,41 @@ func main() {
 	}
 
 	// initialise execution context
+	bind, broadcast, listen := config.DefaultIpAddresses()
+	devices := []uhppote.Device{}
+
 	conf := configuration(cmd)
-	u := uhppote.UHPPOTE{
-		Devices: make(map[uint32]*uhppote.Device),
-		Debug:   options.debug,
-	}
-
-	u.BindAddress = conf.BindAddress
-	u.BroadcastAddress = conf.BroadcastAddress
-	u.ListenAddress = conf.ListenAddress
-
-	for s, d := range conf.Devices {
-		u.Devices[s] = uhppote.NewDevice(s, d.Address, d.Rollover, d.Doors)
-	}
 
 	if options.bind.address != nil {
-		u.BindAddress = options.bind.address
-		u.ListenAddress = options.bind.address
+		bind = *options.bind.address
+	} else if conf.BindAddress != nil {
+		bind = *conf.BindAddress
 	}
 
 	if options.broadcast.address != nil {
-		u.BroadcastAddress = options.broadcast.address
+		broadcast = *options.broadcast.address
+	} else if conf.BroadcastAddress != nil {
+		broadcast = *conf.BroadcastAddress
 	}
 
 	if options.listen.address != nil {
-		u.ListenAddress = options.listen.address
+		listen = *options.listen.address
+	} else if conf.ListenAddress != nil {
+		listen = *conf.ListenAddress
 	}
 
-	if err := validate(u.BindAddress, u.BroadcastAddress, u.ListenAddress); err != nil {
+	for s, d := range conf.Devices {
+		if device := uhppote.NewDevice(s, d.Address, d.Rollover, d.Doors); device != nil {
+			devices = append(devices, *device)
+		}
+	}
+
+	if err := validate(bind, broadcast, listen); err != nil {
 		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}
+
+	u := uhppote.NewUHPPOTE(bind, broadcast, listen, devices, options.debug)
 
 	// execute command
 	ctx := commands.NewContext(&u, conf)
@@ -126,7 +130,7 @@ func main() {
 	}
 }
 
-func validate(bind, broadcast, listen *net.UDPAddr) error {
+func validate(bind, broadcast, listen net.UDPAddr) error {
 	// validate bind.address port
 	port := bind.Port
 

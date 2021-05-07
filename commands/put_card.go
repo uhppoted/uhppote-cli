@@ -43,13 +43,11 @@ func (c *PutCard) Execute(ctx Context) error {
 	}
 
 	for _, door := range []uint8{1, 2, 3, 4} {
-		if p, ok := permissions[door]; ok {
-			if v, ok := p.(uint8); ok {
-				if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, v); err != nil {
-					return err
-				} else if profile == nil {
-					return fmt.Errorf("Time profile %v is not defined", v)
-				}
+		if v, ok := permissions[door]; ok && v >= 2 && v <= 254 {
+			if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, uint8(v)); err != nil {
+				return err
+			} else if profile == nil {
+				return fmt.Errorf("Time profile %v is not defined", v)
 			}
 		}
 	}
@@ -112,9 +110,9 @@ func (c *PutCard) RequiresConfig() bool {
 	return false
 }
 
-func getPermissions() (map[uint8]types.Permission, error) {
+func getPermissions() (map[uint8]int, error) {
 	index := 5
-	permissions := map[uint8]types.Permission{1: false, 2: false, 3: false, 4: false}
+	permissions := map[uint8]int{1: 0, 2: 0, 3: 0, 4: 0}
 
 	if len(flag.Args()) > index {
 		tokens := strings.Split(flag.Arg(index), ",")
@@ -131,7 +129,7 @@ func getPermissions() (map[uint8]types.Permission, error) {
 			}
 
 			if match[2] == "" {
-				permissions[uint8(door)] = true
+				permissions[uint8(door)] = 1
 			} else {
 				profile, err := strconv.ParseUint(match[2], 10, 8)
 				if err != nil {
@@ -140,7 +138,7 @@ func getPermissions() (map[uint8]types.Permission, error) {
 					return nil, fmt.Errorf("Invalid time profile '%v' (valid profiles are in the range 2 to 254)", match[2])
 				}
 
-				permissions[uint8(door)] = uint8(profile)
+				permissions[uint8(door)] = int(profile)
 			}
 		}
 	}
