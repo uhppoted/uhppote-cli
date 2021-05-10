@@ -2,13 +2,13 @@
 
 ### IN PROGRESS
 
-- [ ] `compare-acl` with time profiles
 - [ ] Implement get-time-profiles
 - [ ] Implement set-time-profile 
 - [ ] Implement set-time-profiles
 - [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices
 
+- [x] `compare-acl` with time profiles
 - [x] `load-acl` with time profiles
 - [x] `get-acl` with time profiles
 - [x] Add time profiles to put-card

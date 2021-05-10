@@ -131,11 +131,12 @@ func (c *CompareACL) report(diff map[uint32]acl.Diff, w io.Writer) error {
 		return err
 	}
 
+	timestamp := types.DateTime(time.Now())
 	rpt := struct {
-		DateTime types.DateTime
+		DateTime *types.DateTime
 		Diffs    map[uint32]acl.Diff
 	}{
-		DateTime: types.DateTime(time.Now()),
+		DateTime: &timestamp,
 		Diffs:    diff,
 	}
 
