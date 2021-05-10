@@ -34,6 +34,7 @@ var cli = []commands.Command{
 	&commands.DeleteCardCmd,
 	&commands.DeleteCardsCmd,
 	&commands.GetTimeProfileCmd,
+	&commands.GetTimeProfilesCmd,
 	&commands.SetTimeProfileCmd,
 	&commands.ClearTimeProfilesCmd,
 	&commands.ShowCmd,
@@ -261,7 +262,7 @@ func help() {
 }
 
 func usage() {
-	format := "    %-22s %s\n"
+	format := "    %-21s %s\n"
 	fmt.Println()
 	fmt.Println("  Usage: uhppote-cli [options] <command>")
 	fmt.Println()
@@ -291,7 +292,7 @@ func helpCommands() {
 	fmt.Println()
 
 	for _, c := range cli {
-		fmt.Printf(" %-16s %s\n", c.CLI(), c.Usage())
+		fmt.Printf(" %-21s %s\n", c.CLI(), c.Usage())
 	}
 
 	fmt.Println()

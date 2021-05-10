@@ -47,7 +47,7 @@ func (c *Listen) Description() string {
 }
 
 func (c *Listen) Usage() string {
-	return "listen"
+	return ""
 }
 
 func (c *Listen) Help() {

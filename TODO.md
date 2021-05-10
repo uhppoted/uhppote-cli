@@ -2,19 +2,21 @@
 
 ### IN PROGRESS
 
-- [ ] Implement get-time-profiles
-- [ ] Implement set-time-profile 
-- [ ] Implement set-time-profiles
+- [ ] `set-time-profiles`
+- [ ] Update README with time profile commands
 - [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices
+- [ ] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
 
+- [x] `get-time-profiles`
 - [x] `compare-acl` with time profiles
 - [x] `load-acl` with time profiles
 - [x] `get-acl` with time profiles
 - [x] Add time profiles to put-card
-- [x] Implement get-time-profile 
 - [x] Check for linked circular references in set-time-profile
-- [x] Implement clear-time-profiles
+- [x] `clear-time-profiles`
+- [x] `get-time-profile`
+- [x] `set-time-profile`
 - [x] Use device name from conf file
 
 ## TODO
