@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/uhppoted/uhppote-core/types"
+	"github.com/uhppoted/uhppoted-api/config"
 )
 
 var SetTimeProfileCmd = SetTimeProfile{}
@@ -205,6 +206,12 @@ func (c *SetTimeProfile) Help() {
 	fmt.Println("  weekdays       (optional) list of weekdays on which profile is enabled (defaults to all)")
 	fmt.Println("  segments       (optional) start and end times (HH:mm-HH:mm) for up to 3 segments (segments default to 00:00-00:00 if not defined)")
 	fmt.Println("  linked         (optional) ID of linked profile.Defaults to 0 (unlinked)")
+	fmt.Println()
+	fmt.Println("  Options:")
+	fmt.Println()
+	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
+	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
+	fmt.Println("    --debug   Displays internal information for diagnosing errors")
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()

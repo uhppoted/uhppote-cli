@@ -2,6 +2,8 @@ package commands
 
 import (
 	"fmt"
+
+	"github.com/uhppoted/uhppoted-api/config"
 )
 
 var GetTimeProfileCmd = GetTimeProfile{}
@@ -55,6 +57,12 @@ func (c *GetTimeProfile) Help() {
 	fmt.Println()
 	fmt.Println("  serial number  (required) controller serial number")
 	fmt.Println("  profile ID     (required) time profile ID (2-254)")
+	fmt.Println()
+	fmt.Println("  Options:")
+	fmt.Println()
+	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
+	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
+	fmt.Println("    --debug   Displays internal information for diagnosing errors")
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()

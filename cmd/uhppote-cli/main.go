@@ -36,6 +36,7 @@ var cli = []commands.Command{
 	&commands.GetTimeProfileCmd,
 	&commands.GetTimeProfilesCmd,
 	&commands.SetTimeProfileCmd,
+	&commands.SetTimeProfilesCmd,
 	&commands.ClearTimeProfilesCmd,
 	&commands.ShowCmd,
 	&commands.GrantCmd,

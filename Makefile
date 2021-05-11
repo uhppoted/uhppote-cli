@@ -64,11 +64,7 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-#	$(CLI) set-time-profile 405419896 2  2021-01-01:2021-12-31 Mon,Thurs,Sat 09:30-12:30,13:45-16:00,19:30-20:30 
-#	$(CLI) set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 2
-#	$(CLI) set-time-profile 405419896 55 2021-04-01:2021-10-31 Sat,Sun 10:30-11:30 
-#	$(CLI) get-time-profiles $(SERIALNO) 
-	$(CLI) get-time-profiles $(SERIALNO) ../runtime/profiles.tsv
+	$(CLI) set-time-profiles $(SERIALNO) ../runtime/profiles.tsv
 
 godoc:
 	godoc -http=:80	-index_interval=60s
@@ -152,7 +148,7 @@ get-time-profiles: build
 set-time-profile: build
 	$(CLI) --debug set-time-profile 303986753 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 	$(CLI) --debug set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	# $(CLI) --debug set-time-profile $(CONTROLLER) 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	# $(CLI) --debug set-time-profile 405419896 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 	# $(CLI) --debug set-time-profile 423187757 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 
 clear-time-profiles: build

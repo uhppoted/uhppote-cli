@@ -3,6 +3,8 @@
 ### IN PROGRESS
 
 - [ ] `set-time-profiles`
+- [ ] `get-schedule`
+- [ ] `set-schedule`
 - [ ] Update README with time profile commands
 - [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices
