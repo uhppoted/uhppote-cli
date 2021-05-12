@@ -93,7 +93,7 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		}
 	}
 
-	if ctx.uhppote != nil && ctx.uhppote.Debug {
+	if ctx.uhppote != nil && ctx.debug {
 		fmt.Println(" ...")
 		fmt.Printf(" ... serial number: %v\n", serialNumber)
 		fmt.Printf(" ... profile ID:    %v\n", profileID)

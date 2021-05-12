@@ -15,12 +15,13 @@ import (
 type Context struct {
 	uhppote *uhppote.UHPPOTE
 	config  *config.Config
+	debug   bool
 }
 
 // NewContext returns a valid Context initialized with the supplied UHPPOTE and
 // configuration.
-func NewContext(u *uhppote.UHPPOTE, c *config.Config) Context {
-	return Context{u, c}
+func NewContext(u *uhppote.UHPPOTE, c *config.Config, debug bool) Context {
+	return Context{u, c, debug}
 }
 
 // Command defines the common functions for CLI command implementations. This will be

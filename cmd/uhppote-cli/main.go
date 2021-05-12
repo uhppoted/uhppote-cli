@@ -124,7 +124,7 @@ func main() {
 	u := uhppote.NewUHPPOTE(bind, broadcast, listen, devices, options.debug)
 
 	// execute command
-	ctx := commands.NewContext(&u, conf)
+	ctx := commands.NewContext(&u, conf, options.debug)
 	err = cmd.Execute(ctx)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
