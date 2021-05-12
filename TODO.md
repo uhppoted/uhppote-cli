@@ -2,16 +2,16 @@
 
 ### IN PROGRESS
 
-- [ ] `set-time-profiles`
-- [ ] `get-schedule`
-- [ ] `set-schedule`
-- [ ] Verify 'to' is not before 'from'
-- [ ] Verify segment 'end' is not before segment 'start'
 - [ ] Update README with time profile commands
+- [ ] `set-schedule`
+- [ ] `get-schedule`
 - [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices
 - [ ] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
 
+- [x] Verify 'to' is not before 'from'
+- [x] Verify segment 'end' is not before segment 'start'
+- [x] `set-time-profiles`
 - [x] `get-time-profiles`
 - [x] `compare-acl` with time profiles
 - [x] `load-acl` with time profiles

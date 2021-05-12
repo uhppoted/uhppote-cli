@@ -38,10 +38,6 @@ func (c *SetTimeProfiles) Execute(ctx Context) error {
 		return fmt.Errorf("File '%s' does not contain any valid time profiles", file)
 	}
 
-	if err := c.validate(profiles); err != nil {
-		return err
-	}
-
 	warnings, err := c.load(ctx, serialNumber, profiles)
 	if err != nil {
 		return err
@@ -55,10 +51,6 @@ func (c *SetTimeProfiles) Execute(ctx Context) error {
 		fmt.Println()
 	}
 
-	return nil
-}
-
-func (c *SetTimeProfiles) validate(profiles []types.TimeProfile) error {
 	return nil
 }
 
@@ -77,6 +69,12 @@ func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []type
 		for _, profile := range profiles {
 			// already loaded?
 			if _, ok := remaining[profile.ID]; !ok {
+				continue
+			}
+
+			// profile ok?
+			if err := c.validate(profile); err != nil {
+				warnings = append(warnings, fmt.Errorf("profile %-3v - %v", profile.ID, err))
 				continue
 			}
 
@@ -115,6 +113,34 @@ func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []type
 	}
 
 	return warnings, nil
+}
+
+func (c *SetTimeProfiles) validate(profile types.TimeProfile) error {
+	if profile.From == nil {
+		return fmt.Errorf("invalid 'From' date (%v)", profile.From)
+	}
+
+	if profile.To == nil {
+		return fmt.Errorf("invalid 'To' date (%v)", profile.To)
+	}
+
+	if profile.To.Before(*profile.From) {
+		return fmt.Errorf("'To' date (%v) is before 'From' date (%v)", profile.To, profile.From)
+	}
+
+	for _, i := range []uint8{1, 2, 3} {
+		segment := profile.Segments[i]
+
+		if segment.Start != nil && segment.End == nil {
+			return fmt.Errorf("segment %v missing 'End'", i)
+		} else if segment.Start == nil && segment.End != nil {
+			return fmt.Errorf("segment %v missing 'Start'", i)
+		} else if segment.Start != nil && segment.End != nil && segment.End.Before(time.Time(*segment.Start)) {
+			return fmt.Errorf("segment %v 'End' (%v) is before 'Start' (%v)", i, segment.End, segment.Start)
+		}
+	}
+
+	return nil
 }
 
 func (c *SetTimeProfiles) circular(ctx Context, serialNumber uint32, profile types.TimeProfile) error {
