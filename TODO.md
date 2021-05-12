@@ -5,6 +5,8 @@
 - [ ] `set-time-profiles`
 - [ ] `get-schedule`
 - [ ] `set-schedule`
+- [ ] Verify 'to' is not before 'from'
+- [ ] Verify segment 'end' is not before segment 'start'
 - [ ] Update README with time profile commands
 - [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices

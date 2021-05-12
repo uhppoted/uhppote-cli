@@ -33,14 +33,110 @@ func (c *SetTimeProfiles) Execute(ctx Context) error {
 	if err != nil {
 		return err
 	} else if profiles == nil {
-		return fmt.Errorf("Could not parse TSV File '%s'", file)
+		return fmt.Errorf("Could not extract time profiles from TSV File '%s'", file)
 	} else if len(profiles) == 0 {
 		return fmt.Errorf("File '%s' does not contain any valid time profiles", file)
 	}
 
-	println(serialNumber)
+	if err := c.validate(profiles); err != nil {
+		return err
+	}
+
+	warnings, err := c.load(ctx, serialNumber, profiles)
+	if err != nil {
+		return err
+	}
+
+	if len(warnings) > 0 {
+		fmt.Println()
+		for _, warning := range warnings {
+			fmt.Printf("   WARN  %v\n", warning)
+		}
+		fmt.Println()
+	}
+
+	return nil
+}
+
+func (c *SetTimeProfiles) validate(profiles []types.TimeProfile) error {
+	return nil
+}
+
+func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []types.TimeProfile) ([]error, error) {
+	var warnings []error
+
+	remaining := map[uint8]struct{}{}
 	for _, p := range profiles {
-		fmt.Printf("%v\n", p)
+		remaining[p.ID] = struct{}{}
+	}
+
+	for len(remaining) > 0 {
+		warnings = []error{}
+		count := 0
+
+		for _, profile := range profiles {
+			// already loaded?
+			if _, ok := remaining[profile.ID]; !ok {
+				continue
+			}
+
+			// verify linked profile exists
+			if linked := profile.LinkedProfileID; linked != 0 {
+				if p, err := ctx.uhppote.GetTimeProfile(serialNumber, linked); err != nil {
+					return nil, err
+				} else if p == nil {
+					warnings = append(warnings, fmt.Errorf("profile %-3v - linked time profile %v is not defined", profile.ID, linked))
+					continue
+				}
+			}
+
+			// check for circular references
+			if err := c.circular(ctx, serialNumber, profile); err != nil {
+				warnings = append(warnings, fmt.Errorf("profile %-3v - %v", profile.ID, err))
+				continue
+			}
+
+			// good to go!
+			if ok, err := ctx.uhppote.SetTimeProfile(serialNumber, profile); err != nil {
+				return nil, err
+			} else if !ok {
+				warnings = append(warnings, fmt.Errorf("%v: could not create time profile %v", serialNumber, profile.ID))
+			} else {
+				fmt.Printf("   ... set time profile %v\n", profile.ID)
+
+				delete(remaining, profile.ID)
+				count++
+			}
+		}
+
+		if count == 0 {
+			break
+		}
+	}
+
+	return warnings, nil
+}
+
+func (c *SetTimeProfiles) circular(ctx Context, serialNumber uint32, profile types.TimeProfile) error {
+	if linked := profile.LinkedProfileID; linked != 0 {
+		profiles := map[uint8]bool{profile.ID: true}
+		chain := []uint8{profile.ID}
+
+		for l := linked; l != 0; {
+			if p, err := ctx.uhppote.GetTimeProfile(serialNumber, l); err != nil {
+				return err
+			} else if p == nil {
+				return fmt.Errorf("linked time profile %v is not defined", l)
+			} else {
+				chain = append(chain, p.ID)
+				if profiles[p.ID] {
+					return fmt.Errorf("linking to time profile %v creates a circular reference %v", profile.LinkedProfileID, chain)
+				}
+
+				profiles[p.ID] = true
+				l = p.LinkedProfileID
+			}
+		}
 	}
 
 	return nil
