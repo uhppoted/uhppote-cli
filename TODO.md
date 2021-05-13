@@ -3,9 +3,9 @@
 ### IN PROGRESS
 
 - [ ] Update README with time profile commands
+- [ ] Print device name for get-device/get-devices
 - [ ] `set-schedule`
 - [ ] `get-schedule`
-- [ ] Print device name for get-device/get-devices
 - [ ] Tabulate output for get-devices
 - [ ] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
 

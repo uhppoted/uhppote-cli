@@ -7,4 +7,9 @@
    uhppote-cli get-device alpha
    ```
 
-2. Implemented `get-time-profile`
+2. Time profile support:
+   -  `get-time-profile`
+   -  `set-time-profile`
+   -  `clear-time-profiles`
+   -  `get-time-profiles`
+   -  `set-time-profiles`

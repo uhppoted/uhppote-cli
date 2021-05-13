@@ -106,6 +106,11 @@ Device commands:
 - `put-card`
 - `delete-card`
 - `delete-all`
+- `get-time-profile`
+- `set-time-profile`
+- `clear-time-profiles`
+- `get-time-profiles`
+- `set-time-profiles`
 - `record-special-events`
 - `get-events`
 - `get-swipe-index`
@@ -162,7 +167,12 @@ uhppote-cli version
 ### Device commands
 
 The device commands provide low level access to the device functionality for a
-single _UHPPOTE_ controller.
+single _UHPPOTE_ controller. Commands that require a device ID accept either the controller serial number or the controller name if defined defined in the _uhppoted.conf_ file e.g.
+```
+uhppote-cli get-device 405419896
+uhppote-cli get-device alpha
+```
+Controller names are not case sensitive but should be enclosed in quotes if they contain spaces.
 
 #### `get-devices`
 
@@ -504,9 +514,210 @@ uhppote-cli [options] set-listener <device> <address:port>
 
 #### `put-card`
 
+Creates (or updates) an access card record on a controller time profile, with the following information:
+
+- `serial number`
+- `profile ID`
+- `from:to`
+- `weekdays`
+- `time segments 1-3`
+- `linked profile ID`
+```
+uhppote-cli [options] get-time-profile <device ID> <card number> <start> <end> <doors>
+
+  <device ID>   (required) Controller serial number (or name)
+  <card number> (required) Access card number
+  <start>       (required) Start date from which the card is enabled, formatted as YYYY-mm-dd:YYYY-mm-dd
+  <end>         (required) End dates after which the card is no longer enabled, formatted as YYYY-mm-dd:YYYY-mm-dd
+  <doors>       (optional) Comma separated list of doors for which the card grants access. Time profiled access for a door can be specified as door:profile.
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli put-card 405419896 8165538 2021-01-01 2021-12-31 1,3,4:29
+  405419896 8165538 true
+```
+**NOTES**  
+1. For a door associated with a time profile, `uhppote-cli` requires the time profile to be an existing time profile in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
+
 #### `delete-card`
 
 #### `delete-all`
+
+Unconditionally deletes all cards from a controller, returning `true` if successful.
+```
+uhppote-cli [options] delete-all <device ID>
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli delete-all 405419896
+  405419896 true
+```
+
+#### `get-time-profile`
+
+Retrieves a time profile from a controller, returning a (space delimited) time profile:
+
+- `serial number`
+- `profile ID`
+- `from:to`
+- `weekdays`
+- `time segments 1,2 and 3`
+- `linked profile ID`
+```
+uhppote-cli [options] get-time-profile <device ID> <profile ID>
+
+  <device ID>   (required) Controller serial number (or name)
+  <profile ID>  (required) Time profile ID (in the interval [2..254])
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli get-time-profile 405419896 2
+  405419896  2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,13:45-17:00 3
+  
+  uhppote-cli get-time-profile 405419896 29
+  405419896 29 NO ACTIVE TIME PROFILE  
+```
+
+#### `set-time-profile`
+
+Creates (or updates) a controller time profile. A time profile comprises the following information:
+
+- `serial number`
+- `profile ID`
+- `from:to`
+- `weekdays`
+- `time segments 1-3`
+- `linked profile ID`
+```
+uhppote-cli [options] get-time-profile <device ID> <profile ID> <from:to> <weekdays> <segments> <linked>
+
+  <device ID>   (required) Controller serial number (or name)
+  <profile ID>  (required) Time profile ID (in the interval [2..254])
+  <from:to>     (required) Start and end dates for the time profile ID, formatted as YYYY-mm-dd:YYYY-mm-dd
+  <weekdays>    (optional) Comma separated list of weekdays for which the time profile is active. If omitted, the time profile is not active on any weekday.
+  <segments>    (optional) Comma separated list of up to 3 time segments formatted as HH:mm-HH:mm. Omitted segments are created as 00:00-00:00.
+  <linked>      (optional) Time profile ID to be linked to this time profile to allow more than 3 segments to be associated with a time profile. 
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli set-time-profile 405419896 29 2021-04-01:2021-12-31 3 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+  405419896: time profile 29 created
+```
+**NOTES**  
+1. `uhppote-cli` requires the linked profile to be an existing time profile in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
+2. `uhppote-cli` does not allow a time profile to define a link that creates a circular chain of time profiles. Again, the controller itself does not enforce this requirement but is indicative of a mistake in the definition of the time profiles.
+
+#### `clear-time-profiles`
+
+Deletes all time profiles from a controller.
+
+```
+uhppote-cli [options] clear-time-profiles <device ID>
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli clear-time-profiles 405419896
+  405419896 true
+```
+**NOTES**  
+1. Clearing all time profiles will allow access at any time of day to cards that were previously _time managed_. In general this command is intended to be used when redefining all the time profiles.
+
+#### `get-time-profiles`
+
+Retrieves all time profiles from a controller, optionally storing them in a TSV file.
+
+```
+uhppote-cli [options] get-time-profiles <device ID> <TSV>
+
+  <device ID>   (required) Controller serial number (or name)
+  <TSV>         (optional) TSV file to which to write retrieved profiles.
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli get-time-profiles 405419896
+  
+  -------------------------------------------
+  TIME PROFILES 405419896 2021-05-13 10:36:21
+  -------------------------------------------
+  Profile  From       To          Mon Tue Wed Thurs Fri Sat Sun  Start1 End1   Start2 End2   Start3 End3   Linked
+  2        2021-04-01 2021-10-29  N   Y   N   N     Y   N   Y    08:30  11:30  00:00  03:00  13:45  17:00  3  
+  3        2021-04-02 2021-11-30  N   N   Y   N     Y   Y   Y    09:31  11:31  01:00  04:00  13:46  17:01     
+  29       2021-04-03 2021-12-31  N   N   N   Y     N   Y   Y    10:32  11:32  02:00  05:00  13:47  17:02     
+  75       2021-04-01 2021-12-31  Y   N   Y   N     Y   N   N    08:30  11:30  00:00  00:00  13:45  17:00     
+  
+  uhppote-cli get-time-profiles 405419896 405419896.tsv
+```
+
+#### `set-time-profiles`
+
+Creates (or updates) time profiles on a controller from a TSV file. Invalid time profiles (e.g. with missing or otherwise invalid _from_ and _to_ dates or invalid segments) are ignored with a warning.
+
+Likewise, time profiles that link to an undefined time profile or time profiles with a linked profile that would create a circular chain are ignored with a warning. 
+
+There is no requirement for the profiles to be in any particular order - `uhppote-cli` is capable of creating a time profile that is linked to a profile that is defined after it in the TSV file.
+
+`set-time-profiles` does not clear existing time profiles from the controller i.e. although not recommended, profiles in the file can link to individually defined existing profiles.
+
+```
+uhppote-cli [options] set-time-profiles <device ID> <TSV>
+
+  <device ID>   (required) Controller serial number (or name)
+  <TSV>         (required) TSV file with the time profiles to be created (or updated)
+
+  Options: 
+
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli set-time-profiles 405419896 405419896.tsv
+  
+  ./bin/uhppote-cli set-time-profiles 405419896 ../runtime/set-time-profiles.tsv
+   ... set time profile 3
+   ... set time profile 29
+   ... set time profile 105
+   ... set time profile 2
+
+   WARN  profile 51  - linked time profile 50 is not defined
+   WARN  profile 75  - linking to time profile 75 creates a circular reference [75 75]
+   WARN  profile 150 - 'To' date (2021-04-01) is before 'From' date (2021-12-31)
+   WARN  profile 151 - segment 1 'End' (09:31) is before 'Start' (11:31)  
+```
 
 #### `record-special-events`
 
