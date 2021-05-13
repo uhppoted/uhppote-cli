@@ -136,38 +136,37 @@ delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
 
 delete-all: build
-#	$(CLI) $(DEBUG) delete-all $(SERIALNO)
-	$(CLI) $(DEBUG) delete-all 405419896
-	$(CLI) $(DEBUG) delete-all 303986753
+	$(CLI) delete-all $(SERIALNO)
 
 get-time-profile: build
-	$(CLI) --debug get-time-profile $(SERIALNO)   29
-	# $(CLI) --debug get-time-profile $(CONTROLLER) 2
-	# $(CLI) --debug get-time-profile 423187757   29
+	$(CLI) $(DEBUG) get-time-profile $(SERIALNO) 29
+
+set-time-profile: build
+	$(CLI) $(DEBUG) set-time-profile 303986753 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+
+clear-time-profiles: build
+	$(CLI) $(DEBUG) clear-time-profiles $(SERIALNO)
 
 get-time-profiles: build
 	$(CLI) get-time-profiles $(SERIALNO) 
-	$(CLI) get-time-profiles $(SERIALNO) ../runtime/profiles.tsv
+	$(CLI) get-time-profiles $(CONTROLLER) ../runtime/$(CONTROLLER).tsv
 
-set-time-profile: build
-	$(CLI) --debug set-time-profile 303986753 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) --debug set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	# $(CLI) --debug set-time-profile 405419896 2 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
-	# $(CLI) --debug set-time-profile 423187757 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-
-clear-time-profiles: build
-	$(CLI) --debug clear-time-profiles $(SERIALNO)
-	# $(CLI) --debug clear-time-profiles $(CONTROLLER)
-	# $(CLI) --debug clear-time-profiles 423187757
+set-time-profiles: build
+	$(CLI) clear-time-profiles $(SERIALNO) 
+	$(CLI) set-time-profile $(SERIALNO) 75  2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) set-time-profile $(SERIALNO) 100 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) set-time-profiles $(SERIALNO) ../runtime/set-time-profiles.tsv
+	$(CLI) get-time-profiles $(SERIALNO) 
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)
 
 get-event: build
-#	$(CLI) get-event $(SERIALNO) 17
-#	$(CLI) get-event $(SERIALNO) 17263
-#	$(CLI) get-event $(SERIALNO) first
-#	$(CLI) get-event $(SERIALNO) last
+	$(CLI) get-event $(SERIALNO) 17
+	$(CLI) get-event $(SERIALNO) 17263
+	$(CLI) get-event $(SERIALNO) first
+	$(CLI) get-event $(SERIALNO) last
 	$(CLI) get-event $(SERIALNO)
 
 get-event-index: build

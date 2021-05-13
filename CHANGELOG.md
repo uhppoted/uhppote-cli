@@ -13,3 +13,5 @@
    -  `clear-time-profiles`
    -  `get-time-profiles`
    -  `set-time-profiles`
+
+3. Documented commands missing from the README.
