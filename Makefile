@@ -91,6 +91,8 @@ get-devices: build
 
 get-device: build
 	$(CLI) $(DEBUG) get-device $(SERIALNO)
+	$(CLI) get-device 303986753
+	$(CLI) get-device 405419896
 
 set-address: build
 	$(CLI) $(DEBUG) set-address $(SERIALNO) $(DEVICEIP) '255.255.255.0' '0.0.0.0'

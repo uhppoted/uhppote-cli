@@ -16,7 +16,7 @@ func getDevices(ctx *Context) []*uhppote.Device {
 	devices := []*uhppote.Device{}
 	for _, id := range keys {
 		d := ctx.config.Devices[id]
-		devices = append(devices, uhppote.NewDevice(id, d.Address, d.Rollover, d.Doors))
+		devices = append(devices, uhppote.NewDevice(d.Name, id, d.Address, d.Rollover, d.Doors))
 	}
 
 	return devices

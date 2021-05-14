@@ -111,7 +111,14 @@ func main() {
 	}
 
 	for s, d := range conf.Devices {
-		if device := uhppote.NewDevice(s, d.Address, d.Rollover, d.Doors); device != nil {
+		// ... because d is *Device and all devices end up with the same info if you don't make a manual copy
+		name := d.Name
+		deviceID := s
+		address := d.Address
+		rollover := d.Rollover
+		doors := d.Doors
+
+		if device := uhppote.NewDevice(name, deviceID, address, rollover, doors); device != nil {
 			devices = append(devices, *device)
 		}
 	}
