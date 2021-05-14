@@ -8,7 +8,6 @@ import (
 	"github.com/uhppoted/uhppoted-api/acl"
 	"github.com/uhppoted/uhppoted-api/config"
 	"io"
-	"io/ioutil"
 	"os"
 	"text/template"
 	"time"
@@ -47,7 +46,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return err
 	}
 
-	tsv, err := ioutil.ReadFile(file)
+	tsv, err := os.ReadFile(file)
 	if err != nil {
 		return err
 	}
@@ -117,7 +116,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 	if rptfile, err := c.getReportFile(); err != nil {
 		return err
 	} else if rptfile != "" {
-		return ioutil.WriteFile(rptfile, w.Bytes(), 0660)
+		return os.WriteFile(rptfile, w.Bytes(), 0660)
 	}
 
 	fmt.Printf("%s\n", string(w.Bytes()))

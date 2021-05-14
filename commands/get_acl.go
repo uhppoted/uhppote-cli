@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/uhppoted/uhppoted-api/acl"
 	"github.com/uhppoted/uhppoted-api/config"
-	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -42,7 +41,7 @@ func (c *GetACL) Execute(ctx Context) error {
 			return err
 		}
 
-		return ioutil.WriteFile(file, w.Bytes(), 0660)
+		return os.WriteFile(file, w.Bytes(), 0660)
 	}
 
 	var w strings.Builder

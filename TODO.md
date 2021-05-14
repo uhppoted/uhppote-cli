@@ -2,19 +2,19 @@
 
 ### IN PROGRESS
 
+- [ ] Check for duplicate time profiles
+- [ ] Print device name for get-device/get-devices
+- [ ] Tabulate output for get-devices
 - [ ] Add missing commands to README
       - get-events
       - get-event-index
       - set-event-index
       - open
       - listen
-- [ ] Print device name for get-device/get-devices
-- [ ] Check for duplicate time profiles
 - [ ] `set-schedule`
 - [ ] `get-schedule`
-- [ ] Tabulate output for get-devices
-- [ ] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
 
+- [x] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
 - [x] Update README with time profile commands
 - [x] Verify 'to' is not before 'from'
 - [x] Verify segment 'end' is not before segment 'start'

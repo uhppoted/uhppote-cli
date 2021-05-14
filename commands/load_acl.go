@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/uhppoted/uhppoted-api/acl"
 	"github.com/uhppoted/uhppoted-api/config"
-	"io/ioutil"
 	"os"
 )
 
@@ -31,7 +30,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return err
 	}
 
-	tsv, err := ioutil.ReadFile(file)
+	tsv, err := os.ReadFile(file)
 	if err != nil {
 		return err
 	}
