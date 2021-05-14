@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"reflect"
 	"time"
 
 	"github.com/uhppoted/uhppote-cli/encoding/tsv"
@@ -54,16 +55,97 @@ func (c *SetTimeProfiles) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []types.TimeProfile) ([]error, error) {
-	var warnings []error
+func (c *SetTimeProfiles) CLI() string {
+	return "set-time-profiles"
+}
 
+func (c *SetTimeProfiles) Description() string {
+	return "Writes the time profiles defined in a TSV file to a controller"
+}
+
+func (c *SetTimeProfiles) Usage() string {
+	return "<serial number>"
+}
+
+func (c *SetTimeProfiles) Help() {
+	fmt.Println("Usage: uhppote-cli [options] set-time-profiles <serial number> <file>")
+	fmt.Println()
+	fmt.Println(" Writes the time profiles defined in a TSV file to a controller. Existing time profiles are not cleared")
+	fmt.Println(" but will be overwritten if redefined in the TSV file.")
+	fmt.Println()
+	fmt.Println("  serial number  (required) controller serial number")
+	fmt.Println("  file           (required) TSV file with time profiles")
+	fmt.Println()
+	fmt.Println("  Options:")
+	fmt.Println()
+	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
+	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
+	fmt.Println("    --debug   Displays internal information for diagnosing errors")
+	fmt.Println()
+	fmt.Println("  Examples:")
+	fmt.Println()
+	fmt.Println("    uhppote-cli set-time-profiles 9876543210 9876543210.tsv")
+	fmt.Println()
+}
+
+// Returns false - configuration is useful but optional.
+func (c *SetTimeProfiles) RequiresConfig() bool {
+	return false
+}
+
+func (c *SetTimeProfiles) getTSVFile() (string, error) {
+	if len(flag.Args()) < 3 {
+		return "", nil
+	}
+
+	file := flag.Arg(2)
+	stat, err := os.Stat(file)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return file, fmt.Errorf("File '%s' does not exist", file)
+		} else {
+			return "", err
+		}
+	}
+
+	if stat.Mode().IsDir() {
+		return "", fmt.Errorf("File '%s' is a directory", file)
+	}
+
+	if !stat.Mode().IsRegular() {
+		return "", fmt.Errorf("File '%s' is not a real file", file)
+	}
+
+	return file, nil
+}
+
+func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []types.TimeProfile) ([]error, error) {
+	prewarn := []error{}
+
+	// check for duplicate profiles
+	set := map[uint8]int{}
+
+	for i, profile := range profiles {
+		if line, ok := set[profile.ID]; ok {
+			if !reflect.DeepEqual(profile, profiles[line-1]) {
+				return prewarn, fmt.Errorf("Profile %v has more than one definition (records %v and %v)", profile.ID, line, i+1)
+			}
+
+			prewarn = append(prewarn, fmt.Errorf("Profile %-3v is defined twice (records %v and %v)", profile.ID, line, i+1))
+		}
+
+		set[profile.ID] = i + 1
+	}
+
+	// loop until all profiles are either set or could not be set
+	warnings := prewarn[:]
 	remaining := map[uint8]struct{}{}
 	for _, p := range profiles {
 		remaining[p.ID] = struct{}{}
 	}
 
 	for len(remaining) > 0 {
-		warnings = []error{}
+		warnings = prewarn[:]
 		count := 0
 
 		for _, profile := range profiles {
@@ -74,7 +156,7 @@ func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []type
 
 			// profile ok?
 			if err := c.validate(profile); err != nil {
-				warnings = append(warnings, fmt.Errorf("profile %-3v - %v", profile.ID, err))
+				warnings = append(warnings, fmt.Errorf("profile %-3v %v", profile.ID, err))
 				continue
 			}
 
@@ -83,14 +165,14 @@ func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []type
 				if p, err := ctx.uhppote.GetTimeProfile(serialNumber, linked); err != nil {
 					return nil, err
 				} else if p == nil {
-					warnings = append(warnings, fmt.Errorf("profile %-3v - linked time profile %v is not defined", profile.ID, linked))
+					warnings = append(warnings, fmt.Errorf("profile %-3v linked time profile %v is not defined", profile.ID, linked))
 					continue
 				}
 			}
 
 			// check for circular references
 			if err := c.circular(ctx, serialNumber, profile); err != nil {
-				warnings = append(warnings, fmt.Errorf("profile %-3v - %v", profile.ID, err))
+				warnings = append(warnings, fmt.Errorf("profile %-3v %v", profile.ID, err))
 				continue
 			}
 
@@ -166,70 +248,6 @@ func (c *SetTimeProfiles) circular(ctx Context, serialNumber uint32, profile typ
 	}
 
 	return nil
-}
-
-func (c *SetTimeProfiles) CLI() string {
-	return "set-time-profiles"
-}
-
-func (c *SetTimeProfiles) Description() string {
-	return "Writes the time profiles defined in a TSV file to a controller"
-}
-
-func (c *SetTimeProfiles) Usage() string {
-	return "<serial number>"
-}
-
-func (c *SetTimeProfiles) Help() {
-	fmt.Println("Usage: uhppote-cli [options] set-time-profiles <serial number> <file>")
-	fmt.Println()
-	fmt.Println(" Writes the time profiles defined in a TSV file to a controller. Existing time profiles are not cleared")
-	fmt.Println(" but will be overwritten if redefined in the TSV file.")
-	fmt.Println()
-	fmt.Println("  serial number  (required) controller serial number")
-	fmt.Println("  file           (required) TSV file with time profiles")
-	fmt.Println()
-	fmt.Println("  Options:")
-	fmt.Println()
-	fmt.Println("    --config  File path for the 'conf' file containing the controller configuration")
-	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
-	fmt.Println("    --debug   Displays internal information for diagnosing errors")
-	fmt.Println()
-	fmt.Println("  Examples:")
-	fmt.Println()
-	fmt.Println("    uhppote-cli set-time-profiles 9876543210 9876543210.tsv")
-	fmt.Println()
-}
-
-// Returns false - configuration is useful but optional.
-func (c *SetTimeProfiles) RequiresConfig() bool {
-	return false
-}
-
-func (c *SetTimeProfiles) getTSVFile() (string, error) {
-	if len(flag.Args()) < 3 {
-		return "", nil
-	}
-
-	file := flag.Arg(2)
-	stat, err := os.Stat(file)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return file, fmt.Errorf("File '%s' does not exist", file)
-		} else {
-			return "", err
-		}
-	}
-
-	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
-	}
-
-	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
-	}
-
-	return file, nil
 }
 
 func (c *SetTimeProfiles) parse(file string) ([]types.TimeProfile, error) {
