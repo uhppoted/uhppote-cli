@@ -64,11 +64,7 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) clear-time-profiles $(SERIALNO) 
-	$(CLI) set-time-profile $(SERIALNO) 75  2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) set-time-profile $(SERIALNO) 100 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) set-time-profiles $(SERIALNO) ../runtime/set-time-profilesx.tsv
-	$(CLI) get-time-profiles $(SERIALNO) 
+	$(CLI) get-devices
 
 godoc:
 	godoc -http=:80	-index_interval=60s

@@ -2,7 +2,6 @@
 
 ### IN PROGRESS
 
-- [ ] Tabulate output for get-devices
 - [ ] Add missing commands to README
       - get-events
       - get-event-index
@@ -12,6 +11,7 @@
 - [ ] `set-schedule`
 - [ ] `get-schedule`
 
+- [x] Tabulate output for get-devices
 - [x] Print device name for get-device(s)
 - [x] Check for duplicate time profiles
 - [x] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
