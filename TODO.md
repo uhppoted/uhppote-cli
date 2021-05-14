@@ -2,15 +2,12 @@
 
 ### IN PROGRESS
 
-- [ ] Add missing commands to README
-      - get-events
-      - get-event-index
-      - set-event-index
-      - open
-      - listen
+- [ ] Check card number field for get-event
+- [ ] `grant` with time profile
 - [ ] `set-schedule`
 - [ ] `get-schedule`
 
+- [x] Add missing commands to README
 - [x] Tabulate output for get-devices
 - [x] Print device name for get-device(s)
 - [x] Check for duplicate time profiles

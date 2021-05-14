@@ -12,7 +12,9 @@ Supported operating systems:
 
 ## Raison d'être
 
-The CLI provides a cross-platform set of command-line functions that allow direct interaction with a UHPPOTE access controller and facilitate scripting for automation of routine tasks e.g. synchronizing controller system time across daylight savings changes.
+The CLI provides a cross-platform set of command-line functions that allow direct interaction with a UHPPOTE access controller,
+as well as facilitating scripting for automation of routine tasks e.g. synchronizing controller system time across daylight 
+savings changes.
 
 ## Releases
 
@@ -92,7 +94,6 @@ Device commands:
 - `get-devices`
 - `get-device`
 - `set-address`
-- `get-status`
 - `get-time`
 - `set-time`
 - `get-door-delay`
@@ -101,6 +102,7 @@ Device commands:
 - `set-door-control`
 - `get-listener`
 - `set-listener`
+- `get-status`
 - `get-cards`
 - `get-card`
 - `put-card`
@@ -113,6 +115,7 @@ Device commands:
 - `set-time-profiles`
 - `record-special-events`
 - `get-events`
+- `get-event`
 - `get-event-index`
 - `set-event-index`
 - `open`
@@ -178,6 +181,7 @@ Controller names are not case sensitive but should be enclosed in quotes if they
 
 Retrieves a list of the controllers accessible on the local LAN (i.e. can receive and respond to UDP broadcasts). The command returns a fixed width columnar table with:
 
+- (`name`)
 - `serial number`
 - `IP address`
 - `subnet mask`
@@ -189,7 +193,6 @@ Retrieves a list of the controllers accessible on the local LAN (i.e. can receiv
 uhppote-cli [options] get-devices
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
@@ -197,16 +200,19 @@ uhppote-cli [options] get-devices
 
   uhppote-cli get-devices
   
-  999        192.168.1.100   255.255.255.0   192.168.1.1     00:12:23:34:45:56 0892 2020-05-21
-  303986753  192.168.1.100   255.255.255.0   192.168.1.1     52:fd:fc:07:21:82 0892 2020-05-21
-  405419896  192.168.1.100   255.255.255.0   192.168.1.1     00:12:23:34:45:56 0892 2020-05-21
-
+         201020304  192.168.1.101  255.255.255.0  192.168.1.1  52:fd:fc:07:21:82  v6.62  2020-01-01
+  Beta   303986753  192.168.1.100  255.255.255.0  192.168.1.1  52:fd:fc:07:21:82  v8.92  2019-08-15
+  Alpha  405419896  192.168.1.100  255.255.255.0  192.168.1.1  00:12:23:34:45:56  v8.92  2018-11-05
 ```
+**NOTE**  
+1. The `name` field is retrieved from the _uhppoted.conf_ file. 
+2. The `name` column is omitted entirely if none of the devices has a name defined in the _uhppoted.conf_ file.
 
 #### `get-device`
 
 Retrieves the controller information for a single controller accessible on the local LAN (i.e. can receive and respond to UDP broadcasts) or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command returns a fixed width columnar table with:
 
+- (`name`)
 - `serial number`
 - `IP address`
 - `subnet mask`
@@ -218,7 +224,6 @@ Retrieves the controller information for a single controller accessible on the l
 uhppote-cli [options] get-devices
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
@@ -240,8 +245,11 @@ uhppote-cli [options] get-devices
   ...          00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
   ...          
 
-  405419896  192.168.1.100   255.255.255.0   192.168.1.1     00:12:23:34:45:56 0892 2020-05-21
+  Alpha  405419896  192.168.1.100   255.255.255.0   192.168.1.1     00:12:23:34:45:56 v8.92 2018-11-05
 ```
+**NOTE**  
+1. The `name` field is retrieved from the _uhppoted.conf_ file. 
+2. The `name` field is omitted entirely if the devices does not have a name defined in the _uhppoted.conf_ file.
 
 #### `set-address`
 
@@ -256,7 +264,6 @@ uhppote-cli [options] set-address <device> <address> [mask] [gateway]
   <gateway>     (optional) Gateway IP address. Defaults to 0.0.0.0 if not provided.
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -264,49 +271,6 @@ uhppote-cli [options] set-address <device> <address> [mask] [gateway]
 
   uhppote-cli set-address 405419896 192.168.1.49 255.255.255.0 192.168.1.1
 ```
-
-#### `get-status`
-
-Retrieves the controller status for a single controller accessible on the local LAN (i.e. can receive and respond to UDP broadcasts) or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command returns a fixed width columnar table with:
-
-- `serial number`
-- `door states` [1..4]
-- `door button states` [1..4]
-- `system state`
-- `system date-time`
-- `packet number` _(? TBC)_
-- `backup status` _(? TBC)_
-- `special message` _(? TBC)_
-- `battery status` _(? TBC)_
-- `fire alarm status` _(? TBC)_
-- `last event: index`
-- `last event: type`
-- `last event: access granted`
-- `last event: door`
-- `last event: door opened`
-- `last event: user ID`
-- `last event: timestamp`
-- `last event: result code`
-```
-uhppote-cli [options] get-status <device>
-
-  <device>      (required) Controller serial number
-
-  Options: 
-
-  --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
-
-  Example:
-
-  uhppote-cli get-status 405419896
-  
-  405419896  false false false false false false false false 0    2021-04-24 09:11:17 0          0 00 00 | 69    2   true  1 1     0          2019-08-10 10:28:32 44
-```
-
-**NOTE**  
-The event fields are seperated from the static data by a '|' and are not displayed if the controller does not
-have a valid 'last event'.
 
 #### `get-time`
 
@@ -321,7 +285,6 @@ uhppote-cli [options] get-time <device>
   <device>      (required) Controller serial number
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -346,7 +309,6 @@ uhppote-cli [options] set-time <device> [date/time]
   <date/time>   Date/time in YYYY-MM-DD HH:mm:ss format or use 'now' to use the current time on the uhppote-cli host). Defaults to 'now'.
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -372,7 +334,6 @@ uhppote-cli [options] get-door-delay <device> <door>
   <door>        (required) Door number (1..4)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -398,7 +359,6 @@ uhppote-cli [options] get-door-delay <device> <door>
   <delay>       (required) Delay (in seconds)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -424,7 +384,6 @@ uhppote-cli [options] get-door-control <device> <door>
   <door>        (required) Door number (1..4)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -451,7 +410,6 @@ uhppote-cli [options] set-door-control <device> <door> <state>
   <control>     (required) normally open/normally closed/controlled
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -474,7 +432,6 @@ uhppote-cli [options] get-listener <device>
   <device>      (required) Controller serial number
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -498,7 +455,6 @@ uhppote-cli [options] set-listener <device> <address:port>
   <address:port> (required) Listener IP address and port
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
@@ -508,6 +464,48 @@ uhppote-cli [options] set-listener <device> <address:port>
  
   405419896  true
 ```
+
+#### `get-status`
+
+Retrieves the controller status for a single controller accessible on the local LAN (i.e. can receive and respond to UDP broadcasts) or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command returns a fixed width columnar table with:
+
+- `device ID`
+- `door states` [1..4]
+- `door button states` [1..4]
+- `system state`
+- `system date-time`
+- `packet sequence number`
+- `special info`
+- `relay state`
+- `input state`
+- `last event: index`
+- `last event: type`
+- `last event: access granted`
+- `last event: door`
+- `last event: door opened`
+- `last event: user ID`
+- `last event: timestamp`
+- `last event: result code`
+
+```
+uhppote-cli [options] get-status <device>
+
+  <device>      (required) Controller serial number
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Example:
+
+  uhppote-cli get-status 405419896
+  
+  405419896  false false false false false false false false 0    2021-04-24 09:11:17 0          0 00 00 | 69    2   true  1 1     0          2019-08-10 10:28:32 44
+```
+
+**NOTE**  
+The event fields are separated from the static data by a '|' and are not displayed if the controller does not have a valid 'last event'.
+
 #### `get-cards`
 
 Retrieves all access card records from a controller. A card record comprises:
@@ -525,7 +523,6 @@ uhppote-cli [options] get-cards <device ID>
   <device ID>   (required) Controller serial number (or name)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -553,10 +550,9 @@ Retrieves a single access card record from a controller. A card record comprises
 uhppote-cli [options] get-card <device ID> <card number>
 
   <device ID>   (required) Controller serial number (or name)
-  <card number> (required) Card number of card to be deleted
+  <card number> (required) Card number of card to be retrieved
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -569,25 +565,25 @@ uhppote-cli [options] get-card <device ID> <card number>
 
 #### `put-card`
 
-Creates (or updates) an access card record on a controller time profile, with the following information:
+Creates (or updates) an access card record on a controller, with the following information:
 
-- `serial number`
-- `profile ID`
-- `from:to`
-- `weekdays`
-- `time segments 1-3`
-- `linked profile ID`
+- `card number`
+- `start date` _date from which the card is active_
+- `end date`   _date after which the card is inactive_
+- `door1`     _Y,N or associated time profile for door 1_
+- `door2`     _Y,N or associated time profile for door 2_
+- `door3`     _Y,N or associated time profile for door 3_
+- `door4`     _Y,N or associated time profile for door 4_
 ```
-uhppote-cli [options] get-time-profile <device ID> <card number> <start> <end> <doors>
+uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
 
   <device ID>   (required) Controller serial number (or name)
   <card number> (required) Access card number
-  <start>       (required) Start date from which the card is enabled, formatted as YYYY-mm-dd:YYYY-mm-dd
-  <end>         (required) End dates after which the card is no longer enabled, formatted as YYYY-mm-dd:YYYY-mm-dd
+  <start>       (required) Start date from which the card is enabled, formatted as YYYY-mm-dd
+  <end>         (required) End dates after which the card is no longer enabled, formatted as YYYY-mm-dd
   <doors>       (optional) Comma separated list of doors for which the card grants access. Time profiled access for a door can be specified as door:profile.
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -597,7 +593,7 @@ uhppote-cli [options] get-time-profile <device ID> <card number> <start> <end> <
   405419896 8165538 true
 ```
 **NOTES**  
-1. For a door associated with a time profile, `uhppote-cli` requires the time profile to be an existing time profile in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
+1. For a door associated with a time profile, `uhppote-cli` requires the time profile to be an existing time profile defined in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
 
 #### `delete-card`
 Unconditionally deletes an access card record from a controller, returning `true` if successful.
@@ -608,7 +604,6 @@ uhppote-cli [options] delete-card <device ID> <card number>
   <card number> (required) Card number of card to be deleted
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -628,7 +623,6 @@ uhppote-cli [options] delete-all <device ID>
   <device ID>   (required) Controller serial number (or name)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -655,7 +649,6 @@ uhppote-cli [options] get-time-profile <device ID> <profile ID>
   <profile ID>  (required) Time profile ID (in the interval [2..254])
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -689,7 +682,6 @@ uhppote-cli [options] get-time-profile <device ID> <profile ID> <from:to> <weekd
   <linked>      (optional) Time profile ID to be linked to this time profile to allow more than 3 segments to be associated with a time profile. 
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -699,7 +691,7 @@ uhppote-cli [options] get-time-profile <device ID> <profile ID> <from:to> <weekd
   405419896: time profile 29 created
 ```
 **NOTES**  
-1. `uhppote-cli` requires the linked profile to be an existing time profile in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
+1. `uhppote-cli` requires the linked profile to be an existing time profile defined in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
 2. `uhppote-cli` does not allow a time profile to define a link that creates a circular chain of time profiles. Again, the controller itself does not enforce this requirement but is indicative of a mistake in the definition of the time profiles.
 
 #### `clear-time-profiles`
@@ -712,7 +704,6 @@ uhppote-cli [options] clear-time-profiles <device ID>
   <device ID>   (required) Controller serial number (or name)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -735,7 +726,6 @@ uhppote-cli [options] get-time-profiles <device ID> <TSV>
   <TSV>         (optional) TSV file to which to write retrieved profiles.
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -767,7 +757,6 @@ uhppote-cli [options] set-time-profiles <device ID> <TSV>
   <TSV>         (required) TSV file with the time profiles to be created (or updated)
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the  controllers
 
@@ -806,26 +795,165 @@ uhppote-cli [options] record-special-events <device> <enable>
   <enable>      (optional) Enables or disables door open, closed and button pressed events. Defaults to `true`
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
   Example:
-
   > uhppote-cli record-special-events 405419896 false
-  >
-  > 405419896  true
+    405419896  true
 ```
 
 #### `get-events`
 
+Retrieves the start and end range of the events stored on a controller.
+
+```
+uhppote-cli [options] get-events <device ID>
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Examples:
+  > uhppote-cli get-events 405419896
+    405419896  1  69
+  
+  > uhppote-cli get-events 303986753
+    303986753  NO EVENTS
+```
+
+#### `get-event`
+
+Retrieves the record for a single event from a controller, comprising:
+- `device ID`
+- `event ID`
+- `timestamp`
+- `card number`
+- `door`
+- `access granted`
+- `reason code`
+
+The event ID should be within the event range returned by `get-events`.
+```
+uhppote-cli [options] get-event <device ID> <event ID>
+
+  <device ID>   (required) Controller serial number (or name)
+  <event ID>    (optional) ID of event to be retrieved. If omitted, the event at the current event index is returned and the event index is incremented. `first` and `last` retrieve the _first_ and _last_ stored events respectively.
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Examples:
+  > uhppote-cli get-event 405419896
+    405419896  24     2019-07-24 20:12:40 98765432 3 true  0 
+    
+  > uhppote-cli get-event 405419896 17
+    405419896  17     2019-07-24 20:12:47 98765432 3 true  0     
+    
+  > uhppote-cli get-event 405419896 first
+    405419896  1      2019-07-24 20:12:33 98765432 3 true  0     
+    
+  > uhppote-cli get-event 405419896 last
+    405419896  67     2019-07-24 20:12:43 98765432 4 false 6     
+
+  > uhppote-cli get-event 405419896 17263
+    ERROR: 405419896:  event index 17263 out of range
+```
+
 #### `get-event-index`
+
+Retrieves the current event index from a controller. The event index is a convenient user value that is typically used to store the ID of the most recently retrieved event.
+
+```
+uhppote-cli [options] get-event-index <device ID>
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Examples:
+  > uhppote-cli get-event-index 405419896
+    405419896  24
+```
 
 #### `set-event-index`
 
+Sets the current event index on a controller. The event index is a convenient user value that is typically used to store the ID of the most recently retrieved event. It is not automatically managed by the controller.
+
+```
+uhppote-cli [options] set-event-index <device ID> <index>
+
+  <device ID>   (required) Controller serial number (or name)
+  <index>       (required) ID of event to set as the event index.
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Examples:
+  > uhppote-cli set-event-index 405419896 19
+    405419896  19       true
+```
+
 #### `open`
+Unconditionally unlocks a door, provided the door control state is _controlled_ i.e. not _normally open_ or _normally closed_.
+```
+uhppote-cli [options] open <device ID> <door>
+
+  <device ID>   (required) Controller serial number (or name)
+  <door>        (required) ID of door to unlock ([1..4])
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Examples:
+  > uhppote-cli open 405419896 3
+    405419896  true
+```
 
 #### `listen`
+Establishes a _listening_ socket on the _listen_ `address:port` for events sent from controllers. Each event record comprises the same information as that returned by `get-status`:
+
+- `device ID`
+- `door states` [1..4]
+- `door button states` [1..4]
+- `system state`
+- `system date-time`
+- `packet sequence number`
+- `special info`
+- `relay state`
+- `input state`
+- `last event: index`
+- `last event: type`
+- `last event: access granted`
+- `last event: door`
+- `last event: door opened`
+- `last event: user ID`
+- `last event: timestamp`
+- `last event: result code`
+
+```
+uhppote-cli [options] listen
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+
+  Examples:
+  > uhppote-cli listen
+    405419896  false false false false false false false false 0    2021-05-14 11:14:18 0          0 00 00 | 71    1   false 3 1     8165538    2021-05-14 11:14:18 6
+    405419896  false false false false false false false false 0    2021-05-14 11:14:21 0          0 00 00 | 72    1   false 3 1     8165538    2021-05-14 11:14:21 6
+    405419896  false false false false false false false false 0    2021-05-14 11:14:24 0          0 00 00 | 73    1   false 3 1     8165538    2021-05-14 11:14:24 6
+
+```
 
 ### ACL commands
 
@@ -844,7 +972,7 @@ The only currently supported ACL file format is TSV (tab separated values) and i
 
     Card Number From  To  Workshop  Side Door Front Door  Garage  Upstairs  Downstairs  Tower Cellar
     123465537 2020-01-01  2020-12-31  N N Y N Y N Y Y
-    231465538 2020-01-01  2020-12-31  Y N Y N N Y N N
+    231465538 2020-01-01  2020-12-31  Y N Y N N 29 N N
     635465539 2020-01-01  2020-12-31  N N N N Y N Y Y
 
 | Field         | Description                                                                |
@@ -856,7 +984,10 @@ The only currently supported ACL file format is TSV (tab separated values) and i
 | `<door>`      | ...                                                                        |
 | ...           |                                                                            |
 
-The ACL file must include a column for each controller + door configured in the _devices_ section of the `uhppoted.conf` file used to configure the utility.
+The ACL file must include a column for each controller + door configured in the _devices_ section of the `uhppoted.conf` file used to configure the utility. Permissions for a door can be:
+- Y
+- N
+- time profile ID (e.g. 29)
 
 An [example ACL file](https://github.com/uhppoted/uhppoted/blob/master/runtime/simulation/405419896.acl) is included in the full `uhppoted` distribution, along with the matching [_conf_](https://github.com/uhppoted/uhppoted/blob/master/runtime/simulation/405419896.conf) file.
 
