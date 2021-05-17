@@ -20,8 +20,7 @@ func (c *GetACL) Execute(ctx Context) error {
 		return fmt.Errorf("get-acl requires a valid configuration file")
 	}
 
-	devices := getDevices(&ctx)
-	list, errors := acl.GetACL(ctx.uhppote, devices)
+	list, errors := acl.GetACL(ctx.uhppote, ctx.devices)
 	if len(errors) > 0 {
 		return fmt.Errorf("%v", errors)
 	}
@@ -37,7 +36,7 @@ func (c *GetACL) Execute(ctx Context) error {
 
 	if file != "" {
 		var w bytes.Buffer
-		if err = acl.MakeTSV(list, devices, &w); err != nil {
+		if err = acl.MakeTSV(list, ctx.devices, &w); err != nil {
 			return err
 		}
 
@@ -45,7 +44,7 @@ func (c *GetACL) Execute(ctx Context) error {
 	}
 
 	var w strings.Builder
-	if err = acl.MakeFlatFile(list, devices, &w); err != nil {
+	if err = acl.MakeFlatFile(list, ctx.devices, &w); err != nil {
 		return err
 	}
 

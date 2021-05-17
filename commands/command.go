@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -22,16 +23,17 @@ type Context struct {
 // NewContext returns a valid Context initialized with the supplied UHPPOTE and
 // configuration.
 func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
-	devices := []uhppote.Device{}
-	for s, d := range c.Devices {
-		// ... because d is *Device and all devices end up with the same info if you don't make a manual copy
-		name := d.Name
-		deviceID := s
-		address := d.Address
-		rollover := d.Rollover
-		doors := d.Doors
+	keys := []uint32{}
+	for id := range c.Devices {
+		keys = append(keys, id)
+	}
 
-		if device := uhppote.NewDevice(name, deviceID, address, rollover, doors); device != nil {
+	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+
+	devices := []uhppote.Device{}
+	for _, id := range keys {
+		d := c.Devices[id]
+		if device := uhppote.NewDevice(d.Name, id, d.Address, d.Rollover, d.Doors); device != nil {
 			devices = append(devices, *device)
 		}
 	}

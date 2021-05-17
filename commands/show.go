@@ -23,9 +23,7 @@ func (c *Show) Execute(ctx Context) error {
 		return err
 	}
 
-	devices := getDevices(&ctx)
-
-	permissions, err := acl.GetCard(ctx.uhppote, devices, cardNumber)
+	permissions, err := acl.GetCard(ctx.uhppote, ctx.devices, cardNumber)
 	if err != nil {
 		return err
 	}

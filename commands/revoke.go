@@ -28,9 +28,7 @@ func (c *Revoke) Execute(ctx Context) error {
 		return err
 	}
 
-	devices := getDevices(&ctx)
-
-	err = acl.Revoke(ctx.uhppote, devices, cardNumber, doors)
+	err = acl.Revoke(ctx.uhppote, ctx.devices, cardNumber, doors)
 	if err != nil {
 		return err
 	}

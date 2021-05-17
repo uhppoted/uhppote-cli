@@ -23,8 +23,6 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return errors.New("load-acl requires a valid configuration file")
 	}
 
-	devices := getDevices(&ctx)
-
 	file, err := c.parseArgs()
 	if err != nil {
 		return err
@@ -35,7 +33,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return err
 	}
 
-	list, warnings, err := acl.ParseTSV(bytes.NewReader(tsv), devices, c.strict)
+	list, warnings, err := acl.ParseTSV(bytes.NewReader(tsv), ctx.devices, c.strict)
 	if err != nil {
 		return err
 	}

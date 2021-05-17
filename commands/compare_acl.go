@@ -39,8 +39,6 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return fmt.Errorf("compare-acl requires a valid configuration file")
 	}
 
-	devices := getDevices(&ctx)
-
 	file, err := c.getACLFile()
 	if err != nil {
 		return err
@@ -51,7 +49,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return err
 	}
 
-	list, warnings, err := acl.ParseTSV(bytes.NewReader(tsv), devices, false)
+	list, warnings, err := acl.ParseTSV(bytes.NewReader(tsv), ctx.devices, false)
 	if err != nil {
 		return err
 	}
@@ -64,7 +62,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 		fmt.Printf("   ... %v  ACL has %v records\n", k, len(l))
 	}
 
-	current, errors := acl.GetACL(ctx.uhppote, devices)
+	current, errors := acl.GetACL(ctx.uhppote, ctx.devices)
 	if len(errors) > 0 {
 		return fmt.Errorf("%v", errors)
 	}
