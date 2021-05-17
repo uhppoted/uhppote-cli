@@ -13,15 +13,35 @@ import (
 
 // Context contains the environment and configuration information required for all commands
 type Context struct {
-	uhppote *uhppote.UHPPOTE
+	uhppote uhppote.IUHPPOTE
+	devices []uhppote.Device
 	config  *config.Config
 	debug   bool
 }
 
 // NewContext returns a valid Context initialized with the supplied UHPPOTE and
 // configuration.
-func NewContext(u *uhppote.UHPPOTE, c *config.Config, debug bool) Context {
-	return Context{u, c, debug}
+func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
+	devices := []uhppote.Device{}
+	for s, d := range c.Devices {
+		// ... because d is *Device and all devices end up with the same info if you don't make a manual copy
+		name := d.Name
+		deviceID := s
+		address := d.Address
+		rollover := d.Rollover
+		doors := d.Doors
+
+		if device := uhppote.NewDevice(name, deviceID, address, rollover, doors); device != nil {
+			devices = append(devices, *device)
+		}
+	}
+
+	return Context{
+		uhppote: u,
+		devices: devices,
+		config:  c,
+		debug:   debug,
+	}
 }
 
 // Command defines the common functions for CLI command implementations. This will be

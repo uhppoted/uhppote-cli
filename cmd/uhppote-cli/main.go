@@ -88,7 +88,6 @@ func main() {
 
 	// initialise execution context
 	bind, broadcast, listen := config.DefaultIpAddresses()
-	devices := []uhppote.Device{}
 
 	conf := configuration(cmd)
 
@@ -110,6 +109,7 @@ func main() {
 		listen = *conf.ListenAddress
 	}
 
+	devices := []uhppote.Device{}
 	for s, d := range conf.Devices {
 		// ... because d is *Device and all devices end up with the same info if you don't make a manual copy
 		name := d.Name
@@ -131,7 +131,7 @@ func main() {
 	u := uhppote.NewUHPPOTE(bind, broadcast, listen, devices, options.debug)
 
 	// execute command
-	ctx := commands.NewContext(&u, conf, options.debug)
+	ctx := commands.NewContext(u, conf, options.debug)
 	err = cmd.Execute(ctx)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)

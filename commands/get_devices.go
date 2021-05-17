@@ -19,8 +19,8 @@ func (c *GetDevices) Execute(ctx Context) error {
 	wg := sync.WaitGroup{}
 	list := sync.Map{}
 
-	for id, _ := range ctx.uhppote.DeviceList() {
-		deviceId := id
+	for _, d := range ctx.devices {
+		deviceId := d.DeviceID
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
