@@ -243,7 +243,7 @@ func (d days) parse(arg string) error {
 	delete(d, "Tuesday")
 	delete(d, "Wednesday")
 	delete(d, "Thursday")
-	delete(d, "Fridayday")
+	delete(d, "Friday")
 	delete(d, "Saturday")
 	delete(d, "Sunday")
 
