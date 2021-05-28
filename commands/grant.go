@@ -3,10 +3,13 @@ package commands
 import (
 	"flag"
 	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+
 	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppoted-api/acl"
 	"github.com/uhppoted/uhppoted-api/config"
-	"strings"
 )
 
 var GrantCmd = Grant{}
@@ -34,25 +37,40 @@ func (c *Grant) Execute(ctx Context) error {
 		return err
 	}
 
-	doors, err := c.getDoors()
+	re := regexp.MustCompile("[0-9]+")
+	profileID := 0
+	doors := []string{}
+
+	if len(flag.Args()) > 5 && re.MatchString(flag.Arg(4)) {
+		profileID, err = strconv.Atoi(flag.Arg(4))
+		if err != nil {
+			return err
+		} else if profileID < 2 || profileID > 254 {
+			return fmt.Errorf("Invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
+		}
+
+		doors, err = c.getDoors(5)
+		if err != nil {
+			return err
+		}
+	} else if doors, err = c.getDoors(4); err != nil {
+		return err
+	}
+
+	err = acl.Grant(ctx.uhppote, ctx.devices, cardNumber, types.Date(*from), types.Date(*to), profileID, doors)
 	if err != nil {
 		return err
 	}
 
-	err = acl.Grant(ctx.uhppote, ctx.devices, cardNumber, types.Date(*from), types.Date(*to), doors)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("   ... ok")
+	fmt.Println(" ... ok")
 
 	return nil
 }
 
-func (c *Grant) getDoors() ([]string, error) {
+func (c *Grant) getDoors(ix int) ([]string, error) {
 	doors := []string{}
 
-	s := strings.Join(flag.Args()[4:], " ")
+	s := strings.Join(flag.Args()[ix:], " ")
 	tokens := strings.Split(s, ",")
 
 	for _, t := range tokens {
@@ -73,17 +91,18 @@ func (c *Grant) Description() string {
 }
 
 func (c *Grant) Usage() string {
-	return "<card number> <start date> <end date> <doors>"
+	return "<card number> <start date> <end date> [profile] <doors>"
 }
 
 func (c *Grant) Help() {
-	fmt.Println("Usage: uhppote-cli [options] grant <card number> <start date> <end date> <doors>")
+	fmt.Println("Usage: uhppote-cli [options] grant <card number> <start date> <end date> <profile> <doors>")
 	fmt.Println()
 	fmt.Println(" Sets the access permissions for a card")
 	fmt.Println()
 	fmt.Println("  <card number>    (required) card number")
 	fmt.Println("  <start date>     (required) start date YYYY-MM-DD")
 	fmt.Println("  <end date>       (required) end date   YYYY-MM-DD")
+	fmt.Println("  <profile>        (optional) predefined time profile, in the range [2..254]")
 	fmt.Println("  <doors>          (required) comma separated list of permitted doors e.g. Front Door, Workshop")
 	fmt.Println("                              Doors are case- and space insensitive and correspond to the doors")
 	fmt.Println("                              defined in the config file. The pseudo-door ALL will grant the")
@@ -104,6 +123,7 @@ func (c *Grant) Help() {
 	fmt.Println("  Examples:")
 	fmt.Println()
 	fmt.Println("    uhppote-cli grant 918273645 2020-01-01 2020-12-31 Front Door, Workshop")
+	fmt.Println(`    uhppote-cli grant 918273645 2020-01-01 2020-12-31 29 "Front Door, Workshop"`)
 	fmt.Println("    uhppote-cli grant 918273645 2020-01-01 2020-12-31 ALL")
 	fmt.Println()
 }
