@@ -129,11 +129,14 @@ ACL commands:
 - `get-acl`
 - `compare-acl`
 
-Common command options:
+#### Common command options:
 ```
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the 
-                communications with the UHPPOTE controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
   
@@ -194,6 +197,10 @@ uhppote-cli [options] get-devices
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
@@ -225,25 +232,29 @@ uhppote-cli [options] get-devices
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
-  uhppote-cli --debug --conf ./405419896.conf  get-device 405419896
+  uhppote-cli --debug --conf ./405419896.conf --timeout 1.25s get-device 405419896
   
   ... request
   ...          00000000  17 94 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
   ...          00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
   ...          00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
   ...          00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-  ...          
+  ...
   ... sent 64 bytes to 192.168.1.100:60000
   ... received 64 bytes from 192.168.1.100:60000
   ...          00000000  17 94 00 00 78 37 2a 18  c0 a8 01 64 ff ff ff 00  |....x7*....d....|
   ...          00000010  c0 a8 01 01 00 12 23 34  45 56 08 92 20 20 05 21  |......#4EV..  .!|
   ...          00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
   ...          00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-  ...          
+  ...
 
   Alpha  405419896  192.168.1.100   255.255.255.0   192.168.1.1     00:12:23:34:45:56 v8.92 2018-11-05
 ```

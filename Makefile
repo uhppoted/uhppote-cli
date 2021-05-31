@@ -64,7 +64,8 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 55 "Dungeon, Hogsmeade"
+	# $(CLI) --timeout 7.5s get-device 405419896
+	$(CLI) --timeout 500ms get-device 405419896
 
 godoc:
 	godoc -http=:80	-index_interval=60s

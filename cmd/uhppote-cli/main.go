@@ -3,11 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net"
+	"os"
+	"time"
+
 	"github.com/uhppoted/uhppote-cli/commands"
 	"github.com/uhppoted/uhppote-core/uhppote"
 	"github.com/uhppoted/uhppoted-api/config"
-	"net"
-	"os"
 )
 
 type addr struct {
@@ -58,6 +60,7 @@ var options = struct {
 	bind      addr
 	broadcast addr
 	listen    addr
+	timeout   time.Duration
 	debug     bool
 }{
 	config:    "",
@@ -72,6 +75,7 @@ func main() {
 	flag.Var(&options.bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
 	flag.Var(&options.broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
 	flag.Var(&options.listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
+	flag.DurationVar(&options.timeout, "timeout", 2500*time.Millisecond, "Sets the timeout for a response from a controller (e.g. 3.5s)")
 	flag.BoolVar(&options.debug, "debug", options.debug, "Displays internal information for diagnosing errors")
 	flag.Parse()
 
@@ -128,7 +132,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	u := uhppote.NewUHPPOTE(bind, broadcast, listen, devices, options.debug)
+	u := uhppote.NewUHPPOTE(bind, broadcast, listen, options.timeout, devices, options.debug)
 
 	// execute command
 	ctx := commands.NewContext(u, conf, options.debug)
