@@ -91,35 +91,35 @@ General_ commands:
 
 Device commands:
 
-- `get-devices`
-- `get-device`
-- `set-address`
-- `get-time`
-- `set-time`
-- `get-door-delay`
-- `set-door-delay`
-- `get-door-control`
-- `set-door-control`
-- `get-listener`
-- `set-listener`
-- `get-status`
-- `get-cards`
-- `get-card`
-- `put-card`
-- `delete-card`
-- `delete-all`
-- `get-time-profile`
-- `set-time-profile`
-- `clear-time-profiles`
-- `get-time-profiles`
-- `set-time-profiles`
-- `record-special-events`
-- `get-events`
-- `get-event`
-- `get-event-index`
-- `set-event-index`
-- `open`
-- `listen`
+- [`get-devices`](https://github.com/uhppoted/uhppote-cli#get-devices)
+- [`get-device`](https://github.com/uhppoted/uhppote-cli#get-device)
+- [`set-address`](https://github.com/uhppoted/uhppote-cli#set-address)
+- [`get-time`](https://github.com/uhppoted/uhppote-cli#get-time)
+- [`set-time`](https://github.com/uhppoted/uhppote-cli#set-time)
+- [`get-door-delay`](https://github.com/uhppoted/uhppote-cli#get-door-delay)
+- [`set-door-delay`](https://github.com/uhppoted/uhppote-cli#set-door-delay)
+- [`get-door-control`](https://github.com/uhppoted/uhppote-cli#get-door-control)
+- [`set-door-control`](https://github.com/uhppoted/uhppote-cli#set-door-control)
+- [`get-listener`](https://github.com/uhppoted/uhppote-cli#get-listener)
+- [`set-listener`](https://github.com/uhppoted/uhppote-cli#set-listener)
+- [`get-status`](https://github.com/uhppoted/uhppote-cli#get-status)
+- [`get-cards`](https://github.com/uhppoted/uhppote-cli#get-cards)
+- [`get-card`](https://github.com/uhppoted/uhppote-cli#get-card)
+- [`put-card`](https://github.com/uhppoted/uhppote-cli#put-card)
+- [`delete-card`](https://github.com/uhppoted/uhppote-cli#delete-card)
+- [`delete-all`](https://github.com/uhppoted/uhppote-cli#delete-all)
+- [`get-time-profile`](https://github.com/uhppoted/uhppote-cli#get-time-profile)
+- [`set-time-profile`](https://github.com/uhppoted/uhppote-cli#set-time-profile)
+- [`clear-time-profiles`](https://github.com/uhppoted/uhppote-cli#clear-time-profile)
+- [`get-time-profiles`](https://github.com/uhppoted/uhppote-cli#get-time-profiles)
+- [`set-time-profiles`](https://github.com/uhppoted/uhppote-cli#set-time-profiles)
+- [`record-special-events`](https://github.com/uhppoted/uhppote-cli#record-special-events)
+- [`get-events`](https://github.com/uhppoted/uhppote-cli#get-events)
+- [`get-event`](https://github.com/uhppoted/uhppote-cli#get-event)
+- [`get-event-index`](https://github.com/uhppoted/uhppote-cli#get-event-index)
+- [`set-event-index`](https://github.com/uhppoted/uhppote-cli#set-event-index)
+- [`open`](https://github.com/uhppoted/uhppote-cli#open)
+- [`listen`](https://github.com/uhppoted/uhppote-cli#listen)
 
 ACL commands:
 
@@ -196,7 +196,12 @@ Retrieves a list of the controllers accessible on the local LAN (i.e. can receiv
 uhppote-cli [options] get-devices
 
   Options: 
-    See [command options](https://github.com/uhppoted/uhppote-cli#common-command-options)
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -292,7 +297,11 @@ uhppote-cli [options] get-time <device>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -316,7 +325,11 @@ uhppote-cli [options] set-time <device> [date/time]
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
 
@@ -341,7 +354,11 @@ uhppote-cli [options] get-door-delay <device> <door>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -366,7 +383,11 @@ uhppote-cli [options] get-door-delay <device> <door>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -391,7 +412,11 @@ uhppote-cli [options] get-door-control <device> <door>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -417,7 +442,11 @@ uhppote-cli [options] set-door-control <device> <door> <state>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -439,7 +468,11 @@ uhppote-cli [options] get-listener <device>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -462,7 +495,11 @@ uhppote-cli [options] set-listener <device> <address:port>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -500,7 +537,11 @@ uhppote-cli [options] get-status <device>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -530,7 +571,11 @@ uhppote-cli [options] get-cards <device ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -560,7 +605,11 @@ uhppote-cli [options] get-card <device ID> <card number>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -591,7 +640,11 @@ uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -611,7 +664,11 @@ uhppote-cli [options] delete-card <device ID> <card number>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -630,7 +687,11 @@ uhppote-cli [options] delete-all <device ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -656,7 +717,11 @@ uhppote-cli [options] get-time-profile <device ID> <profile ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -689,7 +754,11 @@ uhppote-cli [options] get-time-profile <device ID> <profile ID> <from:to> <weekd
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -711,7 +780,11 @@ uhppote-cli [options] clear-time-profiles <device ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -733,7 +806,11 @@ uhppote-cli [options] get-time-profiles <device ID> <TSV>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -764,7 +841,11 @@ uhppote-cli [options] set-time-profiles <device ID> <TSV>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -802,7 +883,11 @@ uhppote-cli [options] record-special-events <device> <enable>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
   > uhppote-cli record-special-events 405419896 false
@@ -820,7 +905,11 @@ uhppote-cli [options] get-events <device ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
   > uhppote-cli get-events 405419896
@@ -850,7 +939,11 @@ uhppote-cli [options] get-event <device ID> <event ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
   > uhppote-cli get-event 405419896
@@ -880,7 +973,11 @@ uhppote-cli [options] get-event-index <device ID>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
   > uhppote-cli get-event-index 405419896
@@ -916,7 +1013,11 @@ uhppote-cli [options] open <device ID> <door>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
   > uhppote-cli open 405419896 3
@@ -951,7 +1052,11 @@ uhppote-cli [options] listen
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications with the  controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
   > uhppote-cli listen
@@ -1017,8 +1122,11 @@ uhppote-cli [options] grant <card> <from> <to> [doors]
                 is granted until 23:59 on the 'to' date.
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
@@ -1040,10 +1148,12 @@ existing card access permissions.
   <card>        Card number to be granted access
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications 
-                with the UHPPOTE controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -1061,10 +1171,12 @@ Retrieves and displays the access permissions for a single card across the set o
   <card>        Card number for which access permissions should be retrieved
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications 
-                with the UHPPOTE controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -1081,10 +1193,12 @@ Loads the access permissions from an ACL file to the set of configured UHPPOTE c
    uhppote-cli [options] load-acl <ACL file>
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications 
-                with the UHPPOTE controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -1100,10 +1214,12 @@ Fetches the cards stored in the set of configured UHPPOTE controllers, creates a
   uhppote-cli [options] get-acl <file>
 
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications 
-                with the UHPPOTE controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
@@ -1122,10 +1238,12 @@ exception report.
                 to the console if a report file is not supplied.
   
   Options: 
-
   --config      Sets the uhppoted.conf file to use for controller configurations
-  --debug       Displays verbose debugging information, in particular the communications 
-                with the UHPPOTE controllers
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Example:
 
