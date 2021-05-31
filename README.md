@@ -129,7 +129,7 @@ ACL commands:
 - `get-acl`
 - `compare-acl`
 
-#### Common command options:
+#### Command options:
 ```
   --config      Sets the uhppoted.conf file to use for controller configurations
   --bind        Overrides the default (or configured) bind IP address for a command
@@ -196,12 +196,7 @@ Retrieves a list of the controllers accessible on the local LAN (i.e. can receiv
 uhppote-cli [options] get-devices
 
   Options: 
-  --config      Sets the uhppoted.conf file to use for controller configurations
-  --bind        Overrides the default (or configured) bind IP address for a command
-  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
-  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
-  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
-  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+    See [command options](https://github.com/uhppoted/uhppote-cli#common-command-options)
 
   Example:
 
