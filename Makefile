@@ -64,8 +64,7 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	# $(CLI) --timeout 7.5s get-device 405419896
-	$(CLI) --timeout 500ms get-device 405419896
+	$(CLI) set-time-profile 303986753   101 2021-01-01:2021-12-31 Sat,Sun     10:30-16:30
 
 godoc:
 	godoc -http=:80	-index_interval=60s
