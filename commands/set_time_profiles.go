@@ -213,11 +213,7 @@ func (c *SetTimeProfiles) validate(profile types.TimeProfile) error {
 	for _, i := range []uint8{1, 2, 3} {
 		segment := profile.Segments[i]
 
-		if segment.Start != nil && segment.End == nil {
-			return fmt.Errorf("segment %v missing 'End'", i)
-		} else if segment.Start == nil && segment.End != nil {
-			return fmt.Errorf("segment %v missing 'Start'", i)
-		} else if segment.Start != nil && segment.End != nil && segment.End.Before(time.Time(*segment.Start)) {
+		if segment.End.Before(time.Time(segment.Start)) {
 			return fmt.Errorf("segment %v 'End' (%v) is before 'Start' (%v)", i, segment.End, segment.Start)
 		}
 	}
@@ -252,23 +248,23 @@ func (c *SetTimeProfiles) circular(ctx Context, serialNumber uint32, profile typ
 
 func (c *SetTimeProfiles) parse(file string) ([]types.TimeProfile, error) {
 	type tsvProfile struct {
-		ID        int         `tsv:"Profile"`
-		From      types.Date  `tsv:"From"`
-		To        types.Date  `tsv:"To"`
-		Monday    bool        `tsv:"Mon"`
-		Tuesday   bool        `tsv:"Tue"`
-		Wednesday bool        `tsv:"Wed"`
-		Thursday  bool        `tsv:"Thurs"`
-		Friday    bool        `tsv:"Fri"`
-		Saturday  bool        `tsv:"Sat"`
-		Sunday    bool        `tsv:"Sun"`
-		Start1    *types.HHmm `tsv:"Start1"`
-		End1      *types.HHmm `tsv:"End1"`
-		Start2    *types.HHmm `tsv:"Start2"`
-		End2      *types.HHmm `tsv:"End2"`
-		Start3    *types.HHmm `tsv:"Start3"`
-		End3      *types.HHmm `tsv:"End3"`
-		Linked    int         `tsv:"Linked"`
+		ID        int        `tsv:"Profile"`
+		From      types.Date `tsv:"From"`
+		To        types.Date `tsv:"To"`
+		Monday    bool       `tsv:"Mon"`
+		Tuesday   bool       `tsv:"Tue"`
+		Wednesday bool       `tsv:"Wed"`
+		Thursday  bool       `tsv:"Thurs"`
+		Friday    bool       `tsv:"Fri"`
+		Saturday  bool       `tsv:"Sat"`
+		Sunday    bool       `tsv:"Sun"`
+		Start1    types.HHmm `tsv:"Start1"`
+		End1      types.HHmm `tsv:"End1"`
+		Start2    types.HHmm `tsv:"Start2"`
+		End2      types.HHmm `tsv:"End2"`
+		Start3    types.HHmm `tsv:"Start3"`
+		End3      types.HHmm `tsv:"End3"`
+		Linked    int        `tsv:"Linked"`
 	}
 
 	recordset := []tsvProfile{}

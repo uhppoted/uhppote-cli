@@ -156,25 +156,22 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		},
 
 		Segments: types.Segments{
-			1: types.Segment{Start: &types.HHmm{}, End: &types.HHmm{}},
-			2: types.Segment{Start: &types.HHmm{}, End: &types.HHmm{}},
-			3: types.Segment{Start: &types.HHmm{}, End: &types.HHmm{}},
+			1: types.Segment{},
+			2: types.Segment{},
+			3: types.Segment{},
 		},
 	}
 
 	for _, ix := range []int{1, 2, 3} {
 		if s, ok := schedule[ix]; ok {
-			segment := types.Segment{
-				Start: &types.HHmm{},
-				End:   &types.HHmm{},
-			}
+			segment := types.Segment{}
 
 			if s.start != nil {
-				segment.Start = s.start
+				segment.Start = *s.start
 			}
 
 			if s.end != nil {
-				segment.End = s.end
+				segment.End = *s.end
 			}
 
 			profile.Segments[uint8(ix)] = segment
