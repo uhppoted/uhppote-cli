@@ -186,10 +186,11 @@ listen: build
 # ACL COMMANDS
 
 show: build
-	$(CLI) $(DEBUG) show $(CARD)
+	$(CLI) show $(CARD)
 
 grant: build
-	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 "Lady's Chamber, Workshop"
+	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 "Gryffindor, Slytherin"
+	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 29 "Dungeon"
 
 grant-all: build
 	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 ALL
