@@ -189,8 +189,8 @@ show: build
 	$(CLI) show $(CARD)
 
 grant: build
-	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 "Gryffindor, Slytherin"
-	$(CLI) grant $(CARD) 2020-01-01 2020-12-31 29 "Dungeon"
+	$(CLI) grant $(CARD) 2021-01-01 2021-12-31 "Gryffindor, Slytherin"
+	$(CLI) grant $(CARD) 2021-01-01 2021-12-31 29 "Dungeon"
 
 grant-all: build
 	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 ALL
