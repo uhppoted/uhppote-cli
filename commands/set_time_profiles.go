@@ -213,7 +213,7 @@ func (c *SetTimeProfiles) validate(profile types.TimeProfile) error {
 	for _, i := range []uint8{1, 2, 3} {
 		segment := profile.Segments[i]
 
-		if segment.End.Before(time.Time(segment.Start)) {
+		if segment.End.Before(segment.Start) {
 			return fmt.Errorf("segment %v 'End' (%v) is before 'Start' (%v)", i, segment.End, segment.Start)
 		}
 	}
