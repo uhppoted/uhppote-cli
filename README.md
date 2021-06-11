@@ -20,6 +20,7 @@ savings changes.
 
 | *Version* | *Description*                                                                                            |
 | --------- | -------------------------------------------------------------------------------------------------------- |
+| v0.7.0    | Added commands to get-, set- and clear time profiles                                                     |
 | v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                              |
 | v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                           |
 | v0.6.8    | Maintenance release for version compatibility with `uhppote-core` `v0.6.8`                               |
@@ -91,35 +92,35 @@ General_ commands:
 
 Device commands:
 
-- [`get-devices`](https://github.com/uhppoted/uhppote-cli#get-devices)
-- [`get-device`](https://github.com/uhppoted/uhppote-cli#get-device)
-- [`set-address`](https://github.com/uhppoted/uhppote-cli#set-address)
-- [`get-time`](https://github.com/uhppoted/uhppote-cli#get-time)
-- [`set-time`](https://github.com/uhppoted/uhppote-cli#set-time)
-- [`get-door-delay`](https://github.com/uhppoted/uhppote-cli#get-door-delay)
-- [`set-door-delay`](https://github.com/uhppoted/uhppote-cli#set-door-delay)
-- [`get-door-control`](https://github.com/uhppoted/uhppote-cli#get-door-control)
-- [`set-door-control`](https://github.com/uhppoted/uhppote-cli#set-door-control)
-- [`get-listener`](https://github.com/uhppoted/uhppote-cli#get-listener)
-- [`set-listener`](https://github.com/uhppoted/uhppote-cli#set-listener)
-- [`get-status`](https://github.com/uhppoted/uhppote-cli#get-status)
-- [`get-cards`](https://github.com/uhppoted/uhppote-cli#get-cards)
-- [`get-card`](https://github.com/uhppoted/uhppote-cli#get-card)
-- [`put-card`](https://github.com/uhppoted/uhppote-cli#put-card)
-- [`delete-card`](https://github.com/uhppoted/uhppote-cli#delete-card)
-- [`delete-all`](https://github.com/uhppoted/uhppote-cli#delete-all)
-- [`get-time-profile`](https://github.com/uhppoted/uhppote-cli#get-time-profile)
-- [`set-time-profile`](https://github.com/uhppoted/uhppote-cli#set-time-profile)
-- [`clear-time-profiles`](https://github.com/uhppoted/uhppote-cli#clear-time-profile)
-- [`get-time-profiles`](https://github.com/uhppoted/uhppote-cli#get-time-profiles)
-- [`set-time-profiles`](https://github.com/uhppoted/uhppote-cli#set-time-profiles)
-- [`record-special-events`](https://github.com/uhppoted/uhppote-cli#record-special-events)
-- [`get-events`](https://github.com/uhppoted/uhppote-cli#get-events)
-- [`get-event`](https://github.com/uhppoted/uhppote-cli#get-event)
-- [`get-event-index`](https://github.com/uhppoted/uhppote-cli#get-event-index)
-- [`set-event-index`](https://github.com/uhppoted/uhppote-cli#set-event-index)
-- [`open`](https://github.com/uhppoted/uhppote-cli#open)
-- [`listen`](https://github.com/uhppoted/uhppote-cli#listen)
+- [`get-devices`](#get-devices)
+- [`get-device`](#get-device)
+- [`set-address`](#set-address)
+- [`get-time`](#get-time)
+- [`set-time`](#set-time)
+- [`get-door-delay`](#get-door-delay)
+- [`set-door-delay`](#set-door-delay)
+- [`get-door-control`](#get-door-control)
+- [`set-door-control`](#set-door-control)
+- [`get-listener`](#get-listener)
+- [`set-listener`](#set-listener)
+- [`record-special-events`](#record-special-events)
+- [`get-status`](#get-status)
+- [`get-cards`](#get-cards)
+- [`get-card`](#get-card)
+- [`put-card`](#put-card)
+- [`delete-card`](#delete-card)
+- [`delete-all`](#delete-all)
+- [`get-time-profile`](#get-time-profile)
+- [`set-time-profile`](#set-time-profile)
+- [`get-time-profiles`](#get-time-profiles)
+- [`set-time-profiles`](#set-time-profiles)
+- [`clear-time-profiles`](#clear-time-profiles)
+- [`get-events`](#get-events)
+- [`get-event`](#get-event)
+- [`get-event-index`](#get-event-index)
+- [`set-event-index`](#set-event-index)
+- [`open`](#open)
+- [`listen`](#listen)
 
 ACL commands:
 
@@ -508,6 +509,34 @@ uhppote-cli [options] set-listener <device> <address:port>
   405419896  true
 ```
 
+#### `record-special-events`
+
+Enables or disables events for door open, door closed and door button pressed for a single controller accessible on either the
+local LAN or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command 
+returns the result as a fixed width columnar table with:
+
+- `serial number`
+- `succeeded` _true/false_
+
+```
+uhppote-cli [options] record-special-events <device> <enable>
+
+  <device>      (required) Controller serial number
+  <enable>      (optional) Enables or disables door open, closed and button pressed events. Defaults to `true`
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Example:
+  > uhppote-cli record-special-events 405419896 false
+    405419896  true
+```
+
 #### `get-status`
 
 Retrieves the controller status for a single controller accessible on the local LAN (i.e. can receive and respond to UDP broadcasts) or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command returns a fixed width columnar table with:
@@ -865,34 +894,6 @@ uhppote-cli [options] set-time-profiles <device ID> <TSV>
 **NOTES** 
 1. `set-time-profiles` does not clear existing time profiles from the controller i.e. although not recommended, profiles in the file can link to individually defined existing profiles.
 2. There is no requirement for the profiles to be in any particular order e.g. `uhppote-cli` is capable of creating a time profile that is linked to a profile that is defined after it in the TSV file.
-
-#### `record-special-events`
-
-Enables or disables events for door open, door closed and door button pressed for a single controller accessible on either the
-local LAN or configured in the communal `uhppoted.conf` configuration (or custom configuration, if specified). The command 
-returns the result as a fixed width columnar table with:
-
-- `serial number`
-- `succeeded` _true/false_
-
-```
-uhppote-cli [options] record-special-events <device> <enable>
-
-  <device>      (required) Controller serial number
-  <enable>      (optional) Enables or disables door open, closed and button pressed events. Defaults to `true`
-
-  Options: 
-  --config      Sets the uhppoted.conf file to use for controller configurations
-  --bind        Overrides the default (or configured) bind IP address for a command
-  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
-  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
-  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
-  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
-
-  Example:
-  > uhppote-cli record-special-events 405419896 false
-    405419896  true
-```
 
 #### `get-events`
 

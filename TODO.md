@@ -1,12 +1,6 @@
-## v0.7.x
+## v0.7.0
 
-### IN PROGRESS
-
-- [ ] Check card number field for get-event
-- [ ] `grant` with time profile
-- [ ] `set-schedule`
-- [ ] `get-schedule`
-
+- [x] `grant` with time profile
 - [x] Add missing commands to README
 - [x] Tabulate output for get-devices
 - [x] Print device name for get-device(s)
@@ -29,6 +23,7 @@
 
 ## TODO
 
+- [ ] Check card number field for get-event
 - [ ] Route debugging to stderr
 - [ ] get-events --fetch
 - [ ] listener: retrieve and show actual events
