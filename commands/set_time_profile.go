@@ -230,55 +230,6 @@ func (c *SetTimeProfile) RequiresConfig() bool {
 	return false
 }
 
-// WEEKDAYS
-type days map[string]bool
-
-func (d days) String() string {
-	list := []string{}
-	for _, v := range []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"} {
-		if d[v] {
-			list = append(list, v)
-		}
-	}
-
-	return strings.Join(list, ",")
-}
-
-func (d days) parse(arg string) error {
-	delete(d, "Monday")
-	delete(d, "Tuesday")
-	delete(d, "Wednesday")
-	delete(d, "Thursday")
-	delete(d, "Friday")
-	delete(d, "Saturday")
-	delete(d, "Sunday")
-
-	tokens := strings.Split(arg, ",")
-	for _, t := range tokens {
-		day := strings.ToLower(t)
-		switch {
-		case strings.HasPrefix(day, "mon"):
-			d["Monday"] = true
-		case strings.HasPrefix(day, "tue"):
-			d["Tuesday"] = true
-		case strings.HasPrefix(day, "wed"):
-			d["Wednesday"] = true
-		case strings.HasPrefix(day, "thu"):
-			d["Thursday"] = true
-		case strings.HasPrefix(day, "fri"):
-			d["Friday"] = true
-		case strings.HasPrefix(day, "sat"):
-			d["Saturday"] = true
-		case strings.HasPrefix(day, "sun"):
-			d["Sunday"] = true
-		default:
-			return fmt.Errorf("%v: unrecognised 'weekday'", t)
-		}
-	}
-
-	return nil
-}
-
 // SEGMENTS
 type segments map[int]segment
 
