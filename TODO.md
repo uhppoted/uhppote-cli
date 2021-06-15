@@ -1,25 +1,10 @@
-## v0.7.0
+## v0.7.x
 
-- [x] `grant` with time profile
-- [x] Add missing commands to README
-- [x] Tabulate output for get-devices
-- [x] Print device name for get-device(s)
-- [x] Check for duplicate time profiles
-- [x] Replace all (deprecated) ioutil.WriteFile with os.WriteFile
-- [x] Update README with time profile commands
-- [x] Verify 'to' is not before 'from'
-- [x] Verify segment 'end' is not before segment 'start'
-- [x] `set-time-profiles`
-- [x] `get-time-profiles`
-- [x] `compare-acl` with time profiles
-- [x] `load-acl` with time profiles
-- [x] `get-acl` with time profiles
-- [x] Add time profiles to put-card
-- [x] Check for linked circular references in set-time-profile
-- [x] `clear-time-profiles`
-- [x] `get-time-profile`
-- [x] `set-time-profile`
-- [x] Use device name from conf file
+## IN PROGRESS
+
+- [x] `clear-task-list`
+- [ ] `add-task`
+- [ ] `refresh-task-list`
 
 ## TODO
 
