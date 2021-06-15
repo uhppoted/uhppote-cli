@@ -41,6 +41,7 @@ var cli = []commands.Command{
 	&commands.SetTimeProfilesCmd,
 	&commands.ClearTimeProfilesCmd,
 	&commands.ClearTaskListCmd,
+	&commands.RefreshTaskListCmd,
 	&commands.ShowCmd,
 	&commands.GrantCmd,
 	&commands.RevokeCmd,

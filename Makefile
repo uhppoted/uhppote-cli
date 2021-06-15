@@ -64,7 +64,9 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-api
 
 debug: build
-	$(CLI) --debug clear-task-list $(SERIALNO)
+	# $(CLI) help
+	# $(CLI) help refresh-task-list
+	$(CLI) --debug refresh-task-list $(SERIALNO)
 
 godoc:
 	godoc -http=:80	-index_interval=60s
@@ -93,8 +95,11 @@ get-device: build
 set-address: build
 	$(CLI) $(DEBUG) set-address $(SERIALNO) $(DEVICEIP) '255.255.255.0' '0.0.0.0'
 
-get-status: build
-	$(CLI) $(DEBUG) get-status $(SERIALNO)
+get-listener: build
+	$(CLI) $(DEBUG) get-listener $(SERIALNO)
+
+set-listener: build
+	$(CLI) $(DEBUG) set-listener $(SERIALNO) $(LISTEN)
 
 get-time: build
 	$(CLI) $(DEBUG) get-time $(SERIALNO)
@@ -115,11 +120,11 @@ get-door-control: build
 set-door-control: build
 	$(CLI) $(DEBUG) set-door-control $(SERIALNO) $(DOOR) 'normally closed'
 
-get-listener: build
-	$(CLI) $(DEBUG) get-listener $(SERIALNO)
+record-special-events: build
+	$(CLI) $(DEBUG) record-special-events $(SERIALNO) true
 
-set-listener: build
-	$(CLI) $(DEBUG) set-listener $(SERIALNO) $(LISTEN)
+get-status: build
+	$(CLI) $(DEBUG) get-status $(SERIALNO)
 
 get-cards: build
 	$(CLI) $(DEBUG) get-cards $(SERIALNO)
@@ -158,6 +163,12 @@ set-time-profiles: build
 	$(CLI) set-time-profiles $(SERIALNO) ../runtime/set-time-profiles.tsv
 	$(CLI) get-time-profiles $(SERIALNO) 
 
+clear-task-list: build
+	$(CLI) --debug clear-task-list $(SERIALNO)
+
+refresh-task-list: build
+	$(CLI) --debug refresh-task-list $(SERIALNO)
+
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)
 
@@ -173,9 +184,6 @@ get-event-index: build
 
 set-event-index: build
 	$(CLI) $(DEBUG) set-event-index $(SERIALNO) 23
-
-record-special-events: build
-	$(CLI) $(DEBUG) record-special-events $(SERIALNO) true
 
 open: build
 	$(CLI) $(DEBUG) open $(SERIALNO) 1
