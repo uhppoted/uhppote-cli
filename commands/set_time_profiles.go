@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/uhppoted/uhppote-cli/encoding/tsv"
+	"github.com/uhppoted/uhppote-core/encoding/tsv"
 	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppoted-api/config"
 )

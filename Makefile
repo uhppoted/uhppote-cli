@@ -65,9 +65,8 @@ bump:
 
 debug: build
 	# $(CLI) help
-	# $(CLI) help add-task
-	$(CLI) --debug add-task $(SERIALNO) 3 4 2021-01-01:2021-12-31 Mon,Fri 08:30
-	# $(CLI) --debug add-task $(SERIALNO) 'Time Profile Enabled'
+	# $(CLI) help set-tasks
+	$(CLI) set-tasks $(SERIALNO) ../runtime/set-tasks.tsv
 
 godoc:
 	godoc -http=:80	-index_interval=60s

@@ -44,6 +44,7 @@ var cli = []commands.Command{
 	&commands.ClearTaskListCmd,
 	&commands.AddTaskCmd,
 	&commands.RefreshTaskListCmd,
+	&commands.SetTasksCmd,
 	&commands.ShowCmd,
 	&commands.GrantCmd,
 	&commands.RevokeCmd,
