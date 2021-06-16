@@ -167,6 +167,10 @@ set-time-profiles: build
 clear-task-list: build
 	$(CLI) --debug clear-task-list $(SERIALNO)
 
+add-task: build
+	$(CLI) --debug add-task $(SERIALNO) 3 4 2021-01-01:2021-12-31 Mon,Fri 08:30 33
+	$(CLI) --debug add-task $(SERIALNO) 'enable more cards' 4 2021-01-01:2021-12-31 Mon,Fri 08:30 29
+
 refresh-task-list: build
 	$(CLI) --debug refresh-task-list $(SERIALNO)
 

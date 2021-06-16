@@ -23,160 +23,13 @@ func (c *AddTask) Execute(ctx Context) error {
 		return err
 	}
 
-	task := types.Task{
-		Weekdays: types.Weekdays{},
+	task, err := c.getTask(flag.Args())
+	if err != nil {
+		return err
+	} else if task == nil {
+		return fmt.Errorf("Failed to parse task")
 	}
 
-	args := flag.Args()
-
-	// ... task type
-	if len(args) < 3 {
-		return fmt.Errorf("missing task identifier")
-	} else {
-		arg := args[2]
-		if regexp.MustCompile("^[0-9]+$").MatchString(arg) {
-			if taskID, err := strconv.Atoi(arg); err != nil {
-				return fmt.Errorf("invalid task identifier %v (%v)", arg, err)
-			} else if taskID < 0 || taskID > 12 {
-				return fmt.Errorf("invalid task identifier %v - valid range is [0..12]", arg)
-			} else {
-				task.Task = types.TaskType(taskID)
-			}
-		} else {
-			re := regexp.MustCompile("[^a-z]+")
-			clean := func(s string) string { return re.ReplaceAllString(strings.ToLower(s), "") }
-			taskID := clean(arg)
-			ok := false
-
-			for _, t := range []types.TaskType{
-				types.DoorControlled,
-				types.DoorOpen,
-				types.DoorClosed,
-				types.DisableTimeProfile,
-				types.EnableTimeProfile,
-				types.CardNoPassword,
-				types.CardInPassword,
-				types.CardInOutPassword,
-				types.EnableMoreCards,
-				types.DisableMoreCards,
-				types.TriggerOnce,
-				types.DisablePushButton,
-				types.EnablePushButton,
-			} {
-				if taskID == clean(fmt.Sprintf("%v", t)) {
-					task.Task = t
-					ok = true
-					break
-				}
-			}
-
-			if !ok {
-				return fmt.Errorf("invalid task identifier '%v'", arg)
-			}
-		}
-	}
-
-	// ... door
-	if len(args) < 4 {
-		return fmt.Errorf("missing door")
-	} else {
-		arg := args[3]
-		if regexp.MustCompile("^[0-9]$").MatchString(arg) {
-			if door, err := strconv.Atoi(arg); err != nil {
-				return fmt.Errorf("invalid door '%v' (%v)", arg, err)
-			} else if door < 1 || door > 4 {
-				return fmt.Errorf("invalid door (%v) - valid range is [1..4]", door)
-			} else {
-				task.Door = uint8(door)
-			}
-		} else {
-			return fmt.Errorf("invalid door '%v'", arg)
-		}
-	}
-
-	// ... from:to
-	if args := flag.Args(); len(args) < 5 {
-		return fmt.Errorf("missing 'from:to' dates")
-	} else {
-		arg := args[4]
-		re := regexp.MustCompile("([0-9]{4}-[0-9]{2}-[0-9]{2}):([0-9]{4}-[0-9]{2}-[0-9]{2})")
-
-		match := re.FindStringSubmatch(arg)
-		if match == nil || len(match) != 3 {
-			return fmt.Errorf("invalid 'from:to' dates (%v)", arg)
-		}
-
-		if date, err := types.DateFromString(match[1]); err != nil {
-			return fmt.Errorf("%v: invalid 'from' date (%v)", match[1], err)
-		} else {
-			task.From = date
-		}
-
-		if date, err := types.DateFromString(match[2]); err != nil {
-			return fmt.Errorf("%v: invalid 'to' date (%v)", match[1], err)
-		} else {
-			task.To = date
-		}
-	}
-
-	// ... weekdays
-	var weekdays = days{
-		"Monday":    true,
-		"Tuesday":   true,
-		"Wednesday": true,
-		"Thursday":  true,
-		"Friday":    true,
-		"Saturday":  true,
-		"Sunday":    true,
-	}
-
-	for _, arg := range args[5:] {
-		if regexp.MustCompile("^(?i:Mon|Tue|Wed|Thu|Fri|Sat|Sun).*").MatchString(arg) {
-			if err := weekdays.parse(arg); err != nil {
-				return err
-			}
-		}
-	}
-
-	task.Weekdays = types.Weekdays{
-		time.Monday:    weekdays["Monday"],
-		time.Tuesday:   weekdays["Tuesday"],
-		time.Wednesday: weekdays["Wednesday"],
-		time.Thursday:  weekdays["Thursday"],
-		time.Friday:    weekdays["Friday"],
-		time.Saturday:  weekdays["Saturday"],
-		time.Sunday:    weekdays["Sunday"],
-	}
-
-	// ... start time
-	for _, arg := range args[5:] {
-		if regexp.MustCompile("^[0-9]{2}:[0-9]{2}$").MatchString(arg) {
-			if hhmm, err := types.HHmmFromString(arg); err != nil {
-				return fmt.Errorf("invalid start time '%v' (%v)", arg, err)
-			} else if hhmm == nil {
-				return fmt.Errorf("invalid start time (%v)", arg)
-			} else {
-				task.Start = *hhmm
-			}
-		}
-	}
-
-	// ... more cards
-	if task.Task == types.EnableMoreCards {
-		for _, arg := range args[5:] {
-			if regexp.MustCompile("^[0-9]+$").MatchString(arg) {
-				if cards, err := strconv.Atoi(arg); err != nil {
-					return fmt.Errorf("invalid more cards '%v' (%v)", arg, err)
-				} else if cards < 0 || cards > 255 {
-					return fmt.Errorf("invalid 'more cards' (%v)", arg)
-				} else {
-					task.Cards = uint8(cards)
-				}
-			}
-		}
-	}
-
-	// ... good to go apparently
 	if ctx.uhppote != nil && ctx.debug {
 		fmt.Println(" ...")
 		fmt.Printf(" ... serial number: %v\n", serialNumber)
@@ -190,10 +43,10 @@ func (c *AddTask) Execute(ctx Context) error {
 		fmt.Println(" ...")
 	}
 
-	if ok, err := ctx.uhppote.AddTask(serialNumber, task); err != nil {
+	if ok, err := ctx.uhppote.AddTask(serialNumber, *task); err != nil {
 		return err
 	} else if !ok {
-		return fmt.Errorf("%v: could not add task", serialNumber)
+		return fmt.Errorf("%v: failed to add task", serialNumber)
 	}
 
 	fmt.Printf("%v: task added\n", serialNumber)
@@ -258,4 +111,216 @@ func (c *AddTask) Help() {
 // Returns false - configuration is useful but optional.
 func (c *AddTask) RequiresConfig() bool {
 	return false
+}
+
+func (c *AddTask) getTask(args []string) (*types.Task, error) {
+	task := types.Task{
+		Weekdays: types.Weekdays{},
+	}
+
+	if t, err := c.getTaskType(args); err != nil {
+		return nil, err
+	} else {
+		task.Task = t
+	}
+
+	if d, err := c.getTaskDoor(args); err != nil {
+		return nil, err
+	} else {
+		task.Door = d
+	}
+
+	if from, to, err := c.getTaskActive(args); err != nil {
+		return nil, err
+	} else if from == nil {
+		return nil, fmt.Errorf("invalid 'from' date")
+	} else if to == nil {
+		return nil, fmt.Errorf("invalid 'to' date")
+	} else {
+		task.From = from
+		task.To = to
+	}
+
+	if weekdays, err := c.getTaskDays(args); err != nil {
+		return nil, err
+	} else if weekdays == nil {
+		return nil, fmt.Errorf("Invalid list of weekdays")
+	} else {
+		task.Weekdays = *weekdays
+	}
+
+	if hhmm, err := c.getTaskStart(args); err != nil {
+		return nil, err
+	} else if hhmm != nil {
+		task.Start = *hhmm
+	}
+
+	if task.Task == types.EnableMoreCards {
+		if cards, err := c.getTaskCards(args); err != nil {
+			return nil, err
+		} else {
+			task.Cards = cards
+		}
+	}
+
+	return &task, nil
+}
+
+func (c *AddTask) getTaskType(args []string) (types.TaskType, error) {
+	if len(args) < 3 {
+		return 0, fmt.Errorf("missing task identifier")
+	}
+
+	arg := args[2]
+
+	// ... numeric task type?
+	if regexp.MustCompile("^[0-9]+$").MatchString(arg) {
+		taskID, err := strconv.Atoi(arg)
+		if err != nil {
+			return 0, fmt.Errorf("invalid task identifier %v (%v)", arg, err)
+		}
+
+		if taskID < 0 || taskID > 12 {
+			return 0, fmt.Errorf("invalid task identifier %v - valid range is [0..12]", arg)
+		}
+
+		return types.TaskType(taskID), nil
+	}
+
+	// ... text task type
+	re := regexp.MustCompile("[^a-z]+")
+	clean := func(s string) string { return re.ReplaceAllString(strings.ToLower(s), "") }
+	taskID := clean(arg)
+
+	for _, t := range []types.TaskType{
+		types.DoorControlled,
+		types.DoorOpen,
+		types.DoorClosed,
+		types.DisableTimeProfile,
+		types.EnableTimeProfile,
+		types.CardNoPassword,
+		types.CardInPassword,
+		types.CardInOutPassword,
+		types.EnableMoreCards,
+		types.DisableMoreCards,
+		types.TriggerOnce,
+		types.DisablePushButton,
+		types.EnablePushButton,
+	} {
+		if taskID == clean(fmt.Sprintf("%v", t)) {
+			return t, nil
+		}
+	}
+
+	return 0, fmt.Errorf("invalid task identifier '%v'", arg)
+}
+
+func (c *AddTask) getTaskDoor(args []string) (uint8, error) {
+	if len(args) < 4 {
+		return 0, fmt.Errorf("missing door")
+	}
+
+	arg := args[3]
+
+	if regexp.MustCompile("^[1-4]$").MatchString(arg) {
+		if door, err := strconv.Atoi(arg); err != nil {
+			return 0, fmt.Errorf("invalid door '%v' (%v)", arg, err)
+		} else if door < 1 || door > 4 {
+			return 0, fmt.Errorf("invalid door (%v) - valid range is [1..4]", door)
+		} else {
+			return uint8(door), nil
+		}
+	}
+
+	return 0, fmt.Errorf("invalid door '%v'", arg)
+}
+
+func (c *AddTask) getTaskActive(args []string) (*types.Date, *types.Date, error) {
+	if args := flag.Args(); len(args) < 5 {
+		return nil, nil, fmt.Errorf("missing 'from:to' dates")
+	}
+
+	arg := args[4]
+	match := regexp.MustCompile("([0-9]{4}-[0-9]{2}-[0-9]{2}):([0-9]{4}-[0-9]{2}-[0-9]{2})").FindStringSubmatch(arg)
+	if match == nil || len(match) != 3 {
+		return nil, nil, fmt.Errorf("invalid 'from:to' dates (%v)", arg)
+	}
+
+	var from *types.Date
+	var to *types.Date
+
+	if date, err := types.DateFromString(match[1]); err != nil {
+		return nil, nil, fmt.Errorf("%v: invalid 'from' date (%v)", match[1], err)
+	} else {
+		from = date
+	}
+
+	if date, err := types.DateFromString(match[2]); err != nil {
+		return nil, nil, fmt.Errorf("%v: invalid 'to' date (%v)", match[1], err)
+	} else {
+		to = date
+	}
+
+	return from, to, nil
+}
+
+func (c *AddTask) getTaskDays(args []string) (*types.Weekdays, error) {
+	var weekdays = days{
+		"Monday":    true,
+		"Tuesday":   true,
+		"Wednesday": true,
+		"Thursday":  true,
+		"Friday":    true,
+		"Saturday":  true,
+		"Sunday":    true,
+	}
+
+	for _, arg := range args[5:] {
+		if regexp.MustCompile("^(?i:Mon|Tue|Wed|Thu|Fri|Sat|Sun).*").MatchString(arg) {
+			if err := weekdays.parse(arg); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return &types.Weekdays{
+		time.Monday:    weekdays["Monday"],
+		time.Tuesday:   weekdays["Tuesday"],
+		time.Wednesday: weekdays["Wednesday"],
+		time.Thursday:  weekdays["Thursday"],
+		time.Friday:    weekdays["Friday"],
+		time.Saturday:  weekdays["Saturday"],
+		time.Sunday:    weekdays["Sunday"],
+	}, nil
+}
+
+func (c *AddTask) getTaskStart(args []string) (*types.HHmm, error) {
+	for _, arg := range args[5:] {
+		if regexp.MustCompile("^[0-9]{2}:[0-9]{2}$").MatchString(arg) {
+			if hhmm, err := types.HHmmFromString(arg); err != nil {
+				return nil, fmt.Errorf("invalid start time '%v' (%v)", arg, err)
+			} else if hhmm == nil {
+				return nil, fmt.Errorf("invalid start time (%v)", arg)
+			} else {
+				return hhmm, nil
+			}
+		}
+	}
+	return &types.HHmm{}, nil
+}
+
+func (c *AddTask) getTaskCards(args []string) (uint8, error) {
+	for _, arg := range args[5:] {
+		if regexp.MustCompile("^[0-9]+$").MatchString(arg) {
+			if cards, err := strconv.Atoi(arg); err != nil {
+				return 0, fmt.Errorf("invalid more cards '%v' (%v)", arg, err)
+			} else if cards < 0 || cards > 255 {
+				return 0, fmt.Errorf("invalid 'more cards' (%v)", arg)
+			} else {
+				return uint8(cards), nil
+			}
+		}
+	}
+
+	return 0, nil
 }

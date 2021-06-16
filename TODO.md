@@ -2,9 +2,10 @@
 
 ## IN PROGRESS
 
-- [x] `clear-task-list`
 - [ ] `add-task`
-- [ ] `refresh-task-list`
+- [ ] `set-tasks`
+- [x] `refresh-task-list`
+- [x] `clear-task-list`
 
 ## TODO
 
