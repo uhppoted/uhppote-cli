@@ -2,7 +2,7 @@
 
 ## IN PROGRESS
 
-- [ ] `set-tasks`
+- [x] `set-tasks`
 - [x] `add-task`
 - [x] `refresh-task-list`
 - [x] `clear-task-list`

@@ -168,15 +168,7 @@ func (c *SetTasks) load(ctx Context, serialNumber uint32, tasks []types.Task) (i
 }
 
 func (c *SetTasks) validate(task types.Task) error {
-	if task.From == nil {
-		return fmt.Errorf("invalid 'From' date (%v)", task.From)
-	}
-
-	if task.To == nil {
-		return fmt.Errorf("invalid 'To' date (%v)", task.To)
-	}
-
-	if task.To.Before(*task.From) {
+	if task.To.Before(task.From) {
 		return fmt.Errorf("'To' date (%v) is before 'From' date (%v)", task.To, task.From)
 	}
 
@@ -213,14 +205,11 @@ func (c *SetTasks) parse(file string) ([]types.Task, error) {
 
 	tasks := []types.Task{}
 	for _, record := range recordset {
-		from := record.From
-		to := record.To
-
 		task := types.Task{
 			Task: record.Task,
 			Door: record.Door,
-			From: &from,
-			To:   &to,
+			From: record.From,
+			To:   record.To,
 			Weekdays: types.Weekdays{
 				time.Monday:    record.Monday,
 				time.Tuesday:   record.Tuesday,

@@ -64,9 +64,15 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
-	# $(CLI) help
-	# $(CLI) help set-tasks
-	$(CLI) set-tasks $(SERIALNO) ../runtime/set-tasks.tsv
+	# $(CLI) clear-time-profiles 423187757
+	# $(CLI) set-time-profile    423187757 29 2021-01-01:2021-12-31 Thu 08:30-12:30
+	# $(CLI) get-time-profiles   423187757
+	# $(CLI) put-card            423187757 6154410 2021-01-01 2021-12-31 3:29
+	# $(CLI) get-card            423187757 6154410
+	# $(CLI) clear-task-list     423187757
+	# $(CLI) add-task            423187757 3 3 2021-01-01:2021-12-31 Thu 08:30
+	# $(CLI) add-task            423187757 4 3 2021-01-01:2021-12-31 Thu 11:40
+	# $(CLI) refresh-task-list   423187757
 
 godoc:
 	godoc -http=:80	-index_interval=60s

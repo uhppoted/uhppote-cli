@@ -137,8 +137,8 @@ func (c *AddTask) getTask(args []string) (*types.Task, error) {
 	} else if to == nil {
 		return nil, fmt.Errorf("invalid 'to' date")
 	} else {
-		task.From = from
-		task.To = to
+		task.From = *from
+		task.To = *to
 	}
 
 	if weekdays, err := c.getTaskDays(args); err != nil {
