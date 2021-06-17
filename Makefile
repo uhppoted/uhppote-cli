@@ -61,7 +61,7 @@ release: build-all
 
 bump:
 	go get -u github.com/uhppoted/uhppote-core
-	go get -u github.com/uhppoted/uhppoted-api
+	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
 	# $(CLI) help
@@ -172,6 +172,9 @@ add-task: build
 
 refresh-task-list: build
 	$(CLI) --debug refresh-task-list $(SERIALNO)
+
+set-tasks: build
+	$(CLI) set-tasks $(SERIALNO) ../runtime/set-tasks.tsv
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

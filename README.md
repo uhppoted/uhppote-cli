@@ -78,7 +78,7 @@ The above commands build the `uhppote-cli` executable to the `bin` directory.
 | *Dependency*                                                                 | *Description*                              |
 | ---------------------------------------------------------------------------- | ------------------------------------------ |
 | [com.github/uhppoted/uhppote-core](https://github.com/uhppoted/uhppote-core) | Device level API implementation            |
-| [com.github/uhppoted/uhppoted-api](https://github.com/uhppoted/uhppoted-api) | common API for external applications       |
+| [com.github/uhppoted/uhppoted-lib](https://github.com/uhppoted/uhppoted-lib) | common API for external applications       |
 | golang.org/x/lint/golint                                                     | Additional *lint* check for release builds |
 
 ## uhppote-cli

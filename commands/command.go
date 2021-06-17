@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/uhppoted/uhppote-core/uhppote"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/config"
 )
 
 // Context contains the environment and configuration information required for all commands
@@ -47,7 +47,7 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 }
 
 // Command defines the common functions for CLI command implementations. This will be
-// replaced with the 'uhppoted-api' implementation in a future iteration.
+// replaced with the 'uhppoted-lib' implementation in a future iteration.
 type Command interface {
 	Execute(context Context) error
 	CLI() string

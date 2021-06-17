@@ -2,8 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"github.com/uhppoted/uhppoted-api/acl"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/acl"
+	"github.com/uhppoted/uhppoted-lib/config"
 	"sort"
 	"strings"
 )

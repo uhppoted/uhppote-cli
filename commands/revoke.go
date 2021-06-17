@@ -3,8 +3,8 @@ package commands
 import (
 	"flag"
 	"fmt"
-	"github.com/uhppoted/uhppoted-api/acl"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/acl"
+	"github.com/uhppoted/uhppoted-lib/config"
 	"strings"
 )
 

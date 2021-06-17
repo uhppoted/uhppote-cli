@@ -7,9 +7,9 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/uhppoted/uhppote-core/encoding/tsv"
 	"github.com/uhppoted/uhppote-core/types"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/config"
+	"github.com/uhppoted/uhppoted-lib/encoding/tsv"
 )
 
 var SetTimeProfilesCmd = SetTimeProfiles{}

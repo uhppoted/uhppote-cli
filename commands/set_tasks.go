@@ -6,9 +6,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/uhppoted/uhppote-core/encoding/tsv"
 	"github.com/uhppoted/uhppote-core/types"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/config"
+	"github.com/uhppoted/uhppoted-lib/encoding/tsv"
 )
 
 var SetTasksCmd = SetTasks{}
@@ -35,7 +35,7 @@ func (c *SetTasks) Execute(ctx Context) error {
 	} else if tasks == nil {
 		return fmt.Errorf("Could not extract tasks from TSV File '%s'", file)
 	} else if len(tasks) == 0 {
-		return fmt.Errorf("File '%s' does not contain any valid task definitions", file)
+		fmt.Printf("   WARNING File '%s' does not contain any valid task definitions\n", file)
 	}
 
 	// ... clear task list

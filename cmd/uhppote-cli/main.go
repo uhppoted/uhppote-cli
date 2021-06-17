@@ -9,7 +9,7 @@ import (
 
 	"github.com/uhppoted/uhppote-cli/commands"
 	"github.com/uhppoted/uhppote-core/uhppote"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/config"
 )
 
 type addr struct {

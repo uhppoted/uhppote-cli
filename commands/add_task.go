@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/uhppoted/uhppote-core/types"
-	"github.com/uhppoted/uhppoted-api/config"
+	"github.com/uhppoted/uhppoted-lib/config"
 )
 
 var AddTaskCmd = AddTask{}
