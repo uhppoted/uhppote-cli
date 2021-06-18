@@ -958,7 +958,15 @@ uhppote-cli [options] refresh-task-list <device ID>
 
 #### `add-task`
 
-Create a new task on the controller. The task will only be activated after invoking `refresh-task-list`.
+Create a new task on the controller. The task will only be activated after invoking `refresh-task-list`. A task definition comprises:
+
+- `serial number`
+- `task ID`
+- `door`
+- `from:to`
+- `weekdays`
+- `start time`
+- `number of cards allowed for 'more cards'`
 
 ```
 uhppote-cli [options] add-task <device ID> <task> <door> <from:to> <days> <start> <cards>
