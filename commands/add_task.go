@@ -80,19 +80,19 @@ func (c *AddTask) Help() {
 	fmt.Println("  cards          (optional) number of 'more cards' permitted for the 'enable more cards' task")
 	fmt.Println()
 	fmt.Println("  Tasks:")
-	fmt.Println("    0   control door")
-	fmt.Println("    1   unlock door")
-	fmt.Println("    2   lock door")
-	fmt.Println("    3   disable time profile")
-	fmt.Println("    4   enable time profile")
-	fmt.Println("    5   enable card, no password")
-	fmt.Println("    6   enable card+IN password")
-	fmt.Println("    7   enable card+password")
-	fmt.Println("    8   enable more cards")
-	fmt.Println("    9   disable more cards")
-	fmt.Println("    10  trigger once")
-	fmt.Println("    11  disable pushbutton")
-	fmt.Println("    12  enable pushbutton")
+	fmt.Println("    1   control door")
+	fmt.Println("    2   unlock door")
+	fmt.Println("    3   lock door")
+	fmt.Println("    4   disable time profile")
+	fmt.Println("    5   enable time profile")
+	fmt.Println("    6   enable card, no password")
+	fmt.Println("    7   enable card+IN password")
+	fmt.Println("    8   enable card+password")
+	fmt.Println("    9   enable more cards")
+	fmt.Println("    10   disable more cards")
+	fmt.Println("    11  trigger once")
+	fmt.Println("    12  disable pushbutton")
+	fmt.Println("    13  enable pushbutton")
 	fmt.Println()
 	fmt.Println("  Options:")
 	fmt.Println()
@@ -180,11 +180,11 @@ func (c *AddTask) getTaskType(args []string) (types.TaskType, error) {
 			return 0, fmt.Errorf("invalid task identifier %v (%v)", arg, err)
 		}
 
-		if taskID < 0 || taskID > 12 {
+		if taskID < 1 || taskID > 13 {
 			return 0, fmt.Errorf("invalid task identifier %v - valid range is [0..12]", arg)
 		}
 
-		return types.TaskType(taskID), nil
+		return types.TaskType(taskID - 1), nil
 	}
 
 	// ... text task type

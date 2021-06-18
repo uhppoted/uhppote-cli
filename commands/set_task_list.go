@@ -11,12 +11,12 @@ import (
 	"github.com/uhppoted/uhppoted-lib/encoding/tsv"
 )
 
-var SetTasksCmd = SetTasks{}
+var SetTaskListCmd = SetTaskList{}
 
-type SetTasks struct {
+type SetTaskList struct {
 }
 
-func (c *SetTasks) Execute(ctx Context) error {
+func (c *SetTaskList) Execute(ctx Context) error {
 	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
@@ -80,20 +80,20 @@ func (c *SetTasks) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *SetTasks) CLI() string {
-	return "set-tasks"
+func (c *SetTaskList) CLI() string {
+	return "set-task-list"
 }
 
-func (c *SetTasks) Description() string {
+func (c *SetTaskList) Description() string {
 	return "Sets the list of tasks on a controller"
 }
 
-func (c *SetTasks) Usage() string {
+func (c *SetTaskList) Usage() string {
 	return "<serial number>"
 }
 
-func (c *SetTasks) Help() {
-	fmt.Println("Usage: uhppote-cli [options] set-tasks <serial number> <file>")
+func (c *SetTaskList) Help() {
+	fmt.Println("Usage: uhppote-cli [options] set-task-list <serial number> <file>")
 	fmt.Println()
 	fmt.Println(" Clears any existing task defined on a controller, adds the task defined in the file and then invokes")
 	fmt.Println(" refresh-tasks to activate the new task list.")
@@ -109,16 +109,16 @@ func (c *SetTasks) Help() {
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli set-tasks 9876543210 tasks.tsv")
+	fmt.Println("    uhppote-cli set-task-list 9876543210 tasks.tsv")
 	fmt.Println()
 }
 
 // Returns false - configuration is useful but optional.
-func (c *SetTasks) RequiresConfig() bool {
+func (c *SetTaskList) RequiresConfig() bool {
 	return false
 }
 
-func (c *SetTasks) getTSVFile() (string, error) {
+func (c *SetTaskList) getTSVFile() (string, error) {
 	if len(flag.Args()) < 3 {
 		return "", nil
 	}
@@ -144,7 +144,7 @@ func (c *SetTasks) getTSVFile() (string, error) {
 	return file, nil
 }
 
-func (c *SetTasks) load(ctx Context, serialNumber uint32, tasks []types.Task) (int, []error, error) {
+func (c *SetTaskList) load(ctx Context, serialNumber uint32, tasks []types.Task) (int, []error, error) {
 	warnings := []error{}
 	count := 0
 
@@ -159,7 +159,7 @@ func (c *SetTasks) load(ctx Context, serialNumber uint32, tasks []types.Task) (i
 		} else if !ok {
 			warnings = append(warnings, fmt.Errorf("%v: could not create task definition %v", serialNumber, id+1))
 		} else {
-			fmt.Printf("   ... created task defintion %v\n", id+1)
+			fmt.Printf("   ... created task definition %-3v  %v\n", id+1, task)
 			count++
 		}
 	}
@@ -167,7 +167,7 @@ func (c *SetTasks) load(ctx Context, serialNumber uint32, tasks []types.Task) (i
 	return count, warnings, nil
 }
 
-func (c *SetTasks) validate(task types.Task) error {
+func (c *SetTaskList) validate(task types.Task) error {
 	if task.To.Before(task.From) {
 		return fmt.Errorf("'To' date (%v) is before 'From' date (%v)", task.To, task.From)
 	}
@@ -175,7 +175,7 @@ func (c *SetTasks) validate(task types.Task) error {
 	return nil
 }
 
-func (c *SetTasks) parse(file string) ([]types.Task, error) {
+func (c *SetTaskList) parse(file string) ([]types.Task, error) {
 	type tsvTask struct {
 		Task      types.TaskType `tsv:"Task"`
 		Door      uint8          `tsv:"Door"`

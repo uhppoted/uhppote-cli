@@ -64,6 +64,14 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
+	$(CLI) clear-task-list   $(SERIALNO)
+	$(CLI) add-task          $(SERIALNO) 3  4 2021-01-01:2021-12-31 Mon,Thu,Fri 08:30
+	$(CLI) add-task          $(SERIALNO) 4  4 2021-01-01:2021-12-31 Mon,Thu,Fri 11:30
+	$(CLI) add-task          $(SERIALNO) 11 4 2021-01-01:2021-12-31 Mon,Wed,Fri 00:00
+	$(CLI) add-task          $(SERIALNO) 12 4 2021-01-01:2021-12-31 Sat,Sun     09:15
+	$(CLI) refresh-task-list $(SERIALNO)
+
+debugx: build
 	# $(CLI) clear-time-profiles 423187757
 	# $(CLI) set-time-profile    423187757 29 2021-01-01:2021-12-31 Thu 08:30-12:30
 	# $(CLI) get-time-profiles   423187757
@@ -179,8 +187,8 @@ add-task: build
 refresh-task-list: build
 	$(CLI) --debug refresh-task-list $(SERIALNO)
 
-set-tasks: build
-	$(CLI) set-tasks $(SERIALNO) ../runtime/set-tasks.tsv
+set-task-list: build
+	$(CLI) set-task-list $(SERIALNO) ../runtime/set-tasks.tsv
 
 get-events: build
 	$(CLI) $(DEBUG) get-events $(SERIALNO)

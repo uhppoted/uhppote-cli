@@ -115,6 +115,10 @@ Device commands:
 - [`get-time-profiles`](#get-time-profiles)
 - [`set-time-profiles`](#set-time-profiles)
 - [`clear-time-profiles`](#clear-time-profiles)
+- [`clear-task-list`](#clear-tasklist)
+- [`add-task`](#add-task)
+- [`refresh-task-list`](#refresh-task-list)
+- [`set-task-list`](#set-task-list)
 - [`get-events`](#get-events)
 - [`get-event`](#get-event)
 - [`get-event-index`](#get-event-index)
@@ -876,11 +880,21 @@ uhppote-cli [options] set-time-profiles <device ID> <TSV>
   --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
+  Sample TSV file format:
+
+Profile From        To          Mon Tue Wed Thurs Fri Sat Sun Start1  End1   Start2  End2  Start3  End3  Linked
+2       2021-04-01  2021-10-29  N   Y   N    N    Y   N   Y   08:30   11:30  00:00   03:00 13:45   17:00 3
+3       2021-04-02  2021-11-30  N   N   Y    N    Y   Y   Y   09:31   11:31  01:00   04:00 13:46   17:01 
+29      2021-04-03  2021-12-31  N   N   N    Y    N   Y   Y   10:32   11:32  02:00   05:00 13:47   17:02 
+75      2021-04-01  2021-12-31  Y   N   Y    N    Y   N   N   08:30   11:30  00:00   00:00 13:45   17:00 
+100     2021-04-01  2021-12-31  Y   N   Y    N    Y   N   N   08:30   11:30  00:00   00:00 13:45   17:00 
+101     2021-04-01  2021-10-29  N   Y   N    N    Y   N   Y   08:30   11:30  00:00   03:00 13:45   17:00 102
+
   Example:
 
   uhppote-cli set-time-profiles 405419896 405419896.tsv
   
-  ./bin/uhppote-cli set-time-profiles 405419896 ../runtime/set-time-profiles.tsv
+  ./bin/uhppote-cli set-time-profiles 405419896 405419896.tsv
    ... set time profile 3
    ... set time profile 29
    ... set time profile 105
@@ -894,6 +908,140 @@ uhppote-cli [options] set-time-profiles <device ID> <TSV>
 **NOTES** 
 1. `set-time-profiles` does not clear existing time profiles from the controller i.e. although not recommended, profiles in the file can link to individually defined existing profiles.
 2. There is no requirement for the profiles to be in any particular order e.g. `uhppote-cli` is capable of creating a time profile that is linked to a profile that is defined after it in the TSV file.
+
+
+#### `clear-task-list`
+
+Deletes all defined tasks from a controller.
+
+```
+uhppote-cli [options] clear-task-list <device ID>
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Example:
+
+  uhppote-cli clear-task-list 405419896
+  405419896 true
+```
+
+#### `refresh-task-list`
+
+Activates all tasks created by `add-task`.
+
+```
+uhppote-cli [options] refresh-task-list <device ID>
+
+  <device ID>   (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Example:
+
+  uhppote-cli refresh-task-list 405419896
+  405419896 true
+```
+
+#### `add-task`
+
+Create a new task on the controller. The task will only be activated after invoking `refresh-task-list`.
+
+```
+uhppote-cli [options] add-task <device ID> <task> <door> <from:to> <days> <start> <cards>
+
+  <device ID>   (required) Controller serial number (or name)
+  <task>        (required) Task ID or name, corresponding to one of the predefined operations
+                           listed below
+  <door>        (required) Door ID [1..4] to which the operation applies.
+  <from:to>     (required) Start and end dates between which the task is active, formatted as YYYY-mm-dd:YYYY-mm-dd
+  <weekdays>    (optional) Comma separated list of weekdays for which the task is active. Defaults to 'all' if omitted.
+  <start>       (optional) Time from which task is active, formatted as HH:mm. Defaults to 00:00 if omitted.
+  <cards>       (optional) Number of 'more cards' for the 'enable more cards' operation.
+   
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Tasks: 
+    1   control door
+    2   unlock door
+    3   lock door
+    4   disable time profile
+    5   enable time profile
+    6   enable card, no password
+    7   enable card+IN password
+    8   enable card+password
+    9   enable more cards
+    10  disable more cards
+    11  trigger once
+    12  disable pushbutton
+    13  enable pushbutton
+  
+  Example:
+
+  uhppote-cli add-task 405419896 3 4 2021-01-01:2021-12-31 Mon,Fri 08:30
+  405419896 true
+
+  uhppote-cli add-task 405419896 'enable more cards' 4 2021-01-01:2021-12-31 Mon,Fri 08:30 29
+  405419896 true
+```
+
+#### `set-task-list`
+
+Sets the task list on a controller from a TSV file. The command clears the active task list, adds all tasks
+defined in the TSV file and then invokes `refresh-task-list` to activate the added tasks.
+
+```
+uhppote-cli [options] set-task-list <device ID> <file>
+
+  <device ID>   (required) Controller serial number (or name)
+  <file>        (required) TSV containing the task list for the controller
+   
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --broadcast   Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Sample TSV file format:
+  
+   Task               Door  From        To          Mon Tue Wed Thurs Fri Sat Sun Start Cards
+   1                  3     2021-04-01  2021-10-29  N   Y   N    N    Y   N   Y   08:30 0
+   disable pushbutton 3     2021-04-02  2021-11-30  N   N   Y    N    Y   Y   Y   09:45 0
+   8                  3     2021-04-03  2021-12-31  N   N   N    Y    N   Y   Y   10:15 29
+  
+  Example:
+
+  uhppote-cli set-task-list 405419896 405419896.tasks
+
+  ./bin/uhppote-cli set-task-list 405419896 405419896.tasks
+   ... 405419896 cleared task list
+   ... created task defintion 1
+   ... created task defintion 2
+   ... created task defintion 3
+   ... 405419896 refreshed task list
+```
+
 
 #### `get-events`
 

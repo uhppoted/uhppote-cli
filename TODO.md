@@ -2,6 +2,9 @@
 
 ## IN PROGRESS
 
+- [ ] Use tabular formatting for set-task-list output
+- [x] Set task ID's to start at 1
+- [x] Update README
 - [x] `set-tasks`
 - [x] `add-task`
 - [x] `refresh-task-list`
