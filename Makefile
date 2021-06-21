@@ -64,34 +64,37 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
+	$(CLI) set-time            405419896
 	$(CLI) clear-time-profiles 405419896
-	$(CLI) set-time-profile    405419896 29 2021-01-01:2021-12-31 Fri 08:30-17:00
+	$(CLI) set-time-profile    405419896 29 2021-01-01:2021-12-31 Mon 08:30-17:00
 	$(CLI) get-time-profiles   405419896
 	$(CLI) put-card            405419896 8165538 2021-01-01 2021-12-31 3:29
 	$(CLI) clear-task-list     405419896
-	$(CLI) add-task            405419896 'disable time profile' 3 2021-01-01:2021-12-31 Fri 08:30
-	$(CLI) add-task            405419896 'enable time profile'  3 2021-01-01:2021-12-31 Fri 11:30
-	$(CLI) add-task            405419896 'lock door'            3 2021-01-01:2021-12-31 Fri 11:45
-	$(CLI) add-task            405419896 'unlock door'          3 2021-01-01:2021-12-31 Fri 12:00
-	$(CLI) add-task            405419896 'control door'         3 2021-01-01:2021-12-31 Fri 12:05
-	$(CLI) add-task            405419896 'disable pushbutton'   3 2021-01-01:2021-12-31 Fri 12:10
-	$(CLI) add-task            405419896 'enable pushbutton'    3 2021-01-01:2021-12-31 Fri 12:15
+	$(CLI) add-task            405419896 'disable time profile' 3 2021-01-01:2021-12-31 Mon 11:00
+	$(CLI) add-task            405419896 'enable time profile'  3 2021-01-01:2021-12-31 Mon 11:05
+	$(CLI) add-task            405419896 'lock door'            3 2021-01-01:2021-12-31 Mon 11:10
+	$(CLI) add-task            405419896 'unlock door'          3 2021-01-01:2021-12-31 Mon 11:15
+	$(CLI) add-task            405419896 'control door'         3 2021-01-01:2021-12-31 Mon 11:20
+	$(CLI) add-task            405419896 'disable pushbutton'   3 2021-01-01:2021-12-31 Mon 11:25
+	$(CLI) add-task            405419896 'enable pushbutton'    3 2021-01-01:2021-12-31 Mon 11:30
+	$(CLI) add-task            405419896 'trigger once'         3 2021-01-01:2021-12-31 Mon 12:01
 	$(CLI) refresh-task-list   405419896
 
 irl: build
+	$(CLI) set-time            423187757
 	$(CLI) clear-time-profiles 423187757
-	$(CLI) set-time-profile    423187757 29 2021-01-01:2021-12-31 Fri 08:30-17:00
+	$(CLI) set-time-profile    423187757 29 2021-01-01:2021-12-31 Mon 08:30-17:00
 	$(CLI) get-time-profiles   423187757
 	$(CLI) put-card            423187757 6154410 2021-01-01 2021-12-31 3:29
 	$(CLI) clear-task-list     423187757
-	$(CLI) add-task            423187757 'trigger once'         3 2021-01-01:2021-12-31 Fri 12:00
-	$(CLI) add-task            423187757 'disable time profile' 3 2021-01-01:2021-12-31 Fri 08:30
-	$(CLI) add-task            423187757 'enable time profile'  3 2021-01-01:2021-12-31 Fri 11:30
-	$(CLI) add-task            423187757 'lock door'            3 2021-01-01:2021-12-31 Fri 11:45
-	$(CLI) add-task            423187757 'unlock door'          3 2021-01-01:2021-12-31 Fri 12:00
-	$(CLI) add-task            423187757 'control door'         3 2021-01-01:2021-12-31 Fri 12:05
-	$(CLI) add-task            423187757 'disable pushbutton'   3 2021-01-01:2021-12-31 Fri 12:10
-	$(CLI) add-task            423187757 'enable pushbutton'    3 2021-01-01:2021-12-31 Fri 12:15
+	$(CLI) add-task            423187757 'disable time profile' 3 2021-01-01:2021-12-31 Mon 08:30
+	$(CLI) add-task            423187757 'enable time profile'  3 2021-01-01:2021-12-31 Mon 11:30
+	$(CLI) add-task            423187757 'lock door'            3 2021-01-01:2021-12-31 Mon 11:45
+	$(CLI) add-task            423187757 'unlock door'          3 2021-01-01:2021-12-31 Mon 12:00
+	$(CLI) add-task            423187757 'control door'         3 2021-01-01:2021-12-31 Mon 12:05
+	$(CLI) add-task            423187757 'disable pushbutton'   3 2021-01-01:2021-12-31 Mon 12:10
+	$(CLI) add-task            423187757 'enable pushbutton'    3 2021-01-01:2021-12-31 Mon 12:15
+	$(CLI) add-task            423187757 'trigger once'         3 2021-01-01:2021-12-31 Mon 12:05
 	$(CLI) refresh-task-list   423187757
 
 godoc:

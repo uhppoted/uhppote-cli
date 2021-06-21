@@ -115,7 +115,7 @@ Device commands:
 - [`get-time-profiles`](#get-time-profiles)
 - [`set-time-profiles`](#set-time-profiles)
 - [`clear-time-profiles`](#clear-time-profiles)
-- [`clear-task-list`](#clear-tasklist)
+- [`clear-task-list`](#clear-task-list)
 - [`add-task`](#add-task)
 - [`refresh-task-list`](#refresh-task-list)
 - [`set-task-list`](#set-task-list)

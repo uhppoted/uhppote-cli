@@ -194,8 +194,8 @@ func (c *AddTask) getTaskType(args []string) (types.TaskType, error) {
 
 	for _, t := range []types.TaskType{
 		types.DoorControlled,
-		types.DoorOpen,
-		types.DoorClosed,
+		types.DoorNormallyOpen,
+		types.DoorNormallyClosed,
 		types.DisableTimeProfile,
 		types.EnableTimeProfile,
 		types.CardNoPassword,
