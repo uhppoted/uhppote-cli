@@ -166,3 +166,39 @@ func getDoor(index int, missing, invalid string) (byte, error) {
 
 	return byte(door), nil
 }
+
+func format(table [][]string) []string {
+	rows := []string{}
+
+	columns := 0
+	for _, row := range table {
+		if len(row) > columns {
+			columns = len(row)
+		}
+	}
+
+	widths := make([]int, columns)
+	for _, row := range table {
+		for i, f := range row {
+			if len(f) > widths[i] {
+				widths[i] = len(f)
+			}
+		}
+	}
+
+	formats := []string{}
+	for _, w := range widths {
+		formats = append(formats, fmt.Sprintf("%%-%vs", w))
+	}
+
+	for _, row := range table {
+		line := []string{}
+		for i, v := range row {
+			line = append(line, fmt.Sprintf(formats[i], v))
+		}
+
+		rows = append(rows, strings.Join(line, "  "))
+	}
+
+	return rows
+}

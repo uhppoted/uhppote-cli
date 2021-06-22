@@ -146,7 +146,7 @@ func (c *SetTaskList) getTSVFile() (string, error) {
 
 func (c *SetTaskList) load(ctx Context, serialNumber uint32, tasks []types.Task) (int, []error, error) {
 	warnings := []error{}
-	count := 0
+	created := [][]string{}
 
 	for id, task := range tasks {
 		if err := c.validate(task); err != nil {
@@ -155,16 +155,33 @@ func (c *SetTaskList) load(ctx Context, serialNumber uint32, tasks []types.Task)
 		}
 
 		if ok, err := ctx.uhppote.AddTask(serialNumber, task); err != nil {
-			return count, nil, err
+			return len(created), nil, err
 		} else if !ok {
 			warnings = append(warnings, fmt.Errorf("%v: could not create task definition %v", serialNumber, id+1))
 		} else {
-			fmt.Printf("   ... created task definition %-3v  %v\n", id+1, task)
-			count++
+			cards := ""
+			if task.Task == types.EnableMoreCards {
+				cards = fmt.Sprintf("%d", task.Cards)
+			}
+
+			created = append(created, []string{
+				fmt.Sprintf("%v", id+1),
+				fmt.Sprintf("%v", task.Task),
+				fmt.Sprintf("%v", task.Door),
+				fmt.Sprintf("%v:%v", task.From, task.To),
+				fmt.Sprintf("%v", task.Weekdays),
+				fmt.Sprintf("%v", task.Start),
+				cards,
+			})
 		}
 	}
 
-	return count, warnings, nil
+	rows := format(created)
+	for _, v := range rows {
+		fmt.Printf("   ... created task definition %s\n", v)
+	}
+
+	return len(created), warnings, nil
 }
 
 func (c *SetTaskList) validate(task types.Task) error {
