@@ -1,6 +1,4 @@
-## v0.7.x
-
-## IN PROGRESS
+## v0.7.1
 
 - [x] Use tabular formatting for set-task-list output
 - [x] Set task ID's to start at 1

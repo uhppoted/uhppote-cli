@@ -1,7 +1,5 @@
-VERSION = v0.7.x
-LDFLAGS = -ldflags "-X uhppote.VERSION=$(VERSION)" 
-DIST   ?= development
-CLI     = ./bin/uhppote-cli
+DIST ?= development
+CLI   = ./bin/uhppote-cli
 
 CONTROLLER ?= Alpha
 SERIALNO ?= 405419896

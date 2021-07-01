@@ -20,6 +20,7 @@ savings changes.
 
 | *Version* | *Description*                                                                                            |
 | --------- | -------------------------------------------------------------------------------------------------------- |
+| v0.7.1    | Added task list commands                                                                                 |
 | v0.7.0    | Added commands to get-, set- and clear time profiles                                                     |
 | v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                              |
 | v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                           |
