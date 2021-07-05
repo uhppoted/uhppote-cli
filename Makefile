@@ -62,21 +62,10 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
-	$(CLI) set-time            405419896
-	$(CLI) clear-time-profiles 405419896
-	$(CLI) set-time-profile    405419896 29 2021-01-01:2021-12-31 Mon 08:30-17:00
-	$(CLI) get-time-profiles   405419896
-	$(CLI) put-card            405419896 8165538 2021-01-01 2021-12-31 3:29
-	$(CLI) clear-task-list     405419896
-	$(CLI) add-task            405419896 'disable time profile' 3 2021-01-01:2021-12-31 Mon 11:00
-	$(CLI) add-task            405419896 'enable time profile'  3 2021-01-01:2021-12-31 Mon 11:05
-	$(CLI) add-task            405419896 'lock door'            3 2021-01-01:2021-12-31 Mon 11:10
-	$(CLI) add-task            405419896 'unlock door'          3 2021-01-01:2021-12-31 Mon 11:15
-	$(CLI) add-task            405419896 'control door'         3 2021-01-01:2021-12-31 Mon 11:20
-	$(CLI) add-task            405419896 'disable pushbutton'   3 2021-01-01:2021-12-31 Mon 11:25
-	$(CLI) add-task            405419896 'enable pushbutton'    3 2021-01-01:2021-12-31 Mon 11:30
-	$(CLI) add-task            405419896 'trigger once'         3 2021-01-01:2021-12-31 Mon 12:01
-	$(CLI) refresh-task-list   405419896
+	$(CLI) version
+	$(CLI) --config '../runtime/CLI/uhppoted.conf' version
+	$(CLI) --bind   '192.168.1.100:54321' version
+	$(CLI) --config '../runtime/CLI/uhppoted.conf' --bind '192.168.1.100:54321' version
 
 irl: build
 	$(CLI) set-time            423187757

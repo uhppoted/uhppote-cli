@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+
+### v0.7.2
+
+1. Updated command line arguments to support types.BindAddr
+
 ### v0.7.1
 
 1. Task list support:

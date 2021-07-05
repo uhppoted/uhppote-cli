@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/uhppoted/uhppote-cli/commands"
+	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppote-core/uhppote"
 	"github.com/uhppoted/uhppoted-lib/config"
 )
@@ -61,22 +62,24 @@ var cli = []commands.Command{
 
 var options = struct {
 	config    string
-	bind      addr
+	bind      types.BindAddr
 	broadcast addr
 	listen    addr
 	timeout   time.Duration
 	debug     bool
 }{
 	config:    "",
-	bind:      addr{nil},
 	broadcast: addr{nil},
 	listen:    addr{nil},
 	debug:     false,
 }
 
 func main() {
+	// ... parse command line args
+	var bind types.BindAddr
+
 	flag.StringVar(&options.config, "config", options.config, "Specifies the path for the config file")
-	flag.Var(&options.bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
+	flag.Var(&bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
 	flag.Var(&options.broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
 	flag.Var(&options.listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
 	flag.DurationVar(&options.timeout, "timeout", 2500*time.Millisecond, "Sets the timeout for a response from a controller (e.g. 3.5s)")
@@ -95,14 +98,12 @@ func main() {
 	}
 
 	// initialise execution context
-	bind, broadcast, listen := config.DefaultIpAddresses()
 
+	_, broadcast, listen := config.DefaultIpAddresses()
 	conf := configuration(cmd)
 
-	if options.bind.address != nil {
-		bind = *options.bind.address
-	} else if conf.BindAddress != nil {
-		bind = *conf.BindAddress
+	if conf.BindAddress != nil {
+		options.bind = *conf.BindAddress
 	}
 
 	if options.broadcast.address != nil {
@@ -131,12 +132,22 @@ func main() {
 		}
 	}
 
+	// ... override defaults/conf settings with command line options
+	overrides := func(a *flag.Flag) {
+		switch a.Name {
+		case "bind":
+			options.bind = bind
+		}
+	}
+
+	flag.Visit(overrides)
+
 	if err := validate(bind, broadcast, listen); err != nil {
 		fmt.Fprintf(os.Stderr, "\n   ERROR: %v\n\n", err)
 		os.Exit(1)
 	}
 
-	u := uhppote.NewUHPPOTE(bind, broadcast, listen, options.timeout, devices, options.debug)
+	u := uhppote.NewUHPPOTE(options.bind, broadcast, listen, options.timeout, devices, options.debug)
 
 	// execute command
 	ctx := commands.NewContext(u, conf, options.debug)
@@ -147,13 +158,9 @@ func main() {
 	}
 }
 
-func validate(bind, broadcast, listen net.UDPAddr) error {
+func validate(bind types.BindAddr, broadcast, listen net.UDPAddr) error {
 	// validate bind.address port
 	port := bind.Port
-
-	if port == 60000 {
-		return fmt.Errorf("port %v is not a valid port for the bind address", bind.Port)
-	}
 
 	if port != 0 && port == broadcast.Port {
 		return fmt.Errorf("bind address port (%v) must not be the same as the broadcast address port", bind.Port)
