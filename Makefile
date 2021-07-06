@@ -64,8 +64,8 @@ bump:
 debug: build
 	$(CLI) version
 	$(CLI) --config '../runtime/CLI/uhppoted.conf' version
-	$(CLI) --bind   '192.168.1.100:54321' version
-	$(CLI) --config '../runtime/CLI/uhppoted.conf' --bind '192.168.1.100:54321' version
+	$(CLI) --bind '192.168.1.100:54321' --broadcast '192.168.1.100:43210' --listen '192.168.1.100:32109' version
+	$(CLI) --config '../runtime/CLI/uhppoted.conf' --bind '192.168.1.100:54321' --broadcast '192.168.1.100:43210' --listen '192.168.1.100:32109' version
 
 irl: build
 	$(CLI) set-time            423187757

@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net"
 	"os"
 	"time"
 
@@ -12,10 +11,6 @@ import (
 	"github.com/uhppoted/uhppote-core/uhppote"
 	"github.com/uhppoted/uhppoted-lib/config"
 )
-
-type addr struct {
-	address *net.UDPAddr
-}
 
 var cli = []commands.Command{
 	&commands.VersionCmd,
@@ -63,25 +58,22 @@ var cli = []commands.Command{
 var options = struct {
 	config    string
 	bind      types.BindAddr
-	broadcast addr
-	listen    addr
+	broadcast types.BroadcastAddr
+	listen    types.ListenAddr
 	timeout   time.Duration
 	debug     bool
-}{
-	config:    "",
-	broadcast: addr{nil},
-	listen:    addr{nil},
-	debug:     false,
-}
+}{}
 
 func main() {
 	// ... parse command line args
 	var bind types.BindAddr
+	var broadcast types.BroadcastAddr
+	var listen types.ListenAddr
 
 	flag.StringVar(&options.config, "config", options.config, "Specifies the path for the config file")
 	flag.Var(&bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
-	flag.Var(&options.broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
-	flag.Var(&options.listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
+	flag.Var(&broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
+	flag.Var(&listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
 	flag.DurationVar(&options.timeout, "timeout", 2500*time.Millisecond, "Sets the timeout for a response from a controller (e.g. 3.5s)")
 	flag.BoolVar(&options.debug, "debug", options.debug, "Displays internal information for diagnosing errors")
 	flag.Parse()
@@ -98,24 +90,18 @@ func main() {
 	}
 
 	// initialise execution context
-
-	_, broadcast, listen := config.DefaultIpAddresses()
 	conf := configuration(cmd)
 
 	if conf.BindAddress != nil {
 		options.bind = *conf.BindAddress
 	}
 
-	if options.broadcast.address != nil {
-		broadcast = *options.broadcast.address
-	} else if conf.BroadcastAddress != nil {
-		broadcast = *conf.BroadcastAddress
+	if conf.BroadcastAddress != nil {
+		options.broadcast = *conf.BroadcastAddress
 	}
 
-	if options.listen.address != nil {
-		listen = *options.listen.address
-	} else if conf.ListenAddress != nil {
-		listen = *conf.ListenAddress
+	if conf.ListenAddress != nil {
+		options.listen = *conf.ListenAddress
 	}
 
 	devices := []uhppote.Device{}
@@ -137,6 +123,12 @@ func main() {
 		switch a.Name {
 		case "bind":
 			options.bind = bind
+
+		case "broadcast":
+			options.broadcast = broadcast
+
+		case "listen":
+			options.listen = listen
 		}
 	}
 
@@ -147,7 +139,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	u := uhppote.NewUHPPOTE(options.bind, broadcast, listen, options.timeout, devices, options.debug)
+	fmt.Printf(">>>> DEBUG:%v %v %v\n", options.bind, options.broadcast, options.listen)
+
+	u := uhppote.NewUHPPOTE(options.bind, options.broadcast, options.listen, options.timeout, devices, options.debug)
 
 	// execute command
 	ctx := commands.NewContext(u, conf, options.debug)
@@ -158,7 +152,7 @@ func main() {
 	}
 }
 
-func validate(bind types.BindAddr, broadcast, listen net.UDPAddr) error {
+func validate(bind types.BindAddr, broadcast types.BroadcastAddr, listen types.ListenAddr) error {
 	// validate bind.address port
 	port := bind.Port
 
@@ -168,16 +162,6 @@ func validate(bind types.BindAddr, broadcast, listen net.UDPAddr) error {
 
 	if port != 0 && port == listen.Port {
 		return fmt.Errorf("bind address port (%v) must not be the same as the listen address port", bind.Port)
-	}
-
-	// validate broadcast.address port
-	if broadcast.Port == 0 {
-		return fmt.Errorf("port %v is not a valid port for the broadcast address", broadcast.Port)
-	}
-
-	// validate listen.address port
-	if listen.Port == 0 {
-		return fmt.Errorf("port %v is not a valid port for the listen address", listen.Port)
 	}
 
 	return nil
@@ -243,21 +227,6 @@ func parse() (commands.Command, error) {
 	}
 
 	return cmd, err
-}
-
-func (b *addr) String() string {
-	return b.address.String()
-}
-
-func (b *addr) Set(s string) error {
-	address, err := net.ResolveUDPAddr("udp", s)
-	if err != nil {
-		return err
-	}
-
-	b.address = address
-
-	return nil
 }
 
 func help() {
