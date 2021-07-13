@@ -3,7 +3,7 @@
 
 ### v0.7.2
 
-1. Updated command line arguments to support types.BindAddr
+1. Updated command line arguments to support types.BindAddr, types.BroadcastAddr and types.ListenAddr
 
 ### v0.7.1
 
