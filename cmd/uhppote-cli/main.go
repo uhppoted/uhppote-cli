@@ -139,8 +139,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf(">>>> DEBUG:%v %v %v\n", options.bind, options.broadcast, options.listen)
-
 	u := uhppote.NewUHPPOTE(options.bind, options.broadcast, options.listen, options.timeout, devices, options.debug)
 
 	// execute command
