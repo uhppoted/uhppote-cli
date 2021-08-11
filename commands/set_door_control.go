@@ -2,6 +2,8 @@ package commands
 
 import (
 	"fmt"
+
+	"github.com/uhppoted/uhppote-core/types"
 )
 
 var SetDoorControlCmd = SetDoorControl{}
@@ -10,16 +12,10 @@ type SetDoorControl struct {
 }
 
 func (c *SetDoorControl) Execute(ctx Context) error {
-	states := map[string]uint8{
+	states := map[string]types.ControlState{
 		"normally open":   1,
 		"normally closed": 2,
 		"controlled":      3,
-	}
-
-	lookup := map[uint8]string{
-		1: "normally open",
-		2: "normally closed",
-		3: "controlled",
 	}
 
 	serialNumber, err := getSerialNumber(ctx)
@@ -35,8 +31,7 @@ func (c *SetDoorControl) Execute(ctx Context) error {
 	control, err := getString(3, "Missing control value", "Invalid control value: %v")
 	if err != nil {
 		return err
-	}
-	if _, ok := states[control]; !ok {
+	} else if _, ok := states[control]; !ok {
 		return fmt.Errorf("Invalid door control value: %s (expected 'normally open', 'normally closed' or 'controlled'", control)
 	}
 
@@ -50,7 +45,7 @@ func (c *SetDoorControl) Execute(ctx Context) error {
 		return err
 	}
 
-	fmt.Printf("%s %v %v (%s)\n", record.SerialNumber, record.Door, record.ControlState, lookup[record.ControlState])
+	fmt.Printf("%s %v %v (%v)\n", record.SerialNumber, record.Door, uint8(record.ControlState), record.ControlState)
 
 	return nil
 }

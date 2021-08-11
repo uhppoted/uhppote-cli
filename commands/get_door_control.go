@@ -10,12 +10,6 @@ type GetDoorControl struct {
 }
 
 func (c *GetDoorControl) Execute(ctx Context) error {
-	lookup := map[uint8]string{
-		1: "normally open",
-		2: "normally closed",
-		3: "controlled",
-	}
-
 	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
@@ -31,7 +25,7 @@ func (c *GetDoorControl) Execute(ctx Context) error {
 		return err
 	}
 
-	fmt.Printf("%s %v %v (%s)\n", record.SerialNumber, record.Door, record.ControlState, lookup[record.ControlState])
+	fmt.Printf("%s %v %v (%v)\n", record.SerialNumber, record.Door, uint8(record.ControlState), record.ControlState)
 
 	return nil
 }
