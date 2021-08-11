@@ -1,12 +1,6 @@
-## v0.7.1
+## v0.7.x
 
-- [x] Use tabular formatting for set-task-list output
-- [x] Set task ID's to start at 1
-- [x] Update README
-- [x] `set-task-list`
-- [x] `add-task`
-- [x] `refresh-task-list`
-- [x] `clear-task-list`
+- [ ] Unit/integration test for door control
 
 ## TODO
 
