@@ -1,6 +1,7 @@
 ## v0.7.x
 
 - [ ] Unit/integration test for door control
+- [ ] Fix get-events to handle rollover a la uhppoted-lib
 
 ## TODO
 

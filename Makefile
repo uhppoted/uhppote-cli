@@ -62,10 +62,7 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
-	$(CLI) version
-	$(CLI) --config '../runtime/CLI/uhppoted.conf' version
-	$(CLI) --bind '192.168.1.100:54321' --broadcast '192.168.1.100:43210' --listen '192.168.1.100:32109' version
-	$(CLI) --config '../runtime/CLI/uhppoted.conf' --bind '192.168.1.100:54321' --broadcast '192.168.1.100:43210' --listen '192.168.1.100:32109' version
+	$(CLI) get-event $(SERIALNO) 17
 
 irl: build
 	$(CLI) set-time            423187757

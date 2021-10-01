@@ -10,6 +10,8 @@ var GetEventCmd = GetEvent{}
 type GetEvent struct {
 }
 
+const ROLLOVER = 100000
+
 func (c *GetEvent) Execute(ctx Context) error {
 	serialNumber, err := getSerialNumber(ctx)
 	if err != nil {
@@ -21,7 +23,7 @@ func (c *GetEvent) Execute(ctx Context) error {
 		return err
 	}
 
-	if index > 100000 {
+	if index > ROLLOVER {
 		index = 1
 	}
 
