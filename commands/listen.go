@@ -29,7 +29,7 @@ func (l *listener) OnError(err error) bool {
 }
 
 func (c *Listen) Execute(ctx Context) error {
-	q := make(chan os.Signal)
+	q := make(chan os.Signal, 1)
 
 	defer close(q)
 
