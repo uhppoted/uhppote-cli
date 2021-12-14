@@ -62,7 +62,8 @@ bump:
 	go get -u github.com/uhppoted/uhppoted-lib
 
 debug: build
-	$(CLI) get-event $(SERIALNO) 17
+	$(CLI) get-event $(SERIALNO)
+	go test -v -run TestGetNextEvent* ./commands
 
 irl: build
 	$(CLI) set-time            423187757

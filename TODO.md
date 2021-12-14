@@ -1,10 +1,17 @@
 ## v0.7.x
 
-- [ ] Unit/integration test for door control
 - [ ] Fix get-events to handle rollover a la uhppoted-lib
+      - [x] Rework get-events
+      - [ ] Remove 'rollover' throughout
+      - [ ] Test rollover with simulator
+
+- [ ] Unit/integration test for door control
 
 ## TODO
 
+- [ ] --changelog
+      - https://bhupesh-v.github.io/why-how-add-changelog-in-your-next-cli/
+- [ ] https://capiche.com/e/consumer-dev-tools-command-palette
 - [ ] Check card number field for get-event
 - [ ] Route debugging to stderr
 - [ ] get-events --fetch
