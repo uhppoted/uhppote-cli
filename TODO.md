@@ -2,7 +2,8 @@
 
 - [ ] Fix get-events to handle rollover a la uhppoted-lib
       - [x] Rework get-events
-      - [ ] Remove 'rollover' throughout
+      - [x] Remove 'rollover' throughout
+      - [ ] Test rollover with real board
       - [ ] Test rollover with simulator
 
 - [ ] Unit/integration test for door control
