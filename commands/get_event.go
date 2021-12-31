@@ -34,6 +34,7 @@ func (c *GetEvent) Execute(ctx Context) error {
 	}
 
 	index := c.getNextIndex(first, last, current)
+
 	if len(flag.Args()) > 2 {
 		switch clean(flag.Args()[2]) {
 		case "first":
@@ -178,14 +179,10 @@ func (c *GetEvent) getCurrentIndex(ctx Context, serialNumber uint32) (uint32, er
 func (c *GetEvent) getNextIndex(first, last, current uint32) uint32 {
 	next := current + 1
 
-	if last >= first {
-		if next < first {
-			return first
-		} else if next > last {
-			return last
-		}
-	} else if next < first && next > last {
-		return last
+	if next < first {
+		next = first
+	} else if next > last {
+		next = last + 1
 	}
 
 	return next

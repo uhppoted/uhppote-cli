@@ -1,10 +1,11 @@
 ## v0.7.x
 
-- [ ] Fix get-events to handle rollover a la uhppoted-lib
+- [x] Fix get-events to handle rollover a la uhppoted-lib
       - [x] Rework get-events
+      - [x] Test rollover with real board
       - [x] Remove 'rollover' throughout
-      - [ ] Test rollover with real board
-      - [ ] Test rollover with simulator
+      - [x] Implement 'overwritten' events
+      - [x] Test rollover with simulator
 
 - [ ] Unit/integration test for door control
 
