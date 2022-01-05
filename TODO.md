@@ -8,6 +8,8 @@
       - [x] Test rollover with simulator
 
 - [ ] Unit/integration test for door control
+- [ ] Restructure main()
+      - https://pace.dev/blog/2020/02/12/why-you-shouldnt-use-func-main-in-golang-by-mat-ryer.html
 
 ## TODO
 
