@@ -217,7 +217,7 @@ uhppote-cli [options] get-devices
   Beta   303986753  192.168.1.100  255.255.255.0  192.168.1.1  52:fd:fc:07:21:82  v8.92  2019-08-15
   Alpha  405419896  192.168.1.100  255.255.255.0  192.168.1.1  00:12:23:34:45:56  v8.92  2018-11-05
 ```
-**NOTE**  
+**NOTE**
 1. The `name` field is retrieved from the _uhppoted.conf_ file. 
 2. The `name` column is omitted entirely if none of the devices has a name defined in the _uhppoted.conf_ file.
 
@@ -1093,7 +1093,7 @@ The event ID should be within the event range returned by `get-events`.
 uhppote-cli [options] get-event <device ID> <event ID>
 
   <device ID>   (required) Controller serial number (or name)
-  <event ID>    (optional) ID of event to be retrieved. If omitted, the event at the current event index is returned and the event index is incremented. `first` and `last` retrieve the _first_ and _last_ stored events respectively.
+  <event ID>    (optional) ID of event to be retrieved. If omitted, the event at the current event index is returned and the event index is incremented. `first`, `last`, `current` and `next` retrieve the _first_, _last_, _current_ and _next_ stored events respectively (the current event index is only incremented for `next).
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -1115,6 +1115,12 @@ uhppote-cli [options] get-event <device ID> <event ID>
     
   > uhppote-cli get-event 405419896 last
     405419896  67     2019-07-24 20:12:43 98765432 4 false 6     
+    
+  > uhppote-cli get-event 405419896 current
+    405419896  23     2019-07-24 20:12:43 98765432 4 false 6     
+    
+  > uhppote-cli get-event 405419896 next
+    405419896  24     2019-07-24 20:12:43 98765432 4 false 6     
 
   > uhppote-cli get-event 405419896 17263
     ERROR: 405419896:  event index 17263 out of range

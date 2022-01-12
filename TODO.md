@@ -6,6 +6,7 @@
       - [x] Remove 'rollover' throughout
       - [x] Implement 'overwritten' events
       - [x] Test rollover with simulator
+      - [ ] next:N
 
 - [ ] Unit/integration test for door control
 - [ ] Restructure main()
