@@ -34,19 +34,36 @@ func (c *GetEvent) Execute(ctx Context) error {
 	}
 
 	index := c.getNextIndex(first, last, current)
+	count := 1
+	bump := true
+	fetched := uint32(0)
 
 	if len(flag.Args()) > 2 {
-		switch clean(flag.Args()[2]) {
+		bump = false
+		arg := clean(flag.Args()[2])
+
+		switch arg {
 		case "first":
 			index = first
 
 		case "last":
 			index = last
 
+		case "current":
+			index = current
+
 		case "next":
+			bump = true
 
 		default:
-			if ix, err := c.getUint32(flag.Args()[2]); err != nil {
+			if match := regexp.MustCompile("^next:([0-9]+)$").FindStringSubmatch(arg); match != nil && err == nil {
+				if N, err := strconv.ParseInt(match[1], 10, 32); err != nil {
+					return err
+				} else {
+					count = int(N)
+					bump = true
+				}
+			} else if ix, err := c.getUint32(flag.Args()[2]); err != nil {
 				return err
 			} else {
 				index = ix
@@ -54,27 +71,42 @@ func (c *GetEvent) Execute(ctx Context) error {
 		}
 	}
 
-	event, err := ctx.uhppote.GetEvent(serialNumber, index)
-	if err != nil {
-		return err
+	events := []interface{}{}
+
+	for len(events) < count {
+		event, err := ctx.uhppote.GetEvent(serialNumber, index)
+
+		if err != nil {
+			return err
+		} else if event == nil {
+			break
+		} else if event.Index != index {
+			return fmt.Errorf("%v:  event index %v out of range", serialNumber, index)
+		}
+
+		events = append(events, event)
+		fetched = event.Index
+		index++
 	}
 
-	if event == nil {
+	switch {
+	case len(events) == 0 && count == 1:
 		return fmt.Errorf("%v:  no event at index: %v", serialNumber, index)
+
+	case len(events) == 0 && count > 1:
+		return fmt.Errorf("%v:  no events", serialNumber)
 	}
 
-	if event.Index != index {
-		return fmt.Errorf("%v:  event index %v out of range", serialNumber, index)
-	}
-
-	if len(flag.Args()) < 3 {
-		_, err := ctx.uhppote.SetEventIndex(serialNumber, index)
+	if bump && fetched != 0 {
+		_, err := ctx.uhppote.SetEventIndex(serialNumber, fetched)
 		if err != nil {
 			return err
 		}
 	}
 
-	fmt.Printf("%v\n", event)
+	for _, event := range events {
+		fmt.Printf("%v\n", event)
+	}
 
 	return nil
 }

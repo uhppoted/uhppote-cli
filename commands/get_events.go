@@ -2,7 +2,10 @@ package commands
 
 import (
 	"errors"
+	"flag"
 	"fmt"
+	"regexp"
+	"strconv"
 )
 
 var GetEventsCmd = GetEvents{}
@@ -11,29 +14,34 @@ type GetEvents struct {
 }
 
 func (c *GetEvents) Execute(ctx Context) error {
-	serialNumber, err := getSerialNumber(ctx)
+	deviceID, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
 	}
 
-	first, err := ctx.uhppote.GetEvent(serialNumber, 0)
+	first, err := ctx.uhppote.GetEvent(deviceID, 0)
 	if err != nil {
 		return err
 	}
 
-	last, err := ctx.uhppote.GetEvent(serialNumber, 0xffffffff)
+	last, err := ctx.uhppote.GetEvent(deviceID, 0xffffffff)
+	if err != nil {
+		return err
+	}
+
+	current, err := ctx.uhppote.GetEventIndex(deviceID)
 	if err != nil {
 		return err
 	}
 
 	if first == nil && last == nil {
-		fmt.Printf("%v  NO EVENTS\n", serialNumber)
+		fmt.Printf("%v  NO EVENTS\n", deviceID)
 	} else if first == nil {
 		return errors.New("Failed to get 'first' event")
 	} else if last == nil {
 		return errors.New("Failed to get 'last' event")
 	} else {
-		fmt.Printf("%v  %d  %d\n", serialNumber, first.Index, last.Index)
+		fmt.Printf("%v  %v  %v  %v\n", deviceID, first.Index, last.Index, current.Index)
 	}
 
 	return nil
@@ -72,4 +80,23 @@ func (c *GetEvents) Help() {
 // Returns false - configuration is useful but optional.
 func (c *GetEvents) RequiresConfig() bool {
 	return false
+}
+
+func (c *GetEvents) getCount() (uint32, error) {
+	args := flag.Args()
+
+	if len(args) > 2 {
+		arg := args[2]
+		if ok, err := regexp.MatchString("^[1-9][0-9]*$", arg); err != nil {
+			return 0, err
+		} else if !ok {
+			return 0, fmt.Errorf("Invalid --count value (%v)", arg)
+		} else if N, err := strconv.ParseUint(arg, 10, 32); err != nil {
+			return 0, err
+		} else {
+			return uint32(N), nil
+		}
+	}
+
+	return 0, nil
 }

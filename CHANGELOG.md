@@ -1,13 +1,17 @@
-## CHANGELOG
+# CHANGELOG
 
+## [Unreleased]
 
-### v0.7.2
-
+### Changed
 1. Updated command line arguments to support types.BindAddr, types.BroadcastAddr and types.ListenAddr
+2. Replaced event rollover with handling for _nil_ and _overwritten_ events
+3. Reworked `get-events` to also retrieve the current event index
+4. Reworked `get-event` to support retrieving multiple events with _next:N_
 
-### v0.7.1
+## [0.7.1](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.7.1) - 2021-07-01
 
-1. Task list support:
+### Added
+1. Task lists:
    -  `clear-task-list`
    -  `add-task`
    -  `refresh-task-list`
@@ -16,14 +20,15 @@
 2. Documented commands missing from the README.
 
 
-### v0.7.0
+## [0.7.0](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.7.0) - 2021-06-21
 
-1. Added support for using controller names (from uhppoted.conf) in device commands. e.g. 
+### Added
+1. Support for using controller names (from uhppoted.conf) in device commands. e.g. 
    ```
    uhppote-cli get-device alpha
    ```
 
-2. Time profile support:
+2. Time profiles:
    -  `get-time-profile`
    -  `set-time-profile`
    -  `clear-time-profiles`
@@ -31,3 +36,10 @@
    -  `set-time-profiles`
 
 3. Documented commands missing from the README.
+
+
+## [0.6.12](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.6.12) - 2021-04-28
+
+### Changed
+1. Added validation for `bind`, `broadcast` and `listen` ports to mitigate common misconfigurations.
+2. Corrected typo in _README_

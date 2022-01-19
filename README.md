@@ -1054,7 +1054,8 @@ uhppote-cli [options] set-task-list <device ID> <file>
 
 #### `get-events`
 
-Retrieves the start and end range of the events stored on a controller.
+Retrieves the start and end range of the events stored on a controller as well as the 
+current event index.
 
 ```
 uhppote-cli [options] get-events <device ID>
@@ -1071,7 +1072,7 @@ uhppote-cli [options] get-events <device ID>
 
   Examples:
   > uhppote-cli get-events 405419896
-    405419896  1  69
+    405419896  1  69 53
   
   > uhppote-cli get-events 303986753
     303986753  NO EVENTS
@@ -1093,7 +1094,10 @@ The event ID should be within the event range returned by `get-events`.
 uhppote-cli [options] get-event <device ID> <event ID>
 
   <device ID>   (required) Controller serial number (or name)
-  <event ID>    (optional) ID of event to be retrieved. If omitted, the event at the current event index is returned and the event index is incremented. `first`, `last`, `current` and `next` retrieve the _first_, _last_, _current_ and _next_ stored events respectively (the current event index is only incremented for `next).
+  <event ID>    (optional) ID of event to be retrieved. If omitted, the event at the current event index is returned 
+                           and the event index is incremented. `first`, `last`, `current` and `next` retrieve the 
+                           _first_, _last_, _current_ and _next_ stored events respectively. The controller _current event
+                           index_ is only incremented for `next`.
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -1105,25 +1109,28 @@ uhppote-cli [options] get-event <device ID> <event ID>
 
   Examples:
   > uhppote-cli get-event 405419896
-    405419896  24     2019-07-24 20:12:40 98765432 3 true  0 
+    405419896  25     2019-07-24 20:12:40 98765432 3 true  0 
     
-  > uhppote-cli get-event 405419896 17
-    405419896  17     2019-07-24 20:12:47 98765432 3 true  0     
+  > uhppote-cli get-event 405419896 27
+    405419896  27     2019-07-24 20:12:47 98765432 3 true  0     
     
   > uhppote-cli get-event 405419896 first
-    405419896  1      2019-07-24 20:12:33 98765432 3 true  0     
+    405419896  23      2019-07-24 20:12:33 98765432 3 true  0     
     
   > uhppote-cli get-event 405419896 last
     405419896  67     2019-07-24 20:12:43 98765432 4 false 6     
     
   > uhppote-cli get-event 405419896 current
-    405419896  23     2019-07-24 20:12:43 98765432 4 false 6     
+    405419896  24     2019-07-24 20:12:43 98765432 4 false 6     
     
   > uhppote-cli get-event 405419896 next
-    405419896  24     2019-07-24 20:12:43 98765432 4 false 6     
+    405419896  25     2019-07-24 20:12:43 98765432 4 false 6     
 
   > uhppote-cli get-event 405419896 17263
-    ERROR: 405419896:  event index 17263 out of range
+    ERROR: 405419896:  no event at index 17263
+
+  > uhppote-cli get-event 405419896 17263 17
+    ERROR: 405419896:  event at index has been overwritten
 ```
 
 #### `get-event-index`

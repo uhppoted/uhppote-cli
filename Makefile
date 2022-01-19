@@ -203,10 +203,14 @@ get-events: build
 
 get-event: build
 	$(CLI) get-event $(SERIALNO) 17
-	$(CLI) get-event $(SERIALNO) 17263
 	$(CLI) get-event $(SERIALNO) first
 	$(CLI) get-event $(SERIALNO) last
+	$(CLI) get-event $(SERIALNO) current
+	$(CLI) get-event $(SERIALNO) next
+	$(CLI) get-event $(SERIALNO) next:5
 	$(CLI) get-event $(SERIALNO)
+	$(CLI) get-event $(SERIALNO) 17263
+	# $(CLI) get-event 201020304 100
 
 get-event-index: build
 	$(CLI) $(DEBUG) get-event-index $(SERIALNO)
