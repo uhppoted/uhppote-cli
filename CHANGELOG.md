@@ -1,12 +1,13 @@
 # CHANGELOG
 
-## [Unreleased]
+## [0.7.2](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.7.2) - 2022-01-26
 
 ### Changed
 1. Updated command line arguments to support types.BindAddr, types.BroadcastAddr and types.ListenAddr
 2. Replaced event rollover with handling for _nil_ and _overwritten_ events
 3. Reworked `get-events` to also retrieve the current event index
 4. Reworked `get-event` to support retrieving multiple events with _next:N_
+
 
 ## [0.7.1](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.7.1) - 2021-07-01
 

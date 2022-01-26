@@ -1,4 +1,4 @@
-## v0.7.x
+## v0.7.2
 
 - [x] Fix get-events to handle rollover a la uhppoted-lib
       - [x] Rework get-events
@@ -8,12 +8,11 @@
       - [x] Test rollover with simulator
       - [x] next:N
 
+## TODO
+
 - [ ] Unit/integration test for door control
 - [ ] Restructure main()
       - https://pace.dev/blog/2020/02/12/why-you-shouldnt-use-func-main-in-golang-by-mat-ryer.html
-
-## TODO
-
 - [ ] --changelog
       - https://bhupesh-v.github.io/why-how-add-changelog-in-your-next-cli/
 - [ ] https://capiche.com/e/consumer-dev-tools-command-palette

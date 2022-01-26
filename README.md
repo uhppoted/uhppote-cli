@@ -20,6 +20,7 @@ savings changes.
 
 | *Version* | *Description*                                                                                            |
 | --------- | -------------------------------------------------------------------------------------------------------- |
+| v0.7.2    | Replaced event rollover with `overwritten` event handling                                                |
 | v0.7.1    | Added task list commands                                                                                 |
 | v0.7.0    | Added commands to get-, set- and clear time profiles                                                     |
 | v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                              |
@@ -80,7 +81,7 @@ The above commands build the `uhppote-cli` executable to the `bin` directory.
 | ---------------------------------------------------------------------------- | ------------------------------------------ |
 | [com.github/uhppoted/uhppote-core](https://github.com/uhppoted/uhppote-core) | Device level API implementation            |
 | [com.github/uhppoted/uhppoted-lib](https://github.com/uhppoted/uhppoted-lib) | common API for external applications       |
-| golang.org/x/lint/golint                                                     | Additional *lint* check for release builds |
+
 
 ## uhppote-cli
 
