@@ -70,7 +70,7 @@ If you prefer not to use `make`:
 git clone https://github.com/uhppoted/uhppote-cli.git
 cd uhppote-cli
 mkdir bin
-go build -o bin ./...
+go build -trimpath -o bin ./...
 ```
 
 The above commands build the `uhppote-cli` executable to the `bin` directory.

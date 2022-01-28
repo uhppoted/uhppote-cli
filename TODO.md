@@ -1,12 +1,6 @@
-## v0.7.2
+## v0.7.x
 
-- [x] Fix get-events to handle rollover a la uhppoted-lib
-      - [x] Rework get-events
-      - [x] Test rollover with real board
-      - [x] Remove 'rollover' throughout
-      - [x] Implement 'overwritten' events
-      - [x] Test rollover with simulator
-      - [x] next:N
+- [x] Add -trimpath to `go build`
 
 ## TODO
 
