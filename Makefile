@@ -160,14 +160,14 @@ put-card: build
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
 
-delete-all: build
+delete-cards: build
 	$(CLI) delete-all $(SERIALNO)
 
 get-time-profile: build
 	$(CLI) $(DEBUG) get-time-profile $(SERIALNO) 29
 
 set-time-profile: build
-	$(CLI) $(DEBUG) set-time-profile 303986753 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
 	$(CLI) $(DEBUG) set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 
 clear-time-profiles: build
