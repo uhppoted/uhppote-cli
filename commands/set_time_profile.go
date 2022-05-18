@@ -53,13 +53,13 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 				if date, err := types.DateFromString(match[1]); err != nil {
 					return fmt.Errorf("%v: invalid 'start' date (%v)", match[1], err)
 				} else {
-					from = date
+					from = &date
 				}
 
 				if date, err := types.DateFromString(match[2]); err != nil {
 					return fmt.Errorf("%v: invalid 'to' date (%v)", match[1], err)
 				} else {
-					to = date
+					to = &date
 				}
 
 			}
