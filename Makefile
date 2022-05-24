@@ -70,8 +70,7 @@ release: update-release build-all
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) get-event $(SERIALNO)
-	go test -v -run TestGetNextEvent* ./commands
+	$(CLI) --debug get-card 423187757 6154410
 
 irl: build
 	$(CLI) set-time            423187757

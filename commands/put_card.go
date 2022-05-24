@@ -110,9 +110,9 @@ func (c *PutCard) RequiresConfig() bool {
 	return false
 }
 
-func getPermissions() (map[uint8]int, error) {
+func getPermissions() (map[uint8]uint8, error) {
 	index := 5
-	permissions := map[uint8]int{1: 0, 2: 0, 3: 0, 4: 0}
+	permissions := map[uint8]uint8{1: 0, 2: 0, 3: 0, 4: 0}
 
 	if len(flag.Args()) > index {
 		tokens := strings.Split(flag.Arg(index), ",")
@@ -138,7 +138,7 @@ func getPermissions() (map[uint8]int, error) {
 					return nil, fmt.Errorf("Invalid time profile '%v' (valid profiles are in the range 2 to 254)", match[2])
 				}
 
-				permissions[uint8(door)] = int(profile)
+				permissions[uint8(door)] = uint8(profile)
 			}
 		}
 	}
