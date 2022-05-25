@@ -22,7 +22,7 @@ func (c *GetCards) Execute(ctx Context) error {
 
 	var index uint32 = 1
 	for count := uint32(0); count < N; {
-		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index, nil)
+		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index)
 		if err != nil {
 			return err
 		}
