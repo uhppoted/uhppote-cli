@@ -18,22 +18,23 @@ savings changes.
 
 ## Releases
 
-| *Version* | *Description*                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------- |
-| v0.7.2    | Replaced event rollover with `overwritten` event handling                                                |
-| v0.7.1    | Added task list commands                                                                                 |
-| v0.7.0    | Added commands to get-, set- and clear time profiles                                                     |
-| v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                              |
-| v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                           |
-| v0.6.8    | Maintenance release for version compatibility with `uhppote-core` `v0.6.8`                               |
-| v0.6.7    | Implements `record-special-events` command to enable/disable door events                                 |
-| v0.6.5    | Maintenance release for version compatibility with `node-red-contrib-uhppoted`                           |
-| v0.6.4    | Maintenance release for version compatibility with `uhppoted-app-sheets`                                 |
-| v0.6.3    | Reworked get-cards to handle deleted records                                                             |
-| v0.6.2    | Fixed get-events for controllers without any retrievable events and improved configuration file handling |
-| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers                     |
-| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                                    |
-| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules*                |
+| *Version* | *Description*                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| v0.7.3    | Maintenance release for version compatibility with `uhppote-core` v0.7.3                           |
+| v0.7.2    | Replaced event rollover with `overwritten` event handling                                          |
+| v0.7.1    | Added task list commands                                                                           |
+| v0.7.0    | Added commands to get-, set- and clear time profiles                                               |
+| v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                        |
+| v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                     |
+| v0.6.8    | Maintenance release for version compatibility with `uhppote-core` `v0.6.8`                         |
+| v0.6.7    | Implements `record-special-events` command to enable/disable door events                           |
+| v0.6.5    | Maintenance release for version compatibility with `node-red-contrib-uhppoted`                     |
+| v0.6.4    | Maintenance release for version compatibility with `uhppoted-app-sheets`                           |
+| v0.6.3    | Reworked get-cards to handle deleted records                                                       |
+| v0.6.2    | Fixed get-events for controllers without any events and improved configuration filse handling      |
+| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers               |
+| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                              |
+| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules*          |
 
 ## Installation
 

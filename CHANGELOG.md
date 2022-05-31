@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [0.7.3](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.7.3) - 2022-06-01
+
+### Changed
+1. Maintenance release for compatibility with [uhppote-core](https://github.com/uhppoted/uhppote-core) 
+   v0.7.3
+2. Fixed errors in README (cf. https://github.com/uhppoted/uhppote-cli/issues/8)
+
 ## [0.7.2](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.7.2) - 2022-01-26
 
 ### Changed
