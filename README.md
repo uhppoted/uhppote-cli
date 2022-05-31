@@ -265,7 +265,7 @@ uhppote-cli [options] get-devices
 
   Alpha  405419896  192.168.1.100   255.255.255.0   192.168.1.1     00:12:23:34:45:56 v8.92 2018-11-05
 ```
-**NOTE**  
+**NOTE**
 1. The `name` field is retrieved from the _uhppoted.conf_ file. 
 2. The `name` field is omitted entirely if the devices does not have a name defined in the _uhppoted.conf_ file.
 
@@ -283,6 +283,10 @@ uhppote-cli [options] set-address <device> <address> [mask] [gateway]
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the controllers
 
   Example:
