@@ -70,7 +70,7 @@ release: update-release build-all
 	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) --debug get-card 423187757 6154410
+	$(CLI) --debug get-time 405419896
 
 irl: build
 	$(CLI) set-time            423187757
