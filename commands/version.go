@@ -19,7 +19,7 @@ func (c *Version) Execute(ctx Context) error {
 	return nil
 }
 
-//CLI returns the 'version' command line
+// CLI returns the 'version' command line
 func (c *Version) CLI() string {
 	return "version"
 }
