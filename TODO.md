@@ -2,6 +2,12 @@
 
 ### IN PROGRESS
 
+- [ ] HOWTO: ACL with Google Sheets
+      - `curl -Lo ACL.tsv "https://docs.google.com/spreadsheets/d/1_erZMyFmO6PM0PrAfEqdsiH9haiw-2UqY0kLwo_WTO8/export?gid=640947601&format=tsv"`
+      - https://stackoverflow.com/questions/24255472/download-export-public-google-spreadsheet-as-tsv-from-command-line
+
+- [ ] Windmill a la gcloud ...⠏⠹ (etc) 
+
 ## TODO
 
 - [ ] Unit/integration test for door control

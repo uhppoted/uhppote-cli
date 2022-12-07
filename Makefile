@@ -58,8 +58,10 @@ build-all: test vet
 	mkdir -p dist/$(DIST)/windows
 	mkdir -p dist/$(DIST)/darwin
 	mkdir -p dist/$(DIST)/linux
+	mkdir -p dist/$(DIST)/arm
 	mkdir -p dist/$(DIST)/arm7
 	env GOOS=linux   GOARCH=amd64         GOWORK=off go build -trimpath -o dist/$(DIST)/linux   ./...
+	env GOOS=linux   GOARCH=arm64         GOWORK=off go build -trimpath -o dist/$(DIST)/arm     ./...
 	env GOOS=linux   GOARCH=arm   GOARM=7 GOWORK=off go build -trimpath -o dist/$(DIST)/arm7    ./...
 	env GOOS=darwin  GOARCH=amd64         GOWORK=off go build -trimpath -o dist/$(DIST)/darwin  ./...
 	env GOOS=windows GOARCH=amd64         GOWORK=off go build -trimpath -o dist/$(DIST)/windows ./...
@@ -67,10 +69,12 @@ build-all: test vet
 release: update-release build-all
 	find . -name ".DS_Store" -delete
 	tar --directory=dist --exclude=".DS_Store" -cvzf dist/$(DIST).tar.gz $(DIST)
-	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 debug: build
-	$(CLI) --debug get-time 405419896
+	$(CLI) $(DEBUG) set-time-profile 405419896 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) $(DEBUG) set-time-profile 303986753 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
+	$(CLI) $(DEBUG) set-time-profile 303986753 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 
 irl: build
 	$(CLI) set-time            423187757
@@ -166,8 +170,9 @@ get-time-profile: build
 	$(CLI) $(DEBUG) get-time-profile $(SERIALNO) 29
 
 set-time-profile: build
-	$(CLI) $(DEBUG) set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) $(DEBUG) set-time-profile 405419896 29 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) $(DEBUG) set-time-profile 405419896 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 
 clear-time-profiles: build
 	$(CLI) $(DEBUG) clear-time-profiles $(SERIALNO)

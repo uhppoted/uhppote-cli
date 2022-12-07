@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [Unreleased]
+
+### Added
+1. Added ARM64 to release builds
+
+### Changed
+1. Removed _zip_ files from release artifacts (no longer necessary)
+
 ## [0.8.2](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.2) - 2022-10-14
 
 ### Changed
