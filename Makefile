@@ -70,6 +70,11 @@ release: update-release build-all
 	find . -name ".DS_Store" -delete
 	tar --directory=dist --exclude=".DS_Store" -cvzf dist/$(DIST).tar.gz $(DIST)
 
+publish: release
+	echo "Releasing version $(VERSION)"
+	rm -f dist/development.tar.gz
+	gh release create "$(VERSION)" ./dist/*.tar.gz --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
+
 debug: build
 	$(CLI) $(DEBUG) set-time-profile 405419896 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
 	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
