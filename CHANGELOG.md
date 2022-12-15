@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [Unreleased]
+## [0.8.3](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.3) - 2022-12-16
 
 ### Added
 1. Added ARM64 to release builds
@@ -8,11 +8,13 @@
 ### Changed
 1. Removed _zip_ files from release artifacts (no longer necessary)
 
+
 ## [0.8.2](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.2) - 2022-10-14
 
 ### Changed
 1. Maintenance release for compatiblity with [uhppote-core](https://github.com/uhppoted/uhppote-core) v0.8.2
 2. Bumped Go version to 1.19
+
 
 ## [0.8.1](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.1) - 2022-08-01
 

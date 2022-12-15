@@ -20,6 +20,7 @@ savings changes.
 
 | *Version* | *Description*                                                                                      |
 | --------- | -------------------------------------------------------------------------------------------------- |
+| v0.8.3    | Added ARM64 to release builds                                                                      |
 | v0.8.2    | Maintenance release for version compatibility with `uhppote-core` v0.8.2                           |
 | v0.8.1    | Maintenance release for version compatibility with `uhppote-core` v0.8.1                           |
 | v0.8.0    | Maintenance release for version compatibility with `uhppote-core` v0.8.0                           |
