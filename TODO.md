@@ -8,6 +8,14 @@
 
 - [ ] Windmill a la gcloud ...⠏⠹ (etc) 
 
+- [ ] Controller with uninitialised time
+```
+./bin/uhppote-cli listen
+
+Listening...
+ERROR: parsing time "000000": month out of range
+```
+
 ## TODO
 
 - [ ] Unit/integration test for door control
