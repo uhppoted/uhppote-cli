@@ -131,6 +131,7 @@ Device commands:
 - [`get-event-index`](#get-event-index)
 - [`set-event-index`](#set-event-index)
 - [`open`](#open)
+- [`set-pc-control`](#set-pc-control)
 - [`listen`](#listen)
 
 ACL commands:
@@ -1203,6 +1204,41 @@ uhppote-cli [options] open <device ID> <door>
   Examples:
   > uhppote-cli open 405419896 3
     405419896  true
+```
+
+#### `set-pc-control`
+
+Enables or disables remote host access control. 
+
+If remote host access control is enabled, the access controller expects the host to communicate at least
+once every 30 seconds otherwise it reverts to local control of access using the stored list of cards (the
+communication is not required to be a 'set-pc-control' command - any command is sufficient). If the access
+controller has reverted to local control because no message has been received from the host for more than
+30 seconds, any subsequent communication from the remote host will re-establish remote control mode again.
+
+```
+uhppote-cli [options] set-pc-control <device ID> <enable>
+
+  <device ID>   (required) Controller serial number (or name)
+  <enable>      (optional) Enables remote access control if `true`, disables it otherwise. Defaults to `true`.
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli set-pc-control 405419896
+    405419896  true
+
+  > uhppote-cli set-pc-control 405419896 true
+    405419896  true
+
+  > uhppote-cli set-pc-control 405419896 false
+    405419896  false
 ```
 
 #### `listen`

@@ -230,6 +230,10 @@ set-event-index: build
 open: build
 	$(CLI) $(DEBUG) open $(SERIALNO) 1
 
+set-pc-control: build
+	$(CLI) $(DEBUG) set-pc-control $(SERIALNO) true
+	# $(CLI) $(DEBUG) set-pc-control 423187757 true
+
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 
 
