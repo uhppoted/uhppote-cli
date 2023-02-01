@@ -1,9 +1,9 @@
 # TODO
 
-- [ ] set-pc-control
+- [x] set-pc-control
       - [x] CLI command
       - [x] README
-      - [ ] _bash_ script
+      - [x] _bash_ script
 
 - [ ] Fix listen event format
 ```
