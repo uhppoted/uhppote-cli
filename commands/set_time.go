@@ -24,7 +24,7 @@ func (c *SetTime) Execute(ctx Context) error {
 		} else {
 			datetime, err = time.Parse("2006-01-02 15:04:05", flag.Arg(2))
 			if err != nil {
-				return fmt.Errorf("Invalid date/time parameter: %v", flag.Arg(3))
+				return fmt.Errorf("invalid date/time parameter: %v", flag.Arg(3))
 			}
 		}
 	}

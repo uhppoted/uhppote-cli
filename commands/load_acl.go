@@ -90,7 +90,7 @@ loop:
 
 func (c *LoadACL) parseArgs() (string, error) {
 	if len(flag.Args()) < 2 {
-		return "", fmt.Errorf("Please specify the TSV file from which to load the access control list ")
+		return "", fmt.Errorf("please specify the TSV file from which to load the access control list ")
 	}
 
 	file := flag.Arg(1)
@@ -98,18 +98,18 @@ func (c *LoadACL) parseArgs() (string, error) {
 
 	if err != nil {
 		if os.IsNotExist(err) {
-			return "", fmt.Errorf("File '%s' does not exist", file)
+			return "", fmt.Errorf("file '%s' does not exist", file)
 		}
 
-		return "", fmt.Errorf("Failed to find file '%s':%v", file, err)
+		return "", fmt.Errorf("failed to find file '%s':%v", file, err)
 	}
 
 	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
+		return "", fmt.Errorf("file '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
+		return "", fmt.Errorf("file '%s' is not a real file", file)
 	}
 
 	for _, f := range flag.Args() {

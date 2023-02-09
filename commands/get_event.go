@@ -182,7 +182,7 @@ func (c *GetEvent) getFirstIndex(ctx Context, serialNumber uint32) (uint32, erro
 	if first, err := ctx.uhppote.GetEvent(serialNumber, 0); err != nil {
 		return 0, err
 	} else if first == nil {
-		return 0, fmt.Errorf("Failed to retrieve 'first' event index")
+		return 0, fmt.Errorf("failed to retrieve 'first' event index")
 	} else {
 		return first.Index, nil
 	}
@@ -192,7 +192,7 @@ func (c *GetEvent) getLastIndex(ctx Context, serialNumber uint32) (uint32, error
 	if last, err := ctx.uhppote.GetEvent(serialNumber, 0xffffffff); err != nil {
 		return 0, err
 	} else if last == nil {
-		return 0, fmt.Errorf("Failed to retrieve 'last' event index")
+		return 0, fmt.Errorf("failed to retrieve 'last' event index")
 	} else {
 		return last.Index, nil
 	}
@@ -202,7 +202,7 @@ func (c *GetEvent) getCurrentIndex(ctx Context, serialNumber uint32) (uint32, er
 	if index, err := ctx.uhppote.GetEventIndex(serialNumber); err != nil {
 		return 1, err
 	} else if index == nil {
-		return 1, fmt.Errorf("Failed to retrieve controller event index")
+		return 1, fmt.Errorf("failed to retrieve controller event index")
 	} else {
 		return index.Index, nil
 	}
@@ -222,9 +222,9 @@ func (c *GetEvent) getNextIndex(first, last, current uint32) uint32 {
 
 func (c *GetEvent) getUint32(arg string) (uint32, error) {
 	if valid, _ := regexp.MatchString("[0-9]+", arg); !valid {
-		return 0, fmt.Errorf("Invalid event index: %v", arg)
+		return 0, fmt.Errorf("invalid event index: %v", arg)
 	} else if N, err := strconv.ParseUint(arg, 10, 32); err != nil {
-		return 0, fmt.Errorf("Invalid event index: %v", arg)
+		return 0, fmt.Errorf("invalid event index: %v", arg)
 	} else {
 		return uint32(N), nil
 	}

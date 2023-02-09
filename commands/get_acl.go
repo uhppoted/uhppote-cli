@@ -70,11 +70,11 @@ func (c *GetACL) getACLFile() (string, error) {
 	}
 
 	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
+		return "", fmt.Errorf("file '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
+		return "", fmt.Errorf("file '%s' is not a real file", file)
 	}
 
 	return file, nil

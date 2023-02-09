@@ -23,11 +23,11 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		return err
 	}
 
-	profileID, err := getUint8(2, "Missing time profile ID", "Invalid time profile ID: %v")
+	profileID, err := getUint8(2, "missing time profile ID", "invalid time profile ID: %v")
 	if err != nil {
 		return err
 	} else if profileID < 2 || profileID > 254 {
-		return fmt.Errorf("Invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
+		return fmt.Errorf("invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
 	}
 
 	var from *types.Date
@@ -106,18 +106,18 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 	}
 
 	if from == nil {
-		return fmt.Errorf("Missing 'from' date")
+		return fmt.Errorf("missing 'from' date")
 	}
 
 	if to == nil {
-		return fmt.Errorf("Missing 'to' date")
+		return fmt.Errorf("missing 'to' date")
 	}
 
 	if linked != 0 {
 		if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, linked); err != nil {
 			return err
 		} else if profile == nil {
-			return fmt.Errorf("Linked time profile %v is not defined", linked)
+			return fmt.Errorf("linked time profile %v is not defined", linked)
 		}
 
 		profiles := map[uint8]bool{profileID: true}
@@ -126,11 +126,11 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 			if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, l); err != nil {
 				return err
 			} else if profile == nil {
-				return fmt.Errorf("Linked time profile %v is not defined", l)
+				return fmt.Errorf("linked time profile %v is not defined", l)
 			} else {
 				links = append(links, profile.ID)
 				if profiles[profile.ID] {
-					return fmt.Errorf("Linking to time profile %v creates a circular reference (%v)", linked, links)
+					return fmt.Errorf("linking to time profile %v creates a circular reference (%v)", linked, links)
 				}
 
 				profiles[profile.ID] = true

@@ -19,13 +19,13 @@ func (c *SetAddress) Execute(ctx Context) error {
 	}
 
 	if len(flag.Args()) < 3 {
-		return errors.New("Missing IP address")
+		return errors.New("missing IP address")
 	}
 
 	address := net.ParseIP(flag.Arg(2))
 
 	if address == nil || address.To4() == nil {
-		return fmt.Errorf("Invalid IP address: %v", flag.Arg(2))
+		return fmt.Errorf("invalid IP address: %v", flag.Arg(2))
 	}
 
 	mask := net.IPv4(255, 255, 255, 0)

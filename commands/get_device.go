@@ -19,7 +19,7 @@ func (c *GetDevice) Execute(ctx Context) error {
 	if err != nil {
 		return err
 	} else if device == nil {
-		return fmt.Errorf("No device found matching serial number '%d'", serialNumber)
+		return fmt.Errorf("no device found matching serial number '%d'", serialNumber)
 	}
 
 	fmt.Printf("%s\n", device.String())

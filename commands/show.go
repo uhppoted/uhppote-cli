@@ -48,7 +48,7 @@ func (c *Show) Execute(ctx Context) error {
 	format := fmt.Sprintf("%%-%ds  %%v  %%v\n", width)
 	formatp := fmt.Sprintf("%%-%ds  %%v  %%v  %%v\n", width)
 	for _, door := range doors {
-		v, _ := permissions[door]
+		v := permissions[door]
 		if v.Profile >= 2 && v.Profile <= 254 {
 			fmt.Printf(formatp, door, v.From, v.To, v.Profile)
 		} else {

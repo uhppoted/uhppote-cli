@@ -27,16 +27,16 @@ func (c *SetTimeProfiles) Execute(ctx Context) error {
 	if err != nil {
 		return err
 	} else if file == "" {
-		return fmt.Errorf("Missing TSV file with time profiles")
+		return fmt.Errorf("missing TSV file with time profiles")
 	}
 
 	profiles, err := c.parse(file)
 	if err != nil {
 		return err
 	} else if profiles == nil {
-		return fmt.Errorf("Could not extract time profiles from TSV File '%s'", file)
+		return fmt.Errorf("could not extract time profiles from TSV File '%s'", file)
 	} else if len(profiles) == 0 {
-		return fmt.Errorf("File '%s' does not contain any valid time profiles", file)
+		return fmt.Errorf("file '%s' does not contain any valid time profiles", file)
 	}
 
 	warnings, err := c.load(ctx, serialNumber, profiles)
@@ -102,18 +102,18 @@ func (c *SetTimeProfiles) getTSVFile() (string, error) {
 	stat, err := os.Stat(file)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return file, fmt.Errorf("File '%s' does not exist", file)
+			return file, fmt.Errorf("file '%s' does not exist", file)
 		} else {
 			return "", err
 		}
 	}
 
 	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
+		return "", fmt.Errorf("file '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
+		return "", fmt.Errorf("file '%s' is not a real file", file)
 	}
 
 	return file, nil
@@ -128,10 +128,10 @@ func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []type
 	for i, profile := range profiles {
 		if line, ok := set[profile.ID]; ok {
 			if !reflect.DeepEqual(profile, profiles[line-1]) {
-				return prewarn, fmt.Errorf("Profile %v has more than one definition (records %v and %v)", profile.ID, line, i+1)
+				return prewarn, fmt.Errorf("profile %v has more than one definition (records %v and %v)", profile.ID, line, i+1)
 			}
 
-			prewarn = append(prewarn, fmt.Errorf("Profile %-3v is defined twice (records %v and %v)", profile.ID, line, i+1))
+			prewarn = append(prewarn, fmt.Errorf("profile %-3v is defined twice (records %v and %v)", profile.ID, line, i+1))
 		}
 
 		set[profile.ID] = i + 1

@@ -17,11 +17,11 @@ func (c *GetTimeProfile) Execute(ctx Context) error {
 		return err
 	}
 
-	profileID, err := getUint8(2, "Missing time profile ID", "Invalid time profile ID: %v")
+	profileID, err := getUint8(2, "missing time profile ID", "invalid time profile ID: %v")
 	if err != nil {
 		return err
 	} else if profileID < 2 || profileID > 254 {
-		return fmt.Errorf("Invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
+		return fmt.Errorf("invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
 	}
 
 	profile, err := ctx.uhppote.GetTimeProfile(serialNumber, profileID)

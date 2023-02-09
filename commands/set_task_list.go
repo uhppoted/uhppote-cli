@@ -26,14 +26,14 @@ func (c *SetTaskList) Execute(ctx Context) error {
 	if err != nil {
 		return err
 	} else if file == "" {
-		return fmt.Errorf("Missing TSV file with tasks")
+		return fmt.Errorf("missing TSV file with tasks")
 	}
 
 	tasks, err := c.parse(file)
 	if err != nil {
 		return err
 	} else if tasks == nil {
-		return fmt.Errorf("Could not extract tasks from TSV File '%s'", file)
+		return fmt.Errorf("could not extract tasks from TSV File '%s'", file)
 	} else if len(tasks) == 0 {
 		fmt.Printf("   WARNING File '%s' does not contain any valid task definitions\n", file)
 	}
@@ -127,18 +127,18 @@ func (c *SetTaskList) getTSVFile() (string, error) {
 	stat, err := os.Stat(file)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return file, fmt.Errorf("File '%s' does not exist", file)
+			return file, fmt.Errorf("file '%s' does not exist", file)
 		} else {
 			return "", err
 		}
 	}
 
 	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
+		return "", fmt.Errorf("file '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
+		return "", fmt.Errorf("file '%s' is not a real file", file)
 	}
 
 	return file, nil

@@ -63,7 +63,7 @@ func clean(s string) string {
 
 func getSerialNumber(ctx Context) (uint32, error) {
 	if len(flag.Args()) < 2 {
-		return 0, fmt.Errorf("Missing controller serial number")
+		return 0, fmt.Errorf("missing controller serial number")
 	}
 
 	arg := flag.Arg(1)
@@ -79,11 +79,11 @@ func getSerialNumber(ctx Context) (uint32, error) {
 
 	// numeric serial number?
 	if valid, _ := regexp.MatchString("[0-9]+", arg); !valid {
-		return 0, fmt.Errorf("Invalid controller serial number:%v", arg)
+		return 0, fmt.Errorf("invalid controller serial number:%v", arg)
 	}
 
 	if N, err := strconv.ParseUint(arg, 10, 32); err != nil {
-		return 0, fmt.Errorf("Invalid controller serial number (%v)", arg)
+		return 0, fmt.Errorf("invalid controller serial number (%v)", arg)
 	} else {
 		return uint32(N), nil
 	}

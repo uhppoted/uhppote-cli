@@ -23,16 +23,16 @@ func (c *SetDoorControl) Execute(ctx Context) error {
 		return err
 	}
 
-	door, err := getDoor(2, "Missing door", "Invalid door: %v")
+	door, err := getDoor(2, "missing door", "invalid door: %v")
 	if err != nil {
 		return err
 	}
 
-	control, err := getString(3, "Missing control value", "Invalid control value: %v")
+	control, err := getString(3, "missing control value", "invalid control value: %v")
 	if err != nil {
 		return err
 	} else if _, ok := states[control]; !ok {
-		return fmt.Errorf("Invalid door control value: %s (expected 'normally open', 'normally closed' or 'controlled'", control)
+		return fmt.Errorf("invalid door control value: %s (expected 'normally open', 'normally closed' or 'controlled'", control)
 	}
 
 	state, err := ctx.uhppote.GetDoorControlState(serialNumber, door)

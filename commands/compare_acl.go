@@ -117,7 +117,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return os.WriteFile(rptfile, w.Bytes(), 0660)
 	}
 
-	fmt.Printf("%s\n", string(w.Bytes()))
+	fmt.Printf("%v\n", w.String())
 
 	return nil
 }
@@ -142,7 +142,7 @@ func (c *CompareACL) report(diff map[uint32]acl.Diff, w io.Writer) error {
 
 func (c *CompareACL) getACLFile() (string, error) {
 	if len(flag.Args()) < 2 {
-		return "", fmt.Errorf("Please specify the TSV file from which to load the authoritative access control list ")
+		return "", fmt.Errorf("please specify the TSV file from which to load the authoritative access control list ")
 	}
 
 	file := flag.Arg(1)
@@ -150,18 +150,18 @@ func (c *CompareACL) getACLFile() (string, error) {
 
 	if err != nil {
 		if os.IsNotExist(err) {
-			return "", fmt.Errorf("File '%s' does not exist", file)
+			return "", fmt.Errorf("file '%s' does not exist", file)
 		}
 
-		return "", fmt.Errorf("Failed to find file '%s':%v", file, err)
+		return "", fmt.Errorf("failed to find file '%s':%v", file, err)
 	}
 
 	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
+		return "", fmt.Errorf("file '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
+		return "", fmt.Errorf("file '%s' is not a real file", file)
 	}
 
 	return file, nil
@@ -177,18 +177,18 @@ func (c *CompareACL) getReportFile() (string, error) {
 
 	if err != nil {
 		if !os.IsNotExist(err) {
-			return "", fmt.Errorf("Cannot use to report file '%s':%v", file, err)
+			return "", fmt.Errorf("cannot use to report file '%s':%v", file, err)
 		}
 
 		return file, nil
 	}
 
 	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("File '%s' is a directory", file)
+		return "", fmt.Errorf("file '%s' is a directory", file)
 	}
 
 	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("File '%s' is not a real file", file)
+		return "", fmt.Errorf("file '%s' is not a real file", file)
 	}
 
 	return file, nil

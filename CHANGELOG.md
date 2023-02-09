@@ -6,6 +6,9 @@
 1. `doc.go` package overview documentation.
 2. Added (optional) PIN to put-card command (cf. https://github.com/uhppoted/uhppote-core/issues/8)
 
+### Updated
+1. Included static-check in CI build.
+
 
 ## [0.8.3](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.3) - 2022-12-16
 

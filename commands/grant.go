@@ -22,31 +22,31 @@ func (c *Grant) Execute(ctx Context) error {
 		return fmt.Errorf("grant requires a valid configuration file")
 	}
 
-	cardNumber, err := getUint32(1, "Missing card number", "Invalid card number: %v")
+	cardNumber, err := getUint32(1, "missing card number", "invalid card number: %v")
 	if err != nil {
 		return err
 	}
 
-	from, err := getDate(2, "Missing start date", "Invalid start date: %v")
+	from, err := getDate(2, "missing start date", "invalid start date: %v")
 	if err != nil {
 		return err
 	}
 
-	to, err := getDate(3, "Missing end date", "Invalid end date: %v")
+	to, err := getDate(3, "missing end date", "invalid end date: %v")
 	if err != nil {
 		return err
 	}
 
-	re := regexp.MustCompile("[0-9]+")
-	profileID := 0
-	doors := []string{}
+	var re = regexp.MustCompile("[0-9]+")
+	var profileID = 0
+	var doors []string
 
 	if len(flag.Args()) > 5 && re.MatchString(flag.Arg(4)) {
 		profileID, err = strconv.Atoi(flag.Arg(4))
 		if err != nil {
 			return err
 		} else if profileID < 2 || profileID > 254 {
-			return fmt.Errorf("Invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
+			return fmt.Errorf("invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
 		}
 
 		doors, err = c.getDoors(5)

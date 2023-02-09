@@ -34,7 +34,7 @@ func (c *SetPCControl) Execute(ctx Context) error {
 	if len(flag.Args()) > 2 {
 		v := strings.ToLower(flag.Arg(2))
 		if matches, _ := regexp.MatchString("true|false", v); !matches {
-			return fmt.Errorf("Invalid command - expected 'true' or 'false', got '%v'", flag.Arg(2))
+			return fmt.Errorf("invalid command - expected 'true' or 'false', got '%v'", flag.Arg(2))
 		}
 
 		if v == "false" {
@@ -49,9 +49,9 @@ func (c *SetPCControl) Execute(ctx Context) error {
 
 	if !succeeded {
 		if enable {
-			return fmt.Errorf("Failed to enable 'set PC control' on %v", serialNumber)
+			return fmt.Errorf("failed to enable 'set PC control' on %v", serialNumber)
 		} else {
-			return fmt.Errorf("Failed to disable 'set PC control' on %v", serialNumber)
+			return fmt.Errorf("failed to disable 'set PC control' on %v", serialNumber)
 		}
 	}
 

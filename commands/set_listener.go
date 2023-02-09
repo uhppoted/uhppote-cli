@@ -19,7 +19,7 @@ func (c *SetListener) Execute(ctx Context) error {
 	}
 
 	if len(flag.Args()) < 3 {
-		return errors.New("Missing IP address")
+		return errors.New("missing IP address")
 	}
 
 	address, err := net.ResolveUDPAddr("udp", flag.Arg(2))
@@ -28,7 +28,7 @@ func (c *SetListener) Execute(ctx Context) error {
 	}
 
 	if address == nil || address.IP.To4() == nil {
-		return fmt.Errorf("Invalid UDP address: %v", flag.Arg(2))
+		return fmt.Errorf("invalid UDP address: %v", flag.Arg(2))
 	}
 
 	listener, err := ctx.uhppote.SetListener(serialNumber, *address)

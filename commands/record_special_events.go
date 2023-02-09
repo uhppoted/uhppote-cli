@@ -28,7 +28,7 @@ func (c *RecordSpecialEvents) Execute(ctx Context) error {
 	if len(flag.Args()) > 2 {
 		v := strings.ToLower(flag.Arg(2))
 		if matches, _ := regexp.MatchString("true|false", v); !matches {
-			return fmt.Errorf("Invalid command - expected 'true' or 'false', got '%v'", flag.Arg(2))
+			return fmt.Errorf("invalid command - expected 'true' or 'false', got '%v'", flag.Arg(2))
 		}
 
 		if v == "false" {
@@ -43,9 +43,9 @@ func (c *RecordSpecialEvents) Execute(ctx Context) error {
 
 	if !succeeded {
 		if enable {
-			return fmt.Errorf("Failed enable 'record special events' on %v", serialNumber)
+			return fmt.Errorf("failed enable 'record special events' on %v", serialNumber)
 		} else {
-			return fmt.Errorf("Failed disable 'record special events' on %v", serialNumber)
+			return fmt.Errorf("failed disable 'record special events' on %v", serialNumber)
 		}
 	}
 

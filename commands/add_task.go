@@ -27,7 +27,7 @@ func (c *AddTask) Execute(ctx Context) error {
 	if err != nil {
 		return err
 	} else if task == nil {
-		return fmt.Errorf("Failed to parse task")
+		return fmt.Errorf("failed to parse task")
 	}
 
 	if ctx.uhppote != nil && ctx.debug {
@@ -144,7 +144,7 @@ func (c *AddTask) getTask(args []string) (*types.Task, error) {
 	if weekdays, err := c.getTaskDays(args); err != nil {
 		return nil, err
 	} else if weekdays == nil {
-		return nil, fmt.Errorf("Invalid list of weekdays")
+		return nil, fmt.Errorf("invalid list of weekdays")
 	} else {
 		task.Weekdays = *weekdays
 	}

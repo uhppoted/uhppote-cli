@@ -15,13 +15,13 @@ func (c *OpenDoor) Execute(ctx Context) error {
 		return err
 	}
 
-	door, err := getUint32(2, "Missing door ID", "Invalid door ID: %v")
+	door, err := getUint32(2, "missing door ID", "invalid door ID: %v")
 	if err != nil {
 		return err
 	}
 
 	if door != 1 && door != 2 && door != 3 && door != 4 {
-		return fmt.Errorf("Invalid door ID: %v", door)
+		return fmt.Errorf("invalid door ID: %v", door)
 	}
 
 	opened, err := ctx.uhppote.OpenDoor(serialNumber, uint8(door))

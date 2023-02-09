@@ -37,7 +37,7 @@ func (c *GetDevices) Execute(ctx Context) error {
 		defer wg.Done()
 		if devices, err := ctx.uhppote.GetDevices(); err != nil {
 			fmt.Fprintf(os.Stderr, "   WARN:  %v\n", err)
-		} else if devices != nil {
+		} else {
 			for _, d := range devices {
 				list.Store(uint32(d.SerialNumber), d)
 			}

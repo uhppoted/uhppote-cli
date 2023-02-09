@@ -22,17 +22,17 @@ func (c *PutCard) Execute(ctx Context) error {
 		return err
 	}
 
-	cardNumber, err := getUint32(2, "Missing card number", "Invalid card number: %v")
+	cardNumber, err := getUint32(2, "missing card number", "invalid card number: %v")
 	if err != nil {
 		return err
 	}
 
-	from, err := getDate(3, "Missing start date", "Invalid start date: %v")
+	from, err := getDate(3, "missing start date", "invalid start date: %v")
 	if err != nil {
 		return err
 	}
 
-	to, err := getDate(4, "Missing end date", "Invalid end date: %v")
+	to, err := getDate(4, "missing end date", "invalid end date: %v")
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func (c *PutCard) Execute(ctx Context) error {
 			if profile, err := ctx.uhppote.GetTimeProfile(serialNumber, uint8(v)); err != nil {
 				return err
 			} else if profile == nil {
-				return fmt.Errorf("Time profile %v is not defined", v)
+				return fmt.Errorf("time profile %v is not defined", v)
 			}
 		}
 	}
@@ -126,12 +126,12 @@ func getPermissions() (map[uint8]uint8, error) {
 		for _, token := range tokens {
 			match := regexp.MustCompile("([1-4])(?::([0-9]+))?").FindStringSubmatch(token)
 			if match == nil || len(match) < 3 {
-				return nil, fmt.Errorf("Invalid door '%v'", token)
+				return nil, fmt.Errorf("invalid door '%v'", token)
 			}
 
 			door, err := strconv.ParseInt(match[1], 10, 8)
 			if err != nil {
-				return nil, fmt.Errorf("Invalid door ID '%v' (%v)", match[1], err)
+				return nil, fmt.Errorf("invalid door ID '%v' (%v)", match[1], err)
 			}
 
 			if match[2] == "" {
@@ -139,9 +139,9 @@ func getPermissions() (map[uint8]uint8, error) {
 			} else {
 				profile, err := strconv.ParseUint(match[2], 10, 8)
 				if err != nil {
-					return nil, fmt.Errorf("Invalid time profile '%v' (%v)", match[2], err)
+					return nil, fmt.Errorf("invalid time profile '%v' (%v)", match[2], err)
 				} else if profile < 2 || profile > 254 {
-					return nil, fmt.Errorf("Invalid time profile '%v' (valid profiles are in the range 2 to 254)", match[2])
+					return nil, fmt.Errorf("invalid time profile '%v' (valid profiles are in the range 2 to 254)", match[2])
 				}
 
 				permissions[uint8(door)] = uint8(profile)
