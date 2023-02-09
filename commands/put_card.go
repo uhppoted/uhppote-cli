@@ -52,6 +52,11 @@ func (c *PutCard) Execute(ctx Context) error {
 		}
 	}
 
+	pin, err := getPIN()
+	if err != nil {
+		return err
+	}
+
 	start := types.Date(*from)
 	end := types.Date(*to)
 	authorised, err := ctx.uhppote.PutCard(serialNumber, types.Card{
@@ -59,6 +64,7 @@ func (c *PutCard) Execute(ctx Context) error {
 		From:       &start,
 		To:         &end,
 		Doors:      permissions,
+		PIN:        pin,
 	})
 
 	if err != nil {
@@ -144,4 +150,23 @@ func getPermissions() (map[uint8]uint8, error) {
 	}
 
 	return permissions, nil
+}
+
+func getPIN() (types.PIN, error) {
+	pin := types.PIN(0)
+
+	if len(flag.Args()) > 6 {
+		arg := flag.Arg(6)
+		if ok := regexp.MustCompile("[0-9]+").MatchString(arg); !ok {
+			return pin, fmt.Errorf("invalid PIN (%v)", arg)
+		} else if v, err := strconv.ParseUint(arg, 10, 32); err != nil {
+			return pin, err
+		} else if v > 999999 {
+			return pin, fmt.Errorf("invalid PIN (%v)", v)
+		} else {
+			pin = types.PIN(v)
+		}
+	}
+
+	return pin, nil
 }

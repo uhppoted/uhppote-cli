@@ -76,26 +76,26 @@ publish: release
 	gh release create "$(VERSION)" ./dist/*.tar.gz --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	$(CLI) $(DEBUG) set-time-profile 405419896 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
-	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
-	$(CLI) $(DEBUG) set-time-profile 303986753 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
-	$(CLI) $(DEBUG) set-time-profile 303986753 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) $(DEBUG) set-time-profile 405419896 3  2023-01-01:2023-12-31 Sat,Sun     09:30-16:30,, 
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) $(DEBUG) set-time-profile 303986753 3  2023-01-01:2023-12-31 Sat,Sun     09:30-16:30,, 
+	$(CLI) $(DEBUG) set-time-profile 303986753 29 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 
 irl: build
 	$(CLI) set-time            423187757
 	$(CLI) clear-time-profiles 423187757
-	$(CLI) set-time-profile    423187757 29 2021-01-01:2021-12-31 Mon 08:30-17:00
+	$(CLI) set-time-profile    423187757 29 2023-01-01:2023-12-31 Mon 08:30-17:00
 	$(CLI) get-time-profiles   423187757
-	$(CLI) put-card            423187757 6154410 2021-01-01 2021-12-31 3:29
+	$(CLI) put-card            423187757 6154410 2023-01-01 2023-12-31 3:29
 	$(CLI) clear-task-list     423187757
-	$(CLI) add-task            423187757 'disable time profile' 3 2021-01-01:2021-12-31 Mon 08:30
-	$(CLI) add-task            423187757 'enable time profile'  3 2021-01-01:2021-12-31 Mon 11:30
-	$(CLI) add-task            423187757 'lock door'            3 2021-01-01:2021-12-31 Mon 11:45
-	$(CLI) add-task            423187757 'unlock door'          3 2021-01-01:2021-12-31 Mon 12:00
-	$(CLI) add-task            423187757 'control door'         3 2021-01-01:2021-12-31 Mon 12:05
-	$(CLI) add-task            423187757 'disable pushbutton'   3 2021-01-01:2021-12-31 Mon 12:10
-	$(CLI) add-task            423187757 'enable pushbutton'    3 2021-01-01:2021-12-31 Mon 12:15
-	$(CLI) add-task            423187757 'trigger once'         3 2021-01-01:2021-12-31 Mon 12:05
+	$(CLI) add-task            423187757 'disable time profile' 3 2023-01-01:2023-12-31 Mon 08:30
+	$(CLI) add-task            423187757 'enable time profile'  3 2023-01-01:2023-12-31 Mon 11:30
+	$(CLI) add-task            423187757 'lock door'            3 2023-01-01:2023-12-31 Mon 11:45
+	$(CLI) add-task            423187757 'unlock door'          3 2023-01-01:2023-12-31 Mon 12:00
+	$(CLI) add-task            423187757 'control door'         3 2023-01-01:2023-12-31 Mon 12:05
+	$(CLI) add-task            423187757 'disable pushbutton'   3 2023-01-01:2023-12-31 Mon 12:10
+	$(CLI) add-task            423187757 'enable pushbutton'    3 2023-01-01:2023-12-31 Mon 12:15
+	$(CLI) add-task            423187757 'trigger once'         3 2023-01-01:2023-12-31 Mon 12:05
 	$(CLI) refresh-task-list   423187757
 
 godoc:
@@ -161,9 +161,11 @@ get-cards: build
 
 get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
+	# $(CLI) $(DEBUG) get-card 423187757 $(CARD)
 
 put-card: build
-	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2021-01-01 2021-12-31 1,3,4:29
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2023-01-01 2023-12-31 1,3,4:29 7531
+	# $(CLI) $(DEBUG) put-card 423187757 $(CARD) 2023-01-01 2023-12-31 1,3,4:29 7531
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
@@ -175,9 +177,9 @@ get-time-profile: build
 	$(CLI) $(DEBUG) get-time-profile $(SERIALNO) 29
 
 set-time-profile: build
-	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) $(DEBUG) set-time-profile 405419896 3  2022-01-01:2022-12-31 Sat,Sun     09:30-16:30,, 
-	$(CLI) $(DEBUG) set-time-profile 405419896 29 2022-04-01:2022-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) $(DEBUG) set-time-profile 405419896 3  2023-01-01:2023-12-31 Sat,Sun     09:30-16:30,, 
+	$(CLI) $(DEBUG) set-time-profile 405419896 29 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
 
 clear-time-profiles: build
 	$(CLI) $(DEBUG) clear-time-profiles $(SERIALNO)
@@ -188,9 +190,9 @@ get-time-profiles: build
 
 set-time-profiles: build
 	$(CLI) clear-time-profiles $(SERIALNO) 
-	$(CLI) set-time-profile $(SERIALNO) 75  2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) set-time-profile $(SERIALNO) 100 2021-04-01:2021-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
-	$(CLI) set-time-profile 303986753   101 2021-01-01:2021-12-31 Sat,Sun     10:30-16:30
+	$(CLI) set-time-profile $(SERIALNO) 75  2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) set-time-profile $(SERIALNO) 100 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 
+	$(CLI) set-time-profile 303986753   101 2023-01-01:2023-12-31 Sat,Sun     10:30-16:30
 	$(CLI) set-time-profiles $(SERIALNO) ../runtime/set-time-profiles.tsv
 	$(CLI) get-time-profiles $(SERIALNO) 
 
@@ -198,8 +200,8 @@ clear-task-list: build
 	$(CLI) --debug clear-task-list $(SERIALNO)
 
 add-task: build
-	$(CLI) --debug add-task $(SERIALNO) 3 4 2021-01-01:2021-12-31 Mon,Fri 08:30 33
-	$(CLI) --debug add-task $(SERIALNO) 'enable more cards' 4 2021-01-01:2021-12-31 Mon,Fri 08:30 29
+	$(CLI) --debug add-task $(SERIALNO) 3 4 2023-01-01:3-12-31 Mon,Fri 08:30 33
+	$(CLI) --debug add-task $(SERIALNO) 'enable more cards' 4 2023-01-01:2023-12-31 Mon,Fri 08:30 29
 
 refresh-task-list: build
 	$(CLI) --debug refresh-task-list $(SERIALNO)
@@ -243,11 +245,11 @@ show: build
 	$(CLI) show $(CARD)
 
 grant: build
-	$(CLI) grant $(CARD) 2021-01-01 2021-12-31 "Gryffindor, Slytherin"
-	$(CLI) grant $(CARD) 2021-01-01 2021-12-31 29 "Dungeon"
+	$(CLI) grant $(CARD) 2023-01-01 2023-12-31 "Gryffindor, Slytherin"
+	$(CLI) grant $(CARD) 2023-01-01 2023-12-31 29 "Dungeon"
 
 grant-all: build
-	$(CLI) $(DEBUG) grant $(CARD) 2020-01-01 2020-12-31 ALL
+	$(CLI) $(DEBUG) grant $(CARD) 2023-01-01 2023-12-31 ALL
 
 revoke: build
 	$(CLI) $(DEBUG) revoke $(CARD) "Lady's Chamber, D2"

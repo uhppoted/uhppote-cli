@@ -636,12 +636,16 @@ uhppote-cli [options] get-cards <device ID>
 Retrieves a single access card record from a controller. A card record comprises:
 
 - `card number`
-- `start date` _date from which the card is active_
-- `end date`   _date after which the card is inactive_
+- `start date` _date (inclusive) from which the card is active_
+- `end date`   _date (inclusive) after which the card is inactive_
 - `door1`     _Y,N or associated time profile for door 1_
 - `door2`     _Y,N or associated time profile for door 2_
 - `door3`     _Y,N or associated time profile for door 3_
 - `door4`     _Y,N or associated time profile for door 4_
+- `PIN`       _keypad PIN value_
+
+The keypad PIN is only displayed if the PIN is in the valid range (1 to 999999).
+
 ```
 uhppote-cli [options] get-card <device ID> <card number>
 
@@ -660,7 +664,7 @@ uhppote-cli [options] get-card <device ID> <card number>
 
   uhppote-cli get-card 405419896 8165538
   
-  8165538  2021-01-01 2021-12-31 Y N Y 29
+  8165538  2021-01-01 2021-12-31 Y N Y 29 7531
 ```
 
 #### `put-card`
@@ -674,6 +678,7 @@ Creates (or updates) an access card record on a controller, with the following i
 - `door2`     _Y,N or associated time profile for door 2_
 - `door3`     _Y,N or associated time profile for door 3_
 - `door4`     _Y,N or associated time profile for door 4_
+- `PIN`       _keypad PIN value_
 ```
 uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
 
@@ -682,6 +687,7 @@ uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
   <start>       (required) Start date from which the card is enabled, formatted as YYYY-mm-dd
   <end>         (required) End dates after which the card is no longer enabled, formatted as YYYY-mm-dd
   <doors>       (optional) Comma separated list of doors for which the card grants access. Time profiled access for a door can be specified as door:profile.
+  <PIN>         (optional) keypad PIN code in the range 0 to 999999 (0 is 'none'). Defaults to 0 is not provided.
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -693,7 +699,7 @@ uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
 
   Example:
 
-  uhppote-cli put-card 405419896 8165538 2021-01-01 2021-12-31 1,3,4:29
+  uhppote-cli put-card 405419896 8165538 2023-01-01 2023-12-31 1,3,4:29 7531
   405419896 8165538 true
 ```
 **NOTES**
