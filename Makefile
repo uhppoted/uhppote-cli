@@ -163,11 +163,9 @@ get-cards: build
 
 get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
-	# $(CLI) $(DEBUG) get-card 423187757 $(CARD)
 
 put-card: build
 	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2023-01-01 2023-12-31 1,3,4:29 7531
-	# $(CLI) $(DEBUG) put-card 423187757 $(CARD) 2023-01-01 2023-12-31 1,3,4:29 7531
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
