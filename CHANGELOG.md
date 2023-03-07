@@ -4,7 +4,8 @@
 
 ### Added
 1. `doc.go` package overview documentation.
-2. Added (optional) PIN to put-card command (cf. https://github.com/uhppoted/uhppote-core/issues/8)
+2. Added (optional) PIN to put-card command (cf. https://github.com/uhppoted/uhppoted/issues/23)
+3. Added --with-pin command line option to `get-acl`, `compare-acl` and `load-acl` (cf. https://github.com/uhppoted/uhppoted/issues/23)
 
 ### Updated
 1. Included static-check in CI build.
