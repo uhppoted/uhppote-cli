@@ -257,9 +257,6 @@ revoke: build
 revoke-all: build
 	$(CLI) $(DEBUG) revoke $(CARD) ALL
 	
-load-acl: build
-	$(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
-
 get-acl: build
 	$(CLI) get-acl
 #	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
@@ -278,4 +275,11 @@ compare-acl-with-pin: build
 	$(CLI) compare-acl ../runtime/simulation/simulation.acl ../runtime/uhppote-cli/compare-acl.tsv
 	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation.acl
 	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation.acl ../runtime/uhppote-cli/compare-acl-with-pin.tsv
+
+load-acl: build
+	$(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
+
+load-acl-with-pin: build
+	$(CLI) load-acl ../runtime/simulation/simulation.acl
+	$(CLI) load-acl --with-pin ../runtime/simulation/simulation-with-pin.acl
 

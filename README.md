@@ -1414,7 +1414,7 @@ Loads the access permissions from an ACL file to the set of configured UHPPOTE c
 `uhppoted` distribution.
 
 ```
-   uhppote-cli [options] load-acl <ACL file>
+   uhppote-cli [options] load-acl [--with-pin] [--strict] <ACL file>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -1423,6 +1423,11 @@ Loads the access permissions from an ACL file to the set of configured UHPPOTE c
   --listen      Overrides the default (or configured) listen IP address on which to listen for events
   --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  --with-pin    Updates the access controller PIN for all cards. Default is false.
+                are ignored (or deleted if they exist) with a warning message
+  --strict      Fails with an error for duplicate card numbers. Default is false in which case duplicate cards numbers
+                are ignored (or deleted if they exist) with a warning message
 
   Example:
 
@@ -1445,9 +1450,12 @@ Fetches the cards stored in the set of configured UHPPOTE controllers, creates a
   --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
+  --with-pin    Includes the card keypad PIN field in the retrieved ACL.
+
   Example:
 
-  uhppote-cli --debug --conf warehouse.conf get-acl 2020-05-18.acl
+  uhppote-cli --debug get-acl 2020-05-18.acl
+  uhppote-cli --debug --conf warehouse.conf get-acl --with-pin 2023-03-07.acl
 ```
 
 ### `compare-acl`
@@ -1469,9 +1477,13 @@ exception report.
   --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
+  --with-pin    Includes the card keypad PIN field when comparing the ACL. Defaults to false i.e. ignores the 
+                card keypad PIN field.
+
   Example:
 
-  uhppote-cli --debug --conf warehouse.conf compare-acl warehouse.acl 2020-05-18.rpt
+  uhppote-cli --debug compare-acl warehouse.acl 2020-05-18.rpt
+  uhppote-cli --debug --conf warehouse.conf compare-acl --with-pin warehouse.acl 2020-05-18.rpt
 ```
 
 

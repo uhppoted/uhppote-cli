@@ -226,9 +226,12 @@ func (c *CompareACL) Help() {
 	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
 	fmt.Println("    --debug   Displays internal information for diagnosing errors")
 	fmt.Println()
+	fmt.Println("    --with-pin Includes the card keypad PIN code when comparing ACLs.")
+	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli --debug --config .config compare-acl \"uhppote-2019-05-25.tsv\"")
+	fmt.Println("    uhppote-cli compare-acl \"uhppote-2023-03-07.tsv\"")
+	fmt.Println("    uhppote-cli --debug --config .config compare-acl --with-pin \"uhppote-2023-03-07.tsv\"")
 	fmt.Println()
 }
 

@@ -125,9 +125,13 @@ func (c *GetACL) Help() {
 	fmt.Printf("              (defaults to %s)\n", config.DefaultConfig)
 	fmt.Println("    --debug   Displays internal information for diagnosing errors")
 	fmt.Println()
+	fmt.Println("    --with-pin Includes the card keypad PIN code in the retrieved ACL.")
+	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli --debug --config .config get-acl \"uhppote.tsv\"")
+	fmt.Println("    uhppote-cli get-acl")
+	fmt.Println("    uhppote-cli --debug get-acl \"uhppote.tsv\"")
+	fmt.Println("    uhppote-cli --debug --config .config get-acl --with-pin \"uhppote.tsv\"")
 	fmt.Println()
 }
 
