@@ -4,10 +4,14 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"github.com/uhppoted/uhppoted-lib/acl"
-	"github.com/uhppoted/uhppoted-lib/config"
+	"io"
 	"os"
 	"strings"
+
+	"github.com/uhppoted/uhppote-core/uhppote"
+
+	"github.com/uhppoted/uhppoted-lib/acl"
+	"github.com/uhppoted/uhppoted-lib/config"
 )
 
 var GetACLCmd = GetACL{}
@@ -20,6 +24,27 @@ func (c *GetACL) Execute(ctx Context) error {
 		return fmt.Errorf("get-acl requires a valid configuration file")
 	}
 
+	file, withPIN, err := c.parseArgs()
+	if err != nil {
+		return err
+	}
+
+	tsv := func(list acl.ACL, devices []uhppote.Device, w io.Writer) error {
+		if withPIN {
+			return acl.MakeTSVWithPIN(list, devices, w)
+		} else {
+			return acl.MakeTSV(list, devices, w)
+		}
+	}
+
+	txt := func(list acl.ACL, devices []uhppote.Device, w io.Writer) error {
+		if withPIN {
+			return acl.MakeFlatFileWithPIN(list, ctx.devices, w)
+		} else {
+			return acl.MakeFlatFile(list, ctx.devices, w)
+		}
+	}
+
 	list, errors := acl.GetACL(ctx.uhppote, ctx.devices)
 	if len(errors) > 0 {
 		return fmt.Errorf("%v", errors)
@@ -29,14 +54,9 @@ func (c *GetACL) Execute(ctx Context) error {
 		fmt.Printf("   ... %v  Retrieved %v records\n", k, len(l))
 	}
 
-	file, err := c.getACLFile()
-	if err != nil {
-		return err
-	}
-
 	if file != "" {
 		var w bytes.Buffer
-		if err = acl.MakeTSV(list, ctx.devices, &w); err != nil {
+		if err = tsv(list, ctx.devices, &w); err != nil {
 			return err
 		}
 
@@ -44,7 +64,7 @@ func (c *GetACL) Execute(ctx Context) error {
 	}
 
 	var w strings.Builder
-	if err = acl.MakeFlatFile(list, ctx.devices, &w); err != nil {
+	if err = txt(list, ctx.devices, &w); err != nil {
 		return err
 	}
 
@@ -55,29 +75,28 @@ func (c *GetACL) Execute(ctx Context) error {
 	return nil
 }
 
-func (c *GetACL) getACLFile() (string, error) {
-	if len(flag.Args()) < 2 {
-		return "", nil
-	}
+func (c *GetACL) parseArgs() (string, bool, error) {
+	flagset := flag.NewFlagSet("", flag.ExitOnError)
+	withPIN := flagset.Bool("with-pin", false, "Include card keypad PIN code in retrieved ACL information")
+	file := ""
+	args := flag.Args()[1:]
 
-	file := flag.Arg(1)
-	stat, err := os.Stat(file)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return file, nil
+	flagset.Parse(args)
+
+	// ... file
+	if len(flagset.Args()) > 0 {
+		file = flagset.Arg(0)
+		stat, err := os.Stat(file)
+		if err != nil && !os.IsNotExist(err) {
+			return "", false, err
+		} else if err == nil && stat.Mode().IsDir() {
+			return "", false, fmt.Errorf("file '%s' is a directory", file)
+		} else if err == nil && !stat.Mode().IsRegular() {
+			return "", false, fmt.Errorf("file '%s' is not a real file", file)
 		}
-		return "", err
 	}
 
-	if stat.Mode().IsDir() {
-		return "", fmt.Errorf("file '%s' is a directory", file)
-	}
-
-	if !stat.Mode().IsRegular() {
-		return "", fmt.Errorf("file '%s' is not a real file", file)
-	}
-
-	return file, nil
+	return file, *withPIN, nil
 }
 
 func (c *GetACL) CLI() string {

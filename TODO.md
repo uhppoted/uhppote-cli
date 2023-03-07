@@ -5,6 +5,8 @@
       - [x] README
       - [x] _bash_ script
 
+- [ ] --with-pin option for get-acl, compare-acl and load-acl
+
 - [ ] Fix listen event format
 ```
 423187757  true  true  true  true  false false false false 0    2023-01-25 11:20:28 0          0 00 00 | 207405 1   false 3 1     10058399   2023-01-25 11:20:28 5
@@ -17,6 +19,14 @@
 
 Listening...
 ERROR: parsing time "000000": month out of range
+```
+
+- [ ] Fix get-cards format
+```
+8165537  2021-01-01 2021-12-31 Y N N N
+8165539  2021-01-01 2021-12-31 N N N N
+8165538  2023-01-01 2023-12-31 Y N Y 29 7531
+192837465 2023-01-01 2023-12-31 Y N 55 Y 7531
 ```
 
 ## TODO

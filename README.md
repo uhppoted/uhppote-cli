@@ -609,6 +609,7 @@ Retrieves all access card records from a controller. A card record comprises:
 - `door2`     _Y,N or associated time profile for door 2_
 - `door3`     _Y,N or associated time profile for door 3_
 - `door4`     _Y,N or associated time profile for door 4_
+- `PIN`       _card keypad PIN code_
 ```
 uhppote-cli [options] get-cards <device ID>
 
@@ -628,7 +629,7 @@ uhppote-cli [options] get-cards <device ID>
   
   8165537  2021-01-01 2021-12-31 Y N N N
   8165539  2021-01-01 2021-12-31 N N N N
-  8165538  2021-01-01 2021-12-31 Y N Y 29
+  8165538  2021-01-01 2021-12-31 Y N Y 29 7531
 ```
 
 #### `get-card`
