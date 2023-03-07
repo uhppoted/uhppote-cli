@@ -274,6 +274,7 @@ compare-acl-with-pin: build
 	$(CLI) compare-acl ../runtime/simulation/simulation.acl
 	$(CLI) compare-acl ../runtime/simulation/simulation.acl ../runtime/uhppote-cli/compare-acl.tsv
 	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation.acl
+	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation-with-pin.acl
 	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation.acl ../runtime/uhppote-cli/compare-acl-with-pin.tsv
 
 load-acl: build

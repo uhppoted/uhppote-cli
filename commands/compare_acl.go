@@ -15,6 +15,9 @@ import (
 
 // CompareACLCmd is an initialized CompareACL command for the main() command list
 var CompareACLCmd = CompareACL{
+	file:    "",
+	rptfile: "",
+	withPIN: false,
 	template: `
 -----------------------------------
 ACL DIFF REPORT {{ .DateTime }}
@@ -31,6 +34,9 @@ ACL DIFF REPORT {{ .DateTime }}
 }
 
 type CompareACL struct {
+	file     string
+	rptfile  string
+	withPIN  bool
 	template string
 }
 
@@ -39,16 +45,15 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return fmt.Errorf("compare-acl requires a valid configuration file")
 	}
 
-	file, rptfile, withPIN, err := c.parseArgs()
-	if err != nil {
+	if err := c.parseArgs(); err != nil {
 		return err
 	}
 
-	if file == "" {
+	if c.file == "" {
 		return fmt.Errorf("please specify the TSV file from which to load the authoritative access control list ")
 	}
 
-	tsv, err := os.ReadFile(file)
+	tsv, err := os.ReadFile(c.file)
 	if err != nil {
 		return err
 	}
@@ -72,7 +77,7 @@ func (c *CompareACL) Execute(ctx Context) error {
 	}
 
 	compare := func(current acl.ACL, list acl.ACL) (map[uint32]acl.Diff, error) {
-		if withPIN {
+		if c.withPIN {
 			return acl.CompareWithPIN(current, list)
 		} else {
 			return acl.Compare(current, list)
@@ -123,8 +128,8 @@ func (c *CompareACL) Execute(ctx Context) error {
 		return err
 	}
 
-	if rptfile != "" {
-		return os.WriteFile(rptfile, w.Bytes(), 0660)
+	if c.rptfile != "" {
+		return os.WriteFile(c.rptfile, w.Bytes(), 0660)
 	}
 
 	fmt.Printf("%v\n", w.String())
@@ -150,7 +155,7 @@ func (c *CompareACL) report(diff map[uint32]acl.Diff, w io.Writer) error {
 	return t.Execute(w, rpt)
 }
 
-func (c *CompareACL) parseArgs() (string, string, bool, error) {
+func (c *CompareACL) parseArgs() error {
 	flagset := flag.NewFlagSet("", flag.ExitOnError)
 	withPIN := flagset.Bool("with-pin", false, "Include card keypad PIN code in retrieved ACL information")
 	file := ""
@@ -164,13 +169,13 @@ func (c *CompareACL) parseArgs() (string, string, bool, error) {
 		file = flagset.Arg(0)
 		stat, err := os.Stat(file)
 		if err != nil && os.IsNotExist(err) {
-			return "", "", false, fmt.Errorf("file '%s' does not exist", file)
+			return fmt.Errorf("file '%s' does not exist", file)
 		} else if err != nil {
-			return "", "", false, err
+			return err
 		} else if err == nil && stat.Mode().IsDir() {
-			return "", "", false, fmt.Errorf("file '%s' is a directory", file)
+			return fmt.Errorf("file '%s' is a directory", file)
 		} else if err == nil && !stat.Mode().IsRegular() {
-			return "", "", false, fmt.Errorf("file '%s' is not a real file", file)
+			return fmt.Errorf("file '%s' is not a real file", file)
 		}
 	}
 
@@ -179,15 +184,19 @@ func (c *CompareACL) parseArgs() (string, string, bool, error) {
 		rptfile = flagset.Arg(1)
 		stat, err := os.Stat(rptfile)
 		if err != nil && !os.IsNotExist(err) {
-			return "", "", false, err
+			return err
 		} else if err == nil && stat.Mode().IsDir() {
-			return "", "", false, fmt.Errorf("file '%s' is a directory", rptfile)
+			return fmt.Errorf("file '%s' is a directory", rptfile)
 		} else if err == nil && !stat.Mode().IsRegular() {
-			return "", "", false, fmt.Errorf("file '%s' is not a real file", rptfile)
+			return fmt.Errorf("file '%s' is not a real file", rptfile)
 		}
 	}
 
-	return file, rptfile, *withPIN, nil
+	c.file = file
+	c.rptfile = rptfile
+	c.withPIN = *withPIN
+
+	return nil
 }
 
 func (c *CompareACL) CLI() string {
@@ -212,8 +221,8 @@ func (c *CompareACL) Help() {
 	fmt.Println()
 	fmt.Println("                The TSV file should conform to the following format:")
 	fmt.Println("                Card Number<tab>From<tab>To<tab>Front Door<tab>Back Door<tab> ...")
-	fmt.Println("                123456789<tab>2019-01-01<tab>2019-12-31<tab>Y<tab>N<tab> ...")
-	fmt.Println("                987654321<tab>2019-03-05<tab>2019-11-15<tab>N<tab>N<tab> ...")
+	fmt.Println("                123456789<tab>2023-01-01<tab>2023-12-31<tab>Y<tab>N<tab> ...")
+	fmt.Println("                987654321<tab>2023-03-05<tab>2023-11-15<tab>N<tab>N<tab> ...")
 	fmt.Println()
 	fmt.Println("                'Front Door', 'Back Door', etc should match the door labels in the configuration file.")
 	fmt.Println("                The CLI will compare the access control permissions across all the controllers listed.")
@@ -227,6 +236,11 @@ func (c *CompareACL) Help() {
 	fmt.Println("    --debug   Displays internal information for diagnosing errors")
 	fmt.Println()
 	fmt.Println("    --with-pin Includes the card keypad PIN code when comparing ACLs.")
+	fmt.Println()
+	fmt.Println("               The TSV file with PIN should conform to the following format:")
+	fmt.Println("               Card Number<tab>PIN<tab>From<tab>To<tab>Front Door<tab>Back Door<tab> ...")
+	fmt.Println("               123456789<tab>0<tab>2023-01-01<tab>2023-12-31<tab>Y<tab>N<tab> ...")
+	fmt.Println("               987654321<tab>7531<tab>2023-03-05<tab>2023-11-15<tab>N<tab>N<tab> ...")
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
