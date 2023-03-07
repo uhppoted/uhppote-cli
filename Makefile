@@ -265,10 +265,17 @@ get-acl: build
 #	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf get-acl ../runtime/simulation/uhppote-cli.acl
 
 get-acl-with-pin: build
+	$(CLI) get-acl
 	$(CLI) get-acl --with-pin
 	$(CLI) get-acl --with-pin ../runtime/uhppote-cli/acl-with-pin.tsv
 
 compare-acl: build
 	$(CLI) $(DEBUG) compare-acl ../runtime/simulation/simulation.acl
 	$(CLI) $(DEBUG) --config ../runtime/simulation/$(SERIALNO).conf compare-acl ../runtime/simulation/simulation.acl ../runtime/simulation/$(SERIALNO).rpt
+
+compare-acl-with-pin: build
+	$(CLI) compare-acl ../runtime/simulation/simulation.acl
+	$(CLI) compare-acl ../runtime/simulation/simulation.acl ../runtime/uhppote-cli/compare-acl.tsv
+	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation.acl
+	$(CLI) compare-acl --with-pin ../runtime/simulation/simulation.acl ../runtime/uhppote-cli/compare-acl-with-pin.tsv
 
