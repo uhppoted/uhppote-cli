@@ -6,14 +6,6 @@
 405419896  false false false false false false false false 0    2023-01-25 12:30:24 0          0 00 00 | 257   1   false 3 1     8165538    2023-01-25 12:30:24 5
 ```
 
-- [ ] Fix controller with uninitialised time
-```
-./bin/uhppote-cli listen
-
-Listening...
-ERROR: parsing time "000000": month out of range
-```
-
 - [x] Fix get-cards format
 ```
 8165537  2021-01-01 2021-12-31 Y N N N
