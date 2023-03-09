@@ -2,6 +2,11 @@ package commands
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"strings"
+
+	"github.com/uhppoted/uhppote-core/types"
 )
 
 var GetCardsCmd = GetCards{}
@@ -20,19 +25,95 @@ func (c *GetCards) Execute(ctx Context) error {
 		return err
 	}
 
-	var index uint32 = 1
+	recordset := []types.Card{}
+	index := uint32(1)
 	for count := uint32(0); count < N; {
 		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index)
 		if err != nil {
+			print(recordset, os.Stdout)
 			return err
 		}
 
 		if record != nil {
-			fmt.Printf("%v\n", record)
+			recordset = append(recordset, *record)
 			count++
 		}
 
 		index++
+	}
+
+	return nil
+}
+
+func (c *GetCards) print(recordset []types.Card, w io.Writer) error {
+	from := func(card types.Card) string {
+		if card.From != nil {
+			return fmt.Sprintf("%v", card.From)
+		} else {
+			return "-"
+		}
+	}
+
+	to := func(card types.Card) string {
+		if card.To != nil {
+			return fmt.Sprintf("%v", card.To)
+		} else {
+			return "-"
+		}
+	}
+
+	door := func(p uint8) string {
+		switch {
+		case p == 0:
+			return "N"
+
+		case p == 1:
+			return "Y"
+
+		case p >= 2 && p <= 254:
+			return fmt.Sprintf("%v", p)
+
+		default:
+			return "N"
+		}
+	}
+
+	pin := func(card types.Card) string {
+		if card.PIN > 0 && card.PIN < 1000000 {
+			return fmt.Sprintf("%v", card.PIN)
+		} else {
+			return ""
+		}
+	}
+
+	table := [][]string{}
+
+	for _, card := range recordset {
+		table = append(table, []string{
+			fmt.Sprintf("%-8v", card.CardNumber),
+			fmt.Sprintf("%-10v", from(card)),
+			fmt.Sprintf("%-10v", to(card)),
+			fmt.Sprintf("%v", door(card.Doors[1])),
+			fmt.Sprintf("%v", door(card.Doors[2])),
+			fmt.Sprintf("%v", door(card.Doors[3])),
+			fmt.Sprintf("%v", door(card.Doors[4])),
+			fmt.Sprintf("%v", pin(card)),
+		})
+	}
+
+	width := []int{0, 0, 0, 0, 0, 0, 0, 0}
+	for _, row := range table {
+		for ix, field := range row {
+			if len(field) > width[ix] {
+				width[ix] = len(field)
+			}
+		}
+	}
+
+	format := fmt.Sprintf("%%-%vv %%%vv %%-%vv %%-%vv %%-%vv %%-%vv %%-%vv %%-%vv\n", width[0], width[1], width[2], width[3], width[4], width[5], width[6], width[7])
+	for _, row := range table {
+		s := fmt.Sprintf(format, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+		fmt.Fprintf(w, "%v\n", strings.TrimSpace(s))
 	}
 
 	return nil

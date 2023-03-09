@@ -14,7 +14,7 @@ Listening...
 ERROR: parsing time "000000": month out of range
 ```
 
-- [ ] Fix get-cards format
+- [x] Fix get-cards format
 ```
 8165537  2021-01-01 2021-12-31 Y N N N
 8165539  2021-01-01 2021-12-31 N N N N

@@ -9,6 +9,7 @@
 
 ### Updated
 1. Included static-check in CI build.
+2. Implemented custom formatting for `get-cards` to pretty print lists with too large card numbers.
 
 
 ## [0.8.3](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.3) - 2022-12-16
