@@ -1,13 +1,6 @@
 # TODO
 
-- [x] set-pc-control
-      - [x] CLI command
-      - [x] README
-      - [x] _bash_ script
-
-- [ ] --with-pin option for get-acl, compare-acl and load-acl
-
-- [ ] Fix listen event format
+- [x] Fix listen event format
 ```
 423187757  true  true  true  true  false false false false 0    2023-01-25 11:20:28 0          0 00 00 | 207405 1   false 3 1     10058399   2023-01-25 11:20:28 5
 405419896  false false false false false false false false 0    2023-01-25 12:30:24 0          0 00 00 | 257   1   false 3 1     8165538    2023-01-25 12:30:24 5

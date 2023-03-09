@@ -2,9 +2,10 @@ package commands
 
 import (
 	"fmt"
-	"github.com/uhppoted/uhppote-core/types"
 	"os"
 	"os/signal"
+
+	"github.com/uhppoted/uhppote-core/types"
 )
 
 var ListenCmd = Listen{}
