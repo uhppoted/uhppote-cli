@@ -71,11 +71,11 @@ build-all: test vet lint
 release: update-release build-all
 	find . -name ".DS_Store" -delete
 	tar --directory=dist --exclude=".DS_Store" -cvzf dist/$(DIST).tar.gz $(DIST)
+	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
 
 publish: release
 	echo "Releasing version $(VERSION)"
-	rm -f dist/development.tar.gz
-	gh release create "$(VERSION)" ./dist/*.tar.gz --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
+	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION)*.zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
 	$(CLI) $(DEBUG) set-time-profile 405419896 3  2023-01-01:2023-12-31 Sat,Sun     09:30-16:30,, 
