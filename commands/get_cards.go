@@ -30,7 +30,7 @@ func (c *GetCards) Execute(ctx Context) error {
 	for count := uint32(0); count < N; {
 		record, err := ctx.uhppote.GetCardByIndex(serialNumber, index)
 		if err != nil {
-			print(recordset, os.Stdout)
+			c.print(recordset, os.Stdout)
 			return err
 		}
 
@@ -42,23 +42,25 @@ func (c *GetCards) Execute(ctx Context) error {
 		index++
 	}
 
+	c.print(recordset, os.Stdout)
+
 	return nil
 }
 
 func (c *GetCards) print(recordset []types.Card, w io.Writer) error {
 	from := func(card types.Card) string {
-		if card.From != nil {
-			return fmt.Sprintf("%v", card.From)
-		} else {
+		if card.From.IsZero() {
 			return "-"
+		} else {
+			return fmt.Sprintf("%v", card.From)
 		}
 	}
 
 	to := func(card types.Card) string {
-		if card.To != nil {
-			return fmt.Sprintf("%v", card.To)
-		} else {
+		if card.To.IsZero() {
 			return "-"
+		} else {
+			return fmt.Sprintf("%v", card.To)
 		}
 	}
 

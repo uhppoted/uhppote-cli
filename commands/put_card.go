@@ -61,8 +61,8 @@ func (c *PutCard) Execute(ctx Context) error {
 	end := types.Date(*to)
 	authorised, err := ctx.uhppote.PutCard(serialNumber, types.Card{
 		CardNumber: cardNumber,
-		From:       &start,
-		To:         &end,
+		From:       start,
+		To:         end,
 		Doors:      permissions,
 		PIN:        pin,
 	})

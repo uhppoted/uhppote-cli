@@ -10,6 +10,7 @@ DATETIME  = $(shell date "+%Y-%m-%d %H:%M:%S")
 LISTEN   ?= 192.168.1.100:60001
 DEBUG    ?= --debug
 
+.DEFAULT_GOAL := test
 .PHONY: clean
 .PHONY: update
 .PHONY: update-release

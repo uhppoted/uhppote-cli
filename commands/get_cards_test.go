@@ -9,12 +9,6 @@ import (
 )
 
 func TestGetCardsPrint(t *testing.T) {
-	date := func(y int, m time.Month, d int) *types.Date {
-		dd := types.ToDate(y, m, d)
-
-		return &dd
-	}
-
 	getCards := GetCards{}
 	expected := `12345    2023-01-01 2023-12-21 Y N N N
 8165539  2023-01-01 2023-12-31 Y N N 29
@@ -24,20 +18,20 @@ func TestGetCardsPrint(t *testing.T) {
 	recordset := []types.Card{
 		types.Card{
 			CardNumber: 12345,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 21),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 21),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 0},
 		},
 		types.Card{
 			CardNumber: 8165539,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 31),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 31),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 		},
 		types.Card{
 			CardNumber: 8165538,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 31),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 31),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
 		},
@@ -53,12 +47,6 @@ func TestGetCardsPrint(t *testing.T) {
 }
 
 func TestGetCardsPrintWithInvalidCardNumber(t *testing.T) {
-	date := func(y int, m time.Month, d int) *types.Date {
-		dd := types.ToDate(y, m, d)
-
-		return &dd
-	}
-
 	getCards := GetCards{}
 	expected := `12345     2023-01-01 2023-12-21 Y N N N
 8165539   2023-01-01 2023-12-31 Y N N 29
@@ -69,27 +57,27 @@ func TestGetCardsPrintWithInvalidCardNumber(t *testing.T) {
 	recordset := []types.Card{
 		types.Card{
 			CardNumber: 12345,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 21),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 21),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 0},
 		},
 		types.Card{
 			CardNumber: 8165539,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 31),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 31),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 		},
 		types.Card{
 			CardNumber: 8165538,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 31),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 31),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
 		},
 		types.Card{
 			CardNumber: 192837465,
-			From:       date(2023, time.January, 1),
-			To:         date(2023, time.December, 31),
+			From:       types.ToDate(2023, time.January, 1),
+			To:         types.ToDate(2023, time.December, 31),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
 		},
