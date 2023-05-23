@@ -1,14 +1,15 @@
 DIST ?= development
 CLI   = ./bin/uhppote-cli
 
+DATETIME   = $(shell date "+%Y-%m-%d %H:%M:%S")
 CONTROLLER ?= Alpha
-SERIALNO ?= 405419896
-CARD     ?= 8165538
-DOOR     ?= 3
-DEVICEIP ?= 192.168.1.125
-DATETIME  = $(shell date "+%Y-%m-%d %H:%M:%S")
-LISTEN   ?= 192.168.1.100:60001
-DEBUG    ?= --debug
+SERIALNO   ?= 405419896
+CARD       ?= 8165538
+DOOR       ?= 3
+INTERLOCK  ?= 1&2&3
+DEVICEIP   ?= 192.168.1.125
+LISTEN     ?= 192.168.1.100:60001
+DEBUG      ?= --debug
 
 .DEFAULT_GOAL := test
 .PHONY: clean
@@ -239,6 +240,9 @@ open: build
 set-pc-control: build
 	$(CLI) $(DEBUG) set-pc-control $(SERIALNO) true
 	# $(CLI) $(DEBUG) set-pc-control 423187757 true
+
+set-interlock: build
+	$(CLI) $(DEBUG) set-interlock $(SERIALNO) '$(INTERLOCK)'
 
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 

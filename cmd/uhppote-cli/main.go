@@ -53,6 +53,7 @@ var cli = []commands.Command{
 	&commands.SetEventIndexCmd,
 	&commands.OpenDoorCmd,
 	&commands.SetPCControlCmd,
+	&commands.SetInterlockCmd,
 	&commands.ListenCmd,
 }
 
