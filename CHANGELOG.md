@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+### Added
+1. `set-interlock` command.
 
 ## [0.8.4](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.4) - 2023-03-17
 

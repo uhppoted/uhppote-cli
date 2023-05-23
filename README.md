@@ -133,6 +133,7 @@ Device commands:
 - [`set-event-index`](#set-event-index)
 - [`open`](#open)
 - [`set-pc-control`](#set-pc-control)
+- [`set-interlock`](#set-interlock)
 - [`listen`](#listen)
 
 ACL commands:
@@ -1247,6 +1248,52 @@ uhppote-cli [options] set-pc-control <device ID> <enable>
 
   > uhppote-cli set-pc-control 405419896 false
     405419896  false
+```
+
+#### `set-interlock`
+
+Sets the controller door interlock mode. 
+
+The door interlock prevents a door from opening unless the interlock condition is valid for that door. The
+controllers support the following modes:
+
+| Mode    | Description                                                                                                     |
+|---------|-----------------------------------------------------------------------------------------------------------------|
+| none    | Any door can opened subject to access restrictions                                                              |
+| 1&2,3&4 | Door 1 can be opened if 2 is closed and vice versa. Door 3 can be opened if 4 is closed (and vice versa)        |
+| 1&3,2&4 | Door 1 can be opened if 3 is closed and vice versa. Door 2 can be opened if 4 is closed (and vice versa)        |
+| 1&2&3   | Door 1 can be opened if 2 and 3 are both closed, door 2 if 1 and 3 are closed and door 3 if 1 and 2 are closed  |
+| 1&2&3&4 | A door can only be opened if all the other doors are closed                                                     |
+
+
+```
+uhppote-cli [options] set-interlock <controller ID> <interlock>
+
+  <controller ID> (required) Controller serial number (or name)
+  <interlock>     (required) Sets the controller interlock mode. Valid values are:
+                  - none
+                  - 1&2,3&4
+                  - 1&3,2&4
+                  - 1&2&3
+                  - 1&2&3&4
+
+                  Because the ampersand (&) is a special character the interlock needs to be enclosed in quotes
+                  e.g. uhppote-cli set-interlock 405419896 '1&2,3&4'
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli set-interlock 405419896 '1&2,3&4'
+    405419896  set interlock 1&2,3&4
+
+  > uhppote-cli set-interlock 405419896 none
+    405419896  set interlock none
 ```
 
 #### `listen`
