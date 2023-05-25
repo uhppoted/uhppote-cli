@@ -76,19 +76,19 @@ func (c *SetInterlock) getInterlock() (types.Interlock, error) {
 	interlock := flag.Arg(2)
 
 	switch {
-	case regexp.MustCompile("none").MatchString(interlock):
+	case regexp.MustCompile("^none$").MatchString(interlock):
 		return types.NoInterlock, nil
 
-	case regexp.MustCompile("1&2,3&4").MatchString(interlock):
+	case regexp.MustCompile("^1&2,3&4$").MatchString(interlock):
 		return types.Interlock12_34, nil
 
-	case regexp.MustCompile("1&3,2&4").MatchString(interlock):
+	case regexp.MustCompile("^1&3,2&4$").MatchString(interlock):
 		return types.Interlock13_24, nil
 
-	case regexp.MustCompile("1&2&3").MatchString(interlock):
+	case regexp.MustCompile("^1&2&3$").MatchString(interlock):
 		return types.Interlock123, nil
 
-	case regexp.MustCompile("1&2&3&4").MatchString(interlock):
+	case regexp.MustCompile("^1&2&3&4$").MatchString(interlock):
 		return types.Interlock1234, nil
 
 	default:

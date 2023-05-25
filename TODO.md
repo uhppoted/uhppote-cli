@@ -1,9 +1,9 @@
 # TODO
 
-- [ ] `set-interlock`
-      - [ ] command
-      - [ ] README
-      - [ ] CHANGELOG
+- [x] `set-interlock`
+      - [x] command
+      - [x] README
+      - [x] CHANGELOG
 
 - [ ] CLI is waiting for CR on error
 
