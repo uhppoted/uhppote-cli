@@ -52,14 +52,15 @@ func (c *SetInterlock) Help() {
 	fmt.Println("  serial-number  (required) controller serial number")
 	fmt.Println("  interlock      (required) interlock")
 	fmt.Println("                            - none")
+	fmt.Println("                            - 1&2")
+	fmt.Println("                            - 3&4")
 	fmt.Println("                            - 1&2,3&4")
-	fmt.Println("                            - 1&3,2&4")
 	fmt.Println("                            - 1&2&3")
 	fmt.Println("                            - 1&2&3&4")
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli set-interlocl 405419896 1&2&3")
+	fmt.Println("    uhppote-cli set-interlock 405419896 1&2&3")
 	fmt.Println()
 }
 
@@ -79,11 +80,14 @@ func (c *SetInterlock) getInterlock() (types.Interlock, error) {
 	case regexp.MustCompile("^none$").MatchString(interlock):
 		return types.NoInterlock, nil
 
+	case regexp.MustCompile("^1&2$").MatchString(interlock):
+		return types.Interlock12, nil
+
+	case regexp.MustCompile("^3&4$").MatchString(interlock):
+		return types.Interlock34, nil
+
 	case regexp.MustCompile("^1&2,3&4$").MatchString(interlock):
 		return types.Interlock12_34, nil
-
-	case regexp.MustCompile("^1&3,2&4$").MatchString(interlock):
-		return types.Interlock13_24, nil
 
 	case regexp.MustCompile("^1&2&3$").MatchString(interlock):
 		return types.Interlock123, nil

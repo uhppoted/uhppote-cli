@@ -1272,8 +1272,9 @@ uhppote-cli [options] set-interlock <controller ID> <interlock>
   <controller ID> (required) Controller serial number (or name)
   <interlock>     (required) Sets the controller interlock mode. Valid values are:
                   - none
+                  - 1&2
+                  - 3&4
                   - 1&2,3&4
-                  - 1&3,2&4
                   - 1&2&3
                   - 1&2&3&4
 
