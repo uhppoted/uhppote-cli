@@ -1257,13 +1257,14 @@ Sets the controller door interlock mode.
 The door interlock prevents a door from opening unless the interlock condition is valid for that door. The
 controllers support the following modes:
 
-| Mode    | Description                                                                                                     |
-|---------|-----------------------------------------------------------------------------------------------------------------|
-| none    | Any door can opened subject to access restrictions                                                              |
-| 1&2,3&4 | Door 1 can be opened if 2 is closed and vice versa. Door 3 can be opened if 4 is closed (and vice versa)        |
-| 1&3,2&4 | Door 1 can be opened if 3 is closed and vice versa. Door 2 can be opened if 4 is closed (and vice versa)        |
-| 1&2&3   | Door 1 can be opened if 2 and 3 are both closed, door 2 if 1 and 3 are closed and door 3 if 1 and 2 are closed  |
-| 1&2&3&4 | A door can only be opened if all the other doors are closed                                                     |
+| Mode    | Description                                                                                                      |
+|---------|------------------------------------------------------------------------------------------------------------------|
+| none    | Any door can opened subject to access restrictions                                                               |
+| 1&2     | Door 1 can be opened if door 2 is closed and vice versa                                                          |
+| 3&4     | Door 3 can be opened if door 4 is closed and vice versa                                                          |
+| 1&2,3&4 | Door 1 can be opened if door 2 is closed and vice versa, Door 3 can be opened if door 4 is closed and vice versa |
+| 1&2&3   | Door 1 can be opened if 2 and 3 are both closed, door 2 if 1 and 3 are closed and door 3 if 1 and 2 are closed   |
+| 1&2&3&4 | A door can only be opened if all the other doors are closed                                                      |
 
 
 ```
