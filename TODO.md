@@ -1,46 +1,11 @@
 # TODO
 
-- [x] `set-interlock`
-      - [x] command
-      - [x] README
-      - [x] CHANGELOG
-
-| Interlock | S1     | S2     | S3     | S4     | PB1 | PB2 | PB3 | PB4 |
-|-----------|--------|--------|--------|--------|-----|-----|-----|-----|
-| 0         | CLOSED | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 0         | OPEN   | OPEN   | OPEN   | OPEN   | OK  | OK  | OK  | OK  |
-|-----------|--------|--------|--------|--------|-----|-----|-----|-----|
-| 1         | CLOSED | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 1         | OPEN   | CLOSED | CLOSED | CLOSED | OK  | --  | OK  | OK  |
-| 1         | CLOSED | OPEN   | CLOSED | CLOSED | --  | OK  | OK  | OK  |
-| 1         | CLOSED | CLOSED | OPEN   | CLOSED | OK  | OK  | OK  | OK  |
-| 1         | CLOSED | CLOSED | CLOSED | OPEN   | OK  | OK  | OK  | OK  |
-|-----------|--------|--------|--------|--------|-----|-----|-----|-----|
-| 2         | CLOSED | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 2         | OPEN   | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 2         | CLOSED | OPEN   | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 2         | CLOSED | CLOSED | OPEN   | CLOSED | OK  | OK  | OK  | --  |
-| 2         | CLOSED | CLOSED | CLOSED | OPEN   | OK  | OK  | --  | OK  |
-|-----------|--------|--------|--------|--------|-----|-----|-----|-----|
-| 3         | CLOSED | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 3         | OPEN   | CLOSED | CLOSED | CLOSED | OK  | --  | OK  | OK  |
-| 3         | CLOSED | OPEN   | CLOSED | CLOSED | --  | OK  | OK  | OK  |
-| 3         | CLOSED | CLOSED | OPEN   | CLOSED | OK  | OK  | OK  | --  |
-| 3         | CLOSED | CLOSED | CLOSED | OPEN   | OK  | OK  | --  | OK  |
-|-----------|--------|--------|--------|--------|-----|-----|-----|-----|
-| 4         | CLOSED | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 4         | OPEN   | CLOSED | CLOSED | CLOSED | OK  | --  | --  | OK  |
-| 4         | CLOSED | OPEN   | CLOSED | CLOSED | --  | OK  | --  | OK  |
-| 4         | CLOSED | CLOSED | OPEN   | CLOSED | --  | --  | OK  | OK  |
-| 4         | CLOSED | CLOSED | CLOSED | OPEN   | OK  | OK  | OK  | OK  |
-|-----------|--------|--------|--------|--------|-----|-----|-----|-----|
-| 8         | CLOSED | CLOSED | CLOSED | CLOSED | OK  | OK  | OK  | OK  |
-| 8         | OPEN   | CLOSED | CLOSED | CLOSED | OK  | --  | --  | --  |
-| 8         | CLOSED | OPEN   | CLOSED | CLOSED | --  | OK  | --  | --  |
-| 8         | CLOSED | CLOSED | OPEN   | CLOSED | --  | --  | OK  | --  |
-| 8         | CLOSED | CLOSED | CLOSED | OPEN   | --  | --  | --  | --  |
-
-
+- [ ] Explicitly enable Wiegand-26 validation (cf. https://github.com/uhppoted/uhppote-cli/issues/12)
+      - [x] Add --card-format arg to put-card
+      - [ ] Add --card-format arg to load-acl
+      - [ ] Default to uhppoted.conf value
+      - [ ] CHANGELOG
+      - [ ] README
 - [ ] CLI is waiting for CR on error
 
 ## TODO

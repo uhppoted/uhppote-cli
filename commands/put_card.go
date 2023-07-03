@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppoted-lib/config"
@@ -17,29 +18,75 @@ type PutCard struct {
 }
 
 func (c *PutCard) Execute(ctx Context) error {
-	serialNumber, err := getSerialNumber(ctx)
-	if err != nil {
-		return err
-	}
+	serialNumber := uint32(0)
+	cardNumber := uint32(0)
+	from := &time.Time{}
+	to := &time.Time{}
+	permissions := map[uint8]uint8{}
+	pin := types.PIN(0)
+	format := types.WiegandAny
+	args := flag.Args()
 
-	cardNumber, err := getUint32(2, "missing card number", "invalid card number: %v")
-	if err != nil {
-		return err
-	}
+	ix := 1
+	argi := 0
+	for ix < len(args) {
+		if args[ix] == "--card-format" {
+			ix++
+			if len(args) > ix {
+				if v, err := types.CardFormatFromString(args[ix]); err != nil {
+					return err
+				} else {
+					format = v
+				}
+			}
+		} else {
+			switch argi {
+			case 0:
+				if v, err := getSerialNumberI(ctx, ix); err != nil {
+					return err
+				} else {
+					serialNumber = v
+				}
 
-	from, err := getDate(3, "missing start date", "invalid start date: %v")
-	if err != nil {
-		return err
-	}
+			case 1:
+				if v, err := getUint32(ix, "missing card number", "invalid card number: %v"); err != nil {
+					return err
+				} else {
+					cardNumber = v
+				}
 
-	to, err := getDate(4, "missing end date", "invalid end date: %v")
-	if err != nil {
-		return err
-	}
+			case 2:
+				if v, err := getDate(ix, "missing start date", "invalid start date: %v"); err != nil {
+					return err
+				} else {
+					from = v
+				}
 
-	permissions, err := getPermissions()
-	if err != nil {
-		return err
+			case 3:
+				if v, err := getDate(ix, "missing end date", "invalid end date: %v"); err != nil {
+					return err
+				} else {
+					to = v
+				}
+
+			case 4:
+				if v, err := getPermissions(ix); err != nil {
+					return err
+				} else {
+					permissions = v
+				}
+
+			case 5:
+				if v, err := getPIN(ix); err != nil {
+					return err
+				} else {
+					pin = v
+				}
+			}
+
+			argi++
+		}
+		ix++
 	}
 
 	for _, door := range []uint8{1, 2, 3, 4} {
@@ -52,26 +99,21 @@ func (c *PutCard) Execute(ctx Context) error {
 		}
 	}
 
-	pin, err := getPIN()
-	if err != nil {
-		return err
-	}
-
 	start := types.Date(*from)
 	end := types.Date(*to)
-	authorised, err := ctx.uhppote.PutCard(serialNumber, types.Card{
+	card := types.Card{
 		CardNumber: cardNumber,
 		From:       start,
 		To:         end,
 		Doors:      permissions,
 		PIN:        pin,
-	})
-
-	if err != nil {
-		return err
 	}
 
-	fmt.Printf("%v %v %v\n", serialNumber, cardNumber, authorised)
+	if authorised, err := ctx.uhppote.PutCard(serialNumber, card, format); err != nil {
+		return err
+	} else {
+		fmt.Printf("%v %v %v\n", serialNumber, cardNumber, authorised)
+	}
 
 	return nil
 }
@@ -116,8 +158,7 @@ func (c *PutCard) RequiresConfig() bool {
 	return false
 }
 
-func getPermissions() (map[uint8]uint8, error) {
-	index := 5
+func getPermissions(index int) (map[uint8]uint8, error) {
 	permissions := map[uint8]uint8{1: 0, 2: 0, 3: 0, 4: 0}
 
 	if len(flag.Args()) > index {
@@ -152,11 +193,11 @@ func getPermissions() (map[uint8]uint8, error) {
 	return permissions, nil
 }
 
-func getPIN() (types.PIN, error) {
+func getPIN(index int) (types.PIN, error) {
 	pin := types.PIN(0)
 
-	if len(flag.Args()) > 6 {
-		arg := flag.Arg(6)
+	if len(flag.Args()) > index {
+		arg := flag.Arg(index)
 		if ok := regexp.MustCompile("[0-9]+").MatchString(arg); !ok {
 			return pin, fmt.Errorf("invalid PIN (%v)", arg)
 		} else if v, err := strconv.ParseUint(arg, 10, 32); err != nil {

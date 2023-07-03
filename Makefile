@@ -83,10 +83,10 @@ publish: release
 	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION).zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	$(CLI) $(DEBUG) set-time-profile 405419896 3  2023-01-01:2023-12-31 Sat,Sun     09:30-16:30,, 
-	$(CLI) $(DEBUG) set-time-profile 405419896 29 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
-	$(CLI) $(DEBUG) set-time-profile 303986753 3  2023-01-01:2023-12-31 Sat,Sun     09:30-16:30,, 
-	$(CLI) $(DEBUG) set-time-profile 303986753 29 2023-04-01:2023-12-31 Mon,Wed,Fri 08:30-11:30,,13:45-17:00 3
+	$(CLI) put-card                          $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
+	$(CLI) put-card --card-format any        $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
+	$(CLI) put-card --card-format wiegand-26 $(SERIALNO) 10058400 2023-01-01 2023-12-31 1,3,4:29 7531
+	$(CLI) put-card --card-format wiegand-26 $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
 
 irl: build
 	$(CLI) set-time            423187757
@@ -170,7 +170,7 @@ get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
 put-card: build
-	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2023-01-01 2023-12-31 1,3,4:29 7531
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2023-01-01 2023-12-31 1,3,4:29 7531 --card-format any 
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)

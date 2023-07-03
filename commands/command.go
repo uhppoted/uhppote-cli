@@ -62,11 +62,15 @@ func clean(s string) string {
 }
 
 func getSerialNumber(ctx Context) (uint32, error) {
-	if len(flag.Args()) < 2 {
+	return getSerialNumberI(ctx, 1)
+}
+
+func getSerialNumberI(ctx Context, index int) (uint32, error) {
+	if len(flag.Args()) < index+1 {
 		return 0, fmt.Errorf("missing controller serial number")
 	}
 
-	arg := flag.Arg(1)
+	arg := flag.Arg(index)
 
 	// lookup controller by name
 	if ctx.config != nil {
