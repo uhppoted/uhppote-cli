@@ -83,10 +83,13 @@ publish: release
 	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION).zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	$(CLI) put-card                          $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
-	$(CLI) put-card --card-format any        $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
-	$(CLI) put-card --card-format wiegand-26 $(SERIALNO) 10058400 2023-01-01 2023-12-31 1,3,4:29 7531
-	$(CLI) put-card --card-format wiegand-26 $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
+	# $(CLI) put-card                          $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
+	# $(CLI) put-card --card-format any        $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
+	# $(CLI) put-card --card-format wiegand-26 $(SERIALNO) 10058400 2023-01-01 2023-12-31 1,3,4:29 7531
+	# $(CLI) put-card --card-format wiegand-26 $(SERIALNO) $(CARD)  2023-01-01 2023-12-31 1,3,4:29 7531
+	# $(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
+	# $(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl --card-format wiegand-26 ../runtime/simulation/$(SERIALNO).acl
+	# $(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl --card-format any ../runtime/simulation/$(SERIALNO).acl
 
 irl: build
 	$(CLI) set-time            423187757

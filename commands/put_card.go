@@ -24,7 +24,7 @@ func (c *PutCard) Execute(ctx Context) error {
 	to := &time.Time{}
 	permissions := map[uint8]uint8{}
 	pin := types.PIN(0)
-	format := types.WiegandAny
+	format := ctx.config.CardFormat
 	args := flag.Args()
 
 	ix := 1

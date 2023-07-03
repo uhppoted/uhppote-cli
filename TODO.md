@@ -1,11 +1,12 @@
 # TODO
 
-- [ ] Explicitly enable Wiegand-26 validation (cf. https://github.com/uhppoted/uhppote-cli/issues/12)
+- [x] Explicitly enable Wiegand-26 validation (cf. https://github.com/uhppoted/uhppote-cli/issues/12)
       - [x] Add --card-format arg to put-card
-      - [ ] Add --card-format arg to load-acl
-      - [ ] Default to uhppoted.conf value
-      - [ ] CHANGELOG
-      - [ ] README
+      - [x] Add --card-format arg to load-acl
+      - [x] Default to uhppoted.conf value
+      - [x] CHANGELOG
+      - [x] README
+
 - [ ] CLI is waiting for CR on error
 
 ## TODO

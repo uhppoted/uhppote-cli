@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppote-core/uhppote"
 	"github.com/uhppoted/uhppoted-lib/acl"
 	"github.com/uhppoted/uhppoted-lib/config"
@@ -15,6 +16,7 @@ import (
 var LoadACLCmd = LoadACL{
 	file:    "",
 	withPIN: false,
+	format:  types.WiegandAny,
 	strict:  false,
 	dryrun:  false,
 }
@@ -22,6 +24,7 @@ var LoadACLCmd = LoadACL{
 type LoadACL struct {
 	file    string
 	withPIN bool
+	format  types.CardFormat
 	strict  bool
 	dryrun  bool
 }
@@ -31,7 +34,7 @@ func (c *LoadACL) Execute(ctx Context) error {
 		return errors.New("load-acl requires a valid configuration file")
 	}
 
-	if err := c.parseArgs(); err != nil {
+	if err := c.parseArgs(ctx); err != nil {
 		return err
 	}
 
@@ -59,9 +62,9 @@ func (c *LoadACL) Execute(ctx Context) error {
 
 	put := func(u uhppote.IUHPPOTE, list acl.ACL) (map[uint32]acl.Report, []error) {
 		if c.withPIN {
-			return acl.PutACLWithPIN(ctx.uhppote, list, c.dryrun)
+			return acl.PutACLWithPIN(ctx.uhppote, list, c.dryrun, c.format)
 		} else {
-			return acl.PutACL(ctx.uhppote, list, c.dryrun)
+			return acl.PutACL(ctx.uhppote, list, c.dryrun, c.format)
 		}
 	}
 
@@ -107,8 +110,9 @@ loop:
 	return nil
 }
 
-func (c *LoadACL) parseArgs() error {
+func (c *LoadACL) parseArgs(ctx Context) error {
 	flagset := flag.NewFlagSet("", flag.ExitOnError)
+	format := flagset.String("card-format", fmt.Sprintf("%v", ctx.config.CardFormat), "Card format for card number validation")
 	withPIN := flagset.Bool("with-pin", false, "Include card keypad PIN code in retrieved ACL information")
 	strict := flagset.Bool("strict", false, "Treat duplicate card numbers as errors")
 	file := ""
@@ -134,6 +138,12 @@ func (c *LoadACL) parseArgs() error {
 	c.file = file
 	c.withPIN = *withPIN
 	c.strict = *strict
+
+	if v, err := types.CardFormatFromString(*format); err != nil {
+		return err
+	} else {
+		c.format = v
+	}
 
 	return nil
 }

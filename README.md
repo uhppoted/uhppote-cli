@@ -212,7 +212,7 @@ Retrieves a list of the controllers accessible on the local LAN (i.e. can receiv
 uhppote-cli [options] get-devices
 
   Options: 
-  --config      Sets the uhppoted.conf file to use for controller configurations
+  --config      Sets the [uhppoted.conf](https://github.com/uhppoted/uhppoted/blob/master/documentation/uhppoted.conf/uhppoted.conf.md) file to use for controller configurations
   --bind        Overrides the default (or configured) bind IP address for a command
   --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
   --listen      Overrides the default (or configured) listen IP address on which to listen for events
@@ -684,7 +684,7 @@ Creates (or updates) an access card record on a controller, with the following i
 - `door4`     _Y,N or associated time profile for door 4_
 - `PIN`       _keypad PIN value_
 ```
-uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
+uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors> [--card-format <any|wiegand-26>]
 
   <device ID>   (required) Controller serial number (or name)
   <card number> (required) Access card number
@@ -692,6 +692,8 @@ uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
   <end>         (required) End dates after which the card is no longer enabled, formatted as YYYY-mm-dd
   <doors>       (optional) Comma separated list of doors for which the card grants access. Time profiled access for a door can be specified as door:profile.
   <PIN>         (optional) keypad PIN code in the range 0 to 999999 (0 is 'none'). Defaults to 0 is not provided.
+  --card-format <format> (optional) optionally enables card format validation (either any or Wiegand-26). Defaults to the
+                         `card.format` setting in _uhppoted.conf_ (or _none_).
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -705,6 +707,9 @@ uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors>
 
   uhppote-cli put-card 405419896 8165538 2023-01-01 2023-12-31 1,3,4:29 7531
   405419896 8165538 true
+
+  uhppote-cli put-card  --card-format wiegand-26 405419896 1058400 2023-01-01 2023-12-31 1,3,4:29 7531
+  405419896 10058400 true
 ```
 **NOTES**
 1. For a door associated with a time profile, `uhppote-cli` requires the time profile to be an existing time profile defined in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
@@ -1465,7 +1470,7 @@ Loads the access permissions from an ACL file to the set of configured UHPPOTE c
 `uhppoted` distribution.
 
 ```
-   uhppote-cli [options] load-acl [--with-pin] [--strict] <ACL file>
+   uhppote-cli [options] load-acl [--with-pin] [--strict] [--card-format <any|wiegand-26>] <ACL file>
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -1479,10 +1484,13 @@ Loads the access permissions from an ACL file to the set of configured UHPPOTE c
                 are ignored (or deleted if they exist) with a warning message
   --strict      Fails with an error for duplicate card numbers. Default is false in which case duplicate cards numbers
                 are ignored (or deleted if they exist) with a warning message
+  --card-format <format> (optional) optionally enables card format validation (either any or Wiegand-26). Defaults to the
+                         `card.format` setting in _uhppoted.conf_ (or _none_).
 
   Example:
 
   uhppote-cli --debug --conf warehouse.conf load-acl warehouse.acl
+  uhppote-cli --debug --conf warehouse.conf load-acl --card-format wiegand-26 --with-pin warehouse.acl
 
 ```
 
