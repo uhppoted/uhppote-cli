@@ -4,6 +4,7 @@
 
 ### Added
 1. Added optional --card-format command line argument to `put-acl` and `load-acl`
+2. Implemented activate-keypads command to activate/deactivate reader access keypads.
 
 
 ## [0.8.5](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.5) - 2023-06-13

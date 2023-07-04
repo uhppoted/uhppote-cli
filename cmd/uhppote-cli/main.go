@@ -54,6 +54,7 @@ var cli = []commands.Command{
 	&commands.OpenDoorCmd,
 	&commands.SetPCControlCmd,
 	&commands.SetInterlockCmd,
+	&commands.ActivateKeypadsCmd,
 	&commands.ListenCmd,
 }
 

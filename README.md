@@ -135,6 +135,7 @@ Device commands:
 - [`open`](#open)
 - [`set-pc-control`](#set-pc-control)
 - [`set-interlock`](#set-interlock)
+- [`activate-keypads`](#activate-keypads)
 - [`listen`](#listen)
 
 ACL commands:
@@ -1303,6 +1304,35 @@ uhppote-cli [options] set-interlock <controller ID> <interlock>
   > uhppote-cli set-interlock 405419896 none
     405419896  set interlock none
 ```
+
+#### `activate-keypads`
+
+Activates (or deactivates) the reader access keypads for a controller. 
+
+```
+uhppote-cli [options] activate-keypads <controller ID> <readers>
+
+  <controller ID> (required) Controller serial number (or name)
+  <readers>       (required) Comma seperated list of readers for which access keypads should be activated.
+                  Unlisted reader keypads are automatically deactivated i.e. if no readers are listed then
+                  all access keypads are deactivated.
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli activate-keypads 405419896 1,2,4
+    405419896  activated keypads 1,2,4
+
+  > uhppote-cli activate-keypads 405419896
+    405419896  activated keypads (none)
+```
+
 
 #### `listen`
 Establishes a _listening_ socket on the _listen_ `address:port` for events sent from controllers. Each event record comprises the same information as that returned by `get-status`:

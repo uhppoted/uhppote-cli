@@ -11,7 +11,7 @@ DEVICEIP   ?= 192.168.1.125
 LISTEN     ?= 192.168.1.100:60001
 DEBUG      ?= --debug
 
-.DEFAULT_GOAL := test
+.DEFAULT_GOAL := debug
 .PHONY: clean
 .PHONY: update
 .PHONY: update-release
@@ -90,6 +90,7 @@ debug: build
 	# $(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl ../runtime/simulation/$(SERIALNO).acl
 	# $(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl --card-format wiegand-26 ../runtime/simulation/$(SERIALNO).acl
 	# $(CLI) --config ../runtime/simulation/$(SERIALNO).conf load-acl --card-format any ../runtime/simulation/$(SERIALNO).acl
+	$(CLI) --debug activate-keypads 423187757 1,2,4
 
 irl: build
 	$(CLI) set-time            423187757
@@ -246,6 +247,9 @@ set-pc-control: build
 
 set-interlock: build
 	$(CLI) $(DEBUG) set-interlock $(SERIALNO) '$(INTERLOCK)'
+
+activate-keypads: build
+	$(CLI) $(DEBUG) activate-keypads $(SERIALNO) 1,2,4
 
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 
