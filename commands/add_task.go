@@ -90,7 +90,7 @@ func (c *AddTask) Help() {
 	fmt.Println("    7   enable card+IN password")
 	fmt.Println("    8   enable card+password")
 	fmt.Println("    9   enable more cards")
-	fmt.Println("    10   disable more cards")
+	fmt.Println("    10  disable more cards")
 	fmt.Println("    11  trigger once")
 	fmt.Println("    12  disable pushbutton")
 	fmt.Println("    13  enable pushbutton")
