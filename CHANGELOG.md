@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## [0.8.6](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.6) - 2023-08-30
 
 ### Added
 1. Added optional --card-format command line argument to `put-acl` and `load-acl`
