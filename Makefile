@@ -251,6 +251,10 @@ set-interlock: build
 activate-keypads: build
 	$(CLI) $(DEBUG) activate-keypads $(SERIALNO) 1,2,4
 
+set-super-passwords: build
+	# $(CLI) $(DEBUG) set-super-passwords $(SERIALNO) 1,2,4
+	$(CLI) $(DEBUG) set-super-passwords 423187757 1 12345,999999
+
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 
 

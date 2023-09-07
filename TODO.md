@@ -1,8 +1,6 @@
 # TODO
 
-- [x] Explicitly enable Wiegand-26 validation (cf. https://github.com/uhppoted/uhppote-cli/issues/12)
-
-- [x] activate-keypads (cf. https://github.com/uhppoted/uhppoted/issues/35)
+- [x] set-super-password (cf. https://github.com/uhppoted/uhppoted/issues/40)
       - [x] command
       - [x] CHANGELOG
       - [x] README

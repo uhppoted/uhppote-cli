@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+1. Implemented set-super-passwords command to set the _super_ passwords for a door.
+
 
 ## [0.8.6](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.6) - 2023-08-30
 

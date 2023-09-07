@@ -137,6 +137,7 @@ Device commands:
 - [`set-pc-control`](#set-pc-control)
 - [`set-interlock`](#set-interlock)
 - [`activate-keypads`](#activate-keypads)
+- [`set-super-passwords`](#set-super-passwords)
 - [`listen`](#listen)
 
 ACL commands:
@@ -1311,9 +1312,9 @@ uhppote-cli [options] set-interlock <controller ID> <interlock>
 Activates (or deactivates) the reader access keypads for a controller. 
 
 ```
-uhppote-cli [options] activate-keypads <controller ID> <readers>
+uhppote-cli [options] activate-keypads <controller-id> <readers>
 
-  <controller ID> (required) Controller serial number (or name)
+  <controller-id> (required) Controller serial number (or name)
   <readers>       (required) Comma seperated list of readers for which access keypads should be activated.
                   Unlisted reader keypads are automatically deactivated i.e. if no readers are listed then
                   all access keypads are deactivated.
@@ -1334,6 +1335,38 @@ uhppote-cli [options] activate-keypads <controller ID> <readers>
     405419896  activated keypads (none)
 ```
 
+
+#### `set-super-passwords`
+
+Sets the _super_ passwords that allow keypad only access for door managed by a controller.
+
+```
+uhppote-cli [options] set-super-passwords <controller-id> <door> <password>
+
+  <controller ID> (required) Controller serial number (or name)
+  <door>          (required) Door number ([1..4])
+  <passwords>     Comma seperated list of super passwords for the door. A password is a 
+                  PIN code in the range [1..999999] and the command uses only the first four
+                  passwords in the list, discarding invalid passwords.
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli set-super-passwords 405419896 1 12345,999999
+    405419896  set super passwords 405419896 1 ok
+
+  > uhppote-cli set-super-passwords 405419896 1
+    405419896  set super passwords 405419896 1 ok
+
+  > uhppote-cli --debug set-super-passwords Alpha 1 12345,999999,23456,34567,45678,567890
+    405419896  set super passwords 405419896 1 ok
+```
 
 #### `listen`
 Establishes a _listening_ socket on the _listen_ `address:port` for events sent from controllers. Each event record comprises the same information as that returned by `get-status`:
