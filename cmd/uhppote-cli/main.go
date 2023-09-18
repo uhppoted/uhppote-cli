@@ -25,6 +25,7 @@ var cli = []commands.Command{
 	&commands.SetDoorDelayCmd,
 	&commands.GetDoorControlCmd,
 	&commands.SetDoorControlCmd,
+	&commands.SetDoorPasscodesCmd,
 	&commands.RecordSpecialEventsCmd,
 	&commands.GetStatusCmd,
 	&commands.GetCardsCmd,
@@ -55,7 +56,6 @@ var cli = []commands.Command{
 	&commands.SetPCControlCmd,
 	&commands.SetInterlockCmd,
 	&commands.ActivateKeypadsCmd,
-	&commands.SetSuperPasswordsCmd,
 	&commands.ListenCmd,
 }
 

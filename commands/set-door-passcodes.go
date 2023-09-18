@@ -10,21 +10,21 @@ import (
 	"github.com/uhppoted/uhppoted-lib/config"
 )
 
-// SetSuperCommands variable for CLI command list.
-var SetSuperPasswordsCmd = SetSuperPasswords{}
+// SetDoorPasscodes command variable for CLI command list.
+var SetDoorPasscodesCmd = SetDoorPasscodes{}
 
-// Command implementation for set-super-password to set up to four 'super' passwords for
+// Command implementation for set-door-passcodes to set up to four supervisor passcodes for
 // a door.
 //
-// The command will use up to four of the passwords supplied on the command line. Valid passwords
-// are PIN codes in the range [1..999999] and invalid passwords will be replaced with a 0 PIN
-// ('no password').
-type SetSuperPasswords struct {
+// The command will use up to four of the codes supplied on the command line. Valid passcodes
+// are PIN codes in the range [1..999999] and invalid codes will be replaced with a 0 PIN
+// ('no code').
+type SetDoorPasscodes struct {
 }
 
 // Gets the device ID, door and passwords list from the command line and sends a set-super-control
 // command to the designated controller.
-func (c *SetSuperPasswords) Execute(ctx Context) error {
+func (c *SetDoorPasscodes) Execute(ctx Context) error {
 	controller, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
@@ -35,44 +35,44 @@ func (c *SetSuperPasswords) Execute(ctx Context) error {
 		return err
 	}
 
-	passwords, err := c.getPasswords()
+	passcodes, err := c.getPasscodes()
 	if err != nil {
 		return err
 	}
 
-	if ok, err := ctx.uhppote.SetSuperPasswords(controller, door, passwords...); err != nil {
+	if ok, err := ctx.uhppote.SetDoorPasscodes(controller, door, passcodes...); err != nil {
 		return err
 	} else if !ok {
-		return fmt.Errorf("failed to set super passwords for %v, door %v", controller, door)
+		return fmt.Errorf("failed to set door passcodes for %v, door %v", controller, door)
 	} else {
 		fmt.Printf("%v %v\n", controller, ok)
 		return nil
 	}
 }
 
-// Returns the 'set-pc-control' command string for the CLI interface.
-func (c *SetSuperPasswords) CLI() string {
-	return "set-super-passwords"
+// Returns the 'set-door-passcodes' command string for the CLI interface.
+func (c *SetDoorPasscodes) CLI() string {
+	return "set-door-passcodes"
 }
 
-// Returns the 'set-pc-control' command summary for the CLI interface.
-func (c *SetSuperPasswords) Description() string {
-	return "Sets the 'super' passwords for a door"
+// Returns the 'set-door-passcodes' command summary for the CLI interface.
+func (c *SetDoorPasscodes) Description() string {
+	return "Sets the supervisor passcodes for a door"
 }
 
-// Returns the 'set-pc-control' command parameters for the CLI interface.
-func (c *SetSuperPasswords) Usage() string {
-	return "<serial number> <door> <passwords>"
+// Returns the 'set-door-passcodes' command parameters for the CLI interface.
+func (c *SetDoorPasscodes) Usage() string {
+	return "<serial number> <door> <passcodes>"
 }
 
-// Outputs the 'set-super-passwords' command help for the CLI interface.
-func (c *SetSuperPasswords) Help() {
-	fmt.Println("Usage: uhppote-cli [options] set-super-passwords <serial number> <door> <passwords>")
+// Outputs the 'set-door-passcodes' command help for the CLI interface.
+func (c *SetDoorPasscodes) Help() {
+	fmt.Println("Usage: uhppote-cli [options] set-door-passcodes <serial number> <door> <passcodes>")
 	fmt.Println()
-	fmt.Println(" Sets up to four 'super' passwords for a door.")
+	fmt.Println(" Sets up to four supervisor passcodes for a door.")
 	fmt.Println()
-	fmt.Println(" Valid passwords are PIN codes in the range [1..999999] and the commands uses the first")
-	fmt.Println(" four passwords from the list, replacing invalid passwords with '0' (no password).")
+	fmt.Println(" Valid passcodes are PIN codes in the range [1..999999] and the commands uses the first")
+	fmt.Println(" four codes from the list, replacing invalid passcodes with '0' (no code).")
 	fmt.Println()
 	fmt.Println("  <serial number>  (required) controller serial number")
 	fmt.Println("  <door>           (required) door [1..4]")
@@ -86,18 +86,18 @@ func (c *SetSuperPasswords) Help() {
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli --debug --config .config set-super-passwords 12345678 3 12345,999999,54321")
+	fmt.Println("    uhppote-cli --debug --config .config set-door-passcodes 12345678 3 12345,999999,54321")
 	fmt.Println()
 }
 
 // Returns false - configuration is useful but optional.
-func (c *SetSuperPasswords) RequiresConfig() bool {
+func (c *SetDoorPasscodes) RequiresConfig() bool {
 	return false
 }
 
 // Returns the door ID from command line argument 3, returning an error if
 // missing or not a valid door ID (in the range 1..4]).
-func (c *SetSuperPasswords) getDoor() (uint8, error) {
+func (c *SetDoorPasscodes) getDoor() (uint8, error) {
 	if len(flag.Args()) < 3 {
 		return 0, fmt.Errorf("missing door ID")
 	}
@@ -116,8 +116,8 @@ func (c *SetSuperPasswords) getDoor() (uint8, error) {
 }
 
 // Returns a list of up to four passwords converted from command line argument 4.
-func (c *SetSuperPasswords) getPasswords() ([]uint32, error) {
-	passwords := []uint32{}
+func (c *SetDoorPasscodes) getPasscodes() ([]uint32, error) {
+	passcodes := []uint32{}
 
 	if len(flag.Args()) > 3 {
 		arg := strings.Split(flag.Arg(3), ",")
@@ -130,11 +130,11 @@ func (c *SetSuperPasswords) getPasswords() ([]uint32, error) {
 		for _, v := range arg {
 			if matches := re.FindStringSubmatch(v); len(matches) > 1 {
 				if N, err := strconv.ParseUint(matches[1], 10, 32); err == nil {
-					passwords = append(passwords, uint32(N))
+					passcodes = append(passcodes, uint32(N))
 				}
 			}
 		}
 	}
 
-	return passwords, nil
+	return passcodes, nil
 }
