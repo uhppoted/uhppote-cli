@@ -5,6 +5,9 @@
 ### Added
 1. Implemented set-super-passwords command to set the _super_ passwords for a door.
 
+### Updated
+1. Replaced `nil` event pointer with zero value in `get-status`.
+
 
 ## [0.8.6](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.6) - 2023-08-30
 
