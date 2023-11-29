@@ -1,9 +1,9 @@
 # CHANGELOG
 
-## Unreleased
+## [0.8.7](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.7) - 2023-12-01
 
 ### Added
-1. Implemented set-super-passwords command to set the _super_ passwords for a door.
+1. Implemented `set-super-passwords` command to set the _super_ passwords for a door.
 
 ### Updated
 1. Replaced `nil` event pointer with zero value in `get-status`.
@@ -119,3 +119,17 @@
 ### Changed
 1. Added validation for `bind`, `broadcast` and `listen` ports to mitigate common misconfigurations.
 2. Corrected typo in _README_
+
+## Older
+
+| *Version* | *Description*                                                                                      |
+| v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                     |
+| v0.6.8    | Maintenance release for version compatibility with `uhppote-core` `v0.6.8`                         |
+| v0.6.7    | Implements `record-special-events` command to enable/disable door events                           |
+| v0.6.5    | Maintenance release for version compatibility with `node-red-contrib-uhppoted`                     |
+| v0.6.4    | Maintenance release for version compatibility with `uhppoted-app-sheets`                           |
+| v0.6.3    | Reworked get-cards to handle deleted records                                                       |
+| v0.6.2    | Fixed get-events for controllers without any events and improved configuration filse handling      |
+| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers               |
+| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                              |
+| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules*          |

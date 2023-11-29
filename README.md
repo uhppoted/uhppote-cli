@@ -16,32 +16,14 @@ The CLI provides a cross-platform set of command-line functions that allow direc
 as well as facilitating scripting for automation of routine tasks e.g. synchronizing controller system time across daylight 
 savings changes.
 
-## Releases
+## Release Notes
 
-| *Version* | *Description*                                                                                      |
-| --------- | -------------------------------------------------------------------------------------------------- |
-| v0.8.6    | Added `activate-keypads` command to enable reader keypads                                          |
-| v0.8.5    | Added `set-interlock` command to set controller door interlock mode                                |
-| v0.8.4    | Added `set-pc-control` command and support for card keypad PINs                                    |
-| v0.8.3    | Added ARM64 to release builds                                                                      |
-| v0.8.2    | Maintenance release for version compatibility with `uhppote-core` v0.8.2                           |
-| v0.8.1    | Maintenance release for version compatibility with `uhppote-core` v0.8.1                           |
-| v0.8.0    | Maintenance release for version compatibility with `uhppote-core` v0.8.0                           |
-| v0.7.3    | Maintenance release for version compatibility with `uhppote-core` v0.7.3                           |
-| v0.7.2    | Replaced event rollover with `overwritten` event handling                                          |
-| v0.7.1    | Added task list commands                                                                           |
-| v0.7.0    | Added commands to get-, set- and clear time profiles                                               |
-| v0.6.12   | Added validation for `bind`, `broadcast` and `listen` ports                                        |
-| v0.6.10   | Maintenance release for version compatibility with `uhppoted-app-wild-apricot`                     |
-| v0.6.8    | Maintenance release for version compatibility with `uhppote-core` `v0.6.8`                         |
-| v0.6.7    | Implements `record-special-events` command to enable/disable door events                           |
-| v0.6.5    | Maintenance release for version compatibility with `node-red-contrib-uhppoted`                     |
-| v0.6.4    | Maintenance release for version compatibility with `uhppoted-app-sheets`                           |
-| v0.6.3    | Reworked get-cards to handle deleted records                                                       |
-| v0.6.2    | Fixed get-events for controllers without any events and improved configuration filse handling      |
-| v0.6.1    | Added ACL commands to simplify managing card permissions across multiple controllers               |
-| v0.6.0    | Maintenance release to keep compatibility with updated `uhppote-core`                              |
-| v0.5.1    | Initial release following restructuring into standalone Go *modules* and *git submodules*          |
+### Current Release
+
+** [v0.8.7](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.7) - 2023-12-01**
+
+1. Implemented `set-super-passwords` command to set the _super_ passwords for a door.
+2. Replaced `nil` event pointer with zero value in `get-status`.
 
 ## Installation
 
