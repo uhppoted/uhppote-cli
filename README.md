@@ -65,14 +65,6 @@ go build -trimpath -o bin ./...
 
 The above commands build the `uhppote-cli` executable to the `bin` directory.
 
-#### Dependencies
-
-| *Dependency*                                                                 | *Description*                              |
-| ---------------------------------------------------------------------------- | ------------------------------------------ |
-| [com.github/uhppoted/uhppote-core](https://github.com/uhppoted/uhppote-core) | Device level API implementation            |
-| [com.github/uhppoted/uhppoted-lib](https://github.com/uhppoted/uhppoted-lib) | common API for external applications       |
-
-
 ## uhppote-cli
 
 Usage: ```uhppote-cli [options] <command> <parameters>```
@@ -120,6 +112,7 @@ Device commands:
 - [`set-interlock`](#set-interlock)
 - [`activate-keypads`](#activate-keypads)
 - [`set-super-passwords`](#set-super-passwords)
+- [`restore-default-parameters`](#restore-default-parameters)
 - [`listen`](#listen)
 
 ACL commands:
@@ -1350,7 +1343,33 @@ uhppote-cli [options] set-super-passwords <controller-id> <door> <password>
     405419896  set super passwords 405419896 1 ok
 ```
 
+
+#### `restore-default-parameters`
+
+Resets a controller to the manufacturer default configuration.
+
+```
+uhppote-cli [options] restore-default-parameters <controller-id>
+
+  <controller ID> (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli restore-default-parameters 405419896
+    405419896  restore default parameters ok
+
+```
+
+
 #### `listen`
+
 Establishes a _listening_ socket on the _listen_ `address:port` for events sent from controllers. Each event record comprises the same information as that returned by `get-status`:
 
 - `device ID`

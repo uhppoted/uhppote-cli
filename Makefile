@@ -255,6 +255,9 @@ set-interlock: build
 activate-keypads: build
 	$(CLI) $(DEBUG) activate-keypads $(SERIALNO) 1,2,4
 
+restore-default-parameters: build
+	$(CLI) $(DEBUG) restore-default-parameters $(SERIALNO)
+
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 
 

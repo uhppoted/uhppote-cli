@@ -1,11 +1,9 @@
 # TODO
 
-- [x] set-super-password (cf. https://github.com/uhppoted/uhppoted/issues/40)
+- [x] [`restore-default-parameters`](https://github.com/uhppoted/uhppoted/issues/48)
       - [x] command
       - [x] CHANGELOG
       - [x] README
-
-- [x] Replace Event pointer in GetStatusResponse with zero value (cf. https://github.com/uhppoted/uhppote-core/issues/18)
 
 - [ ] CLI is waiting for CR on error
 
