@@ -20,10 +20,12 @@ savings changes.
 
 ### Current Release
 
-** [v0.8.7](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.7) - 2023-12-01**
+** [v0.8.8](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.8) - 2024-03-27**
 
-1. Implemented `set-super-passwords` command to set the _super_ passwords for a door.
-2. Replaced `nil` event pointer with zero value in `get-status`.
+1. Implemented `restore-default-parameters` command to reset a controller to the manufacturer
+   default configuration.
+2. Bumped Go version to 1.22.
+
 
 ## Installation
 
