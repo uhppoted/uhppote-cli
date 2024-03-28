@@ -7,6 +7,9 @@
 
 - [ ] CLI is waiting for CR on error
 
+- [ ] JSON formatted output for e.g. get-status
+      - https://blog.kellybrazil.com/2021/12/03/tips-on-adding-json-output-to-your-cli-app/
+
 ## TODO
 
 - [ ] Rework command line parsing with tree-sitter
@@ -31,7 +34,6 @@
 - [ ] Progress messages for acl-load
 - [ ] Nicer formatting for acl-xxx
 - [ ] Human readable output for e.g. get-status
-- [ ] JSON formatted output for e.g. get-status
 - [ ] Interactive shell (https://drewdevault.com/2019/09/02/Interactive-SSH-programs.html)
 - [ ] use flag.FlagSet for commands
 - [ ] Use (loadable) text/template for output formats
@@ -51,6 +53,8 @@
 2.  Integration tests
 3.  Verify fields in listen events/status replies against SDK:
     - battery status can be (at least) 0x00, 0x01 and 0x04
+4. TUI
+    - https://gpanders.com/blog/making-ijq-fast/
 
 ### Miscellaneous
 
