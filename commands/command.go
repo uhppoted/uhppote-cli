@@ -3,6 +3,8 @@ package commands
 import (
 	"flag"
 	"fmt"
+	"net"
+	"net/netip"
 	"regexp"
 	"sort"
 	"strconv"
@@ -33,7 +35,9 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 	devices := []uhppote.Device{}
 	for _, id := range keys {
 		d := c.Devices[id]
-		if device := uhppote.NewDevice(d.Name, id, d.Address, d.Doors); device != nil {
+		address := resolve(d.Address)
+
+		if device := uhppote.NewDevice(d.Name, id, address, d.Doors); device != nil {
 			devices = append(devices, *device)
 		}
 	}
@@ -91,4 +95,16 @@ func getSerialNumberI(ctx Context, index int) (uint32, error) {
 	} else {
 		return uint32(N), nil
 	}
+}
+
+func resolve(udp *net.UDPAddr) *netip.AddrPort {
+	if udp == nil {
+		return nil
+	}
+
+	addr := netip.AddrFrom4([4]byte(udp.IP.To4()))
+	port := uint16(udp.Port)
+	address := netip.AddrPortFrom(addr, port)
+
+	return &address
 }

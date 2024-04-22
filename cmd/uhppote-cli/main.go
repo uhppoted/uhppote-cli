@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net"
+	"net/netip"
 	"os"
 	"time"
 
@@ -114,7 +116,7 @@ func main() {
 		// ... because d is *Device and all devices end up with the same info if you don't make a manual copy
 		name := d.Name
 		deviceID := s
-		address := d.Address
+		address := resolve(d.Address)
 		doors := d.Doors
 
 		if device := uhppote.NewDevice(name, deviceID, address, doors); device != nil {
@@ -290,4 +292,16 @@ func helpCommands() {
 	}
 
 	fmt.Println()
+}
+
+func resolve(udp *net.UDPAddr) *netip.AddrPort {
+	if udp == nil {
+		return nil
+	}
+
+	addr := netip.AddrFrom4([4]byte(udp.IP.To4()))
+	port := uint16(udp.Port)
+	address := netip.AddrPortFrom(addr, port)
+
+	return &address
 }
