@@ -34,8 +34,9 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 	for _, id := range keys {
 		d := c.Devices[id]
 		address := d.Address
+		protocol := d.Protocol
 
-		if device := uhppote.NewDevice(d.Name, id, address, d.Doors); device != nil {
+		if device := uhppote.NewDevice(d.Name, id, address, protocol, d.Doors); device != nil {
 			devices = append(devices, *device)
 		}
 	}

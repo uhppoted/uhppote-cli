@@ -115,10 +115,10 @@ func main() {
 		name := d.Name
 		deviceID := s
 		address := d.Address
-		// FIXME protocol := d.Protocol
+		protocol := d.Protocol
 		doors := d.Doors
 
-		if device := uhppote.NewDevice(name, deviceID, address, doors); device != nil {
+		if device := uhppote.NewDevice(name, deviceID, address, protocol, doors); device != nil {
 			devices = append(devices, *device)
 		}
 	}
