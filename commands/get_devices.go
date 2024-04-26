@@ -35,10 +35,10 @@ func (c *GetDevices) Execute(ctx Context) error {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if devices, err := ctx.uhppote.GetDevices(); err != nil {
+		if controllers, err := ctx.uhppote.GetDevices(); err != nil {
 			fmt.Fprintf(os.Stderr, "   WARN:  %v\n", err)
 		} else {
-			for _, d := range devices {
+			for _, d := range controllers {
 				list.Store(uint32(d.SerialNumber), d)
 			}
 		}

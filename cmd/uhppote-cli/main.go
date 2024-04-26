@@ -109,19 +109,7 @@ func main() {
 		options.listen = *conf.ListenAddress
 	}
 
-	devices := []uhppote.Device{}
-	for s, d := range conf.Devices {
-		// ... because d is *Device and all devices end up with the same info if you don't make a manual copy
-		name := d.Name
-		deviceID := s
-		address := d.Address
-		protocol := d.Protocol
-		doors := d.Doors
-
-		if device := uhppote.NewDevice(name, deviceID, address, protocol, doors); device != nil {
-			devices = append(devices, *device)
-		}
-	}
+	controllers := conf.Devices.ToControllers()
 
 	// ... override defaults/conf settings with command line options
 	overrides := func(a *flag.Flag) {
@@ -144,7 +132,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	u := uhppote.NewUHPPOTE(options.bind, options.broadcast, options.listen, options.timeout, devices, options.debug)
+	u := uhppote.NewUHPPOTE(options.bind, options.broadcast, options.listen, options.timeout, controllers, options.debug)
 
 	// execute command
 	ctx := commands.NewContext(u, conf, options.debug)
