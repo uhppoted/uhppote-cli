@@ -51,8 +51,8 @@ jobs:
     - name: Upload Windows artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/development/windows/uhppote-cli
-        name: uhppote-cli_windows-nightly
+        path: dist/development/windows/uhppote-cli.exe
+        name: uhppote-cli_windows-nightly.exe
 
     - name: Upload ARM artifact
       uses: actions/upload-artifact@v4
