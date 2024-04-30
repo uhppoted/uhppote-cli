@@ -33,5 +33,5 @@ jobs:
     - name: Upload Linux artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/development/linux/uhhppote-cli
+        path: dist/development/linux/uhppote-cli
         name: uhppote-cli_linux-nightly
