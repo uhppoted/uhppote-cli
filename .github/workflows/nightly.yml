@@ -1,11 +1,9 @@
-name: build
+name: nightly
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [published]
 
 jobs:
 
@@ -31,3 +29,9 @@ jobs:
 
     - name: Build
       run: make build-all
+
+    - name: Upload Linux artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/linux/uhhppote-cli
+        name: uhppote-cli_linux-nightly

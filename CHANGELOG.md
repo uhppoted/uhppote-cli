@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+###
+1. Added github nightly build with executable artifacts.
+
 
 ## [0.8.8](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.8) - 2024-03-27
 
