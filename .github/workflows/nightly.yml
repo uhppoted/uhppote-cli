@@ -35,3 +35,33 @@ jobs:
       with:
         path: dist/development/linux/uhppote-cli
         name: uhppote-cli_linux-nightly
+
+    - name: Upload MacOS Intel artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/darwin-x64/uhppote-cli
+        name: uhppote-cli_darwin-x64-nightly
+
+    - name: Upload MacOS Apple silicon artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/darwin-arm64/uhppote-cli
+        name: uhppote-cli_darwin-arm64-nightly
+
+    - name: Upload Windows artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/windows/uhppote-cli
+        name: uhppote-cli_windows-nightly
+
+    - name: Upload ARM artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/arm/uhppote-cli
+        name: uhppote-cli_arm-nightly
+
+    - name: Upload ARM7 artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/arm7/uhppote-cli
+        name: uhppote-cli_arm7-nightly
