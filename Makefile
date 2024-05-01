@@ -26,7 +26,7 @@ clean:
 
 update:
 	go get -u github.com/uhppoted/uhppote-core@master
-	go get -u github.com/uhppoted/uhppoted-lib@master
+	go get -u github.com/uhppoted/uhppoted-lib@main
 	go mod tidy
 
 update-release:
@@ -241,7 +241,7 @@ get-event-index: build
 set-event-index: build
 	$(CLI) $(DEBUG) set-event-index $(SERIALNO) 23
 
-open: build
+open-door: build
 	$(CLI) $(DEBUG) open $(SERIALNO) 1
 
 set-pc-control: build
