@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net/netip"
 	"os"
 	"time"
 
@@ -148,7 +147,7 @@ func main() {
  * Checks that the bind address port is not either of the broadcast or listen ports.
  */
 func validate(bind types.BindAddr, broadcast types.BroadcastAddr, listen types.ListenAddr) error {
-	port := netip.AddrPort(bind).Port() // FIXME add Port() to BindAddr
+	port := bind.Port()
 
 	if port != 0 && int(port) == broadcast.Port {
 		return fmt.Errorf("bind address port (%v) must not be the same as the broadcast address port", port)
