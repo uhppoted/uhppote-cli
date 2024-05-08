@@ -85,8 +85,8 @@ publish: release
 	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION).zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-#	$(CLI) --timeout 5s get-device 405419896
-	$(CLI) --timeout 5s get-device 303986753
+	$(CLI) --timeout 5s get-device 405419896
+#	$(CLI) --timeout 5s get-device 303986753
 #	$(CLI) --timeout 5s get-device 201020304
 #	$(CLI) --timeout 5s get-device 423187757
 
