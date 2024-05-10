@@ -153,7 +153,7 @@ func validate(bind types.BindAddr, broadcast types.BroadcastAddr, listen types.L
 		return fmt.Errorf("bind address port (%v) must not be the same as the broadcast address port", port)
 	}
 
-	if port != 0 && int(port) == listen.Port {
+	if port != 0 && port == listen.Port() {
 		return fmt.Errorf("bind address port (%v) must not be the same as the listen address port", port)
 	}
 
