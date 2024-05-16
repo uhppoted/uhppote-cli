@@ -1,6 +1,6 @@
-github.com/uhppoted/uhppote-core v0.8.9-0.20240515165158-910af58a95a2 h1:3+ZdRcF5PzMzBr0eZhW02UOfxUNdoECXwE/3Z2ajras=
-github.com/uhppoted/uhppote-core v0.8.9-0.20240515165158-910af58a95a2/go.mod h1:Q+DHtT8s74efLs2b0eF20DRBUL9yBkySwaTQ+0lsEVM=
-github.com/uhppoted/uhppoted-lib v0.8.9-0.20240515165648-b0ffb4ea22dd h1:ZzRcP5A0iAffFmJ5u2G+uqLMzY4MaQ+aZ547m2DOZn4=
-github.com/uhppoted/uhppoted-lib v0.8.9-0.20240515165648-b0ffb4ea22dd/go.mod h1:RcM21DG5rJ2q7AvlF24YFW8djJsyLgzafDk9Xc4pQUQ=
+github.com/uhppoted/uhppote-core v0.8.9-0.20240516172829-ac8140e53a0d h1:WyRYAC69Pkxmktu+oFVAqKPb8RbUimtJMvx5y+T5shs=
+github.com/uhppoted/uhppote-core v0.8.9-0.20240516172829-ac8140e53a0d/go.mod h1:Q+DHtT8s74efLs2b0eF20DRBUL9yBkySwaTQ+0lsEVM=
+github.com/uhppoted/uhppoted-lib v0.8.9-0.20240516174718-1f61e72907bd h1:Hc/yTOMSHAvDUR3QAVn2PmdF4X1MuTDn+D8X71gnJ/U=
+github.com/uhppoted/uhppoted-lib v0.8.9-0.20240516174718-1f61e72907bd/go.mod h1:lu/wpSikg/0+/fro2l86CLdZnm8McRNT9f0cngi0eVQ=
 golang.org/x/sys v0.20.0 h1:Od9JTbYCk261bKm4M/mw7AklTlFYIa0bIp9BgSm1S8Y=
 golang.org/x/sys v0.20.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=

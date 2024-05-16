@@ -3,6 +3,7 @@ package commands
 import (
 	"flag"
 	"fmt"
+	"net/netip"
 	"regexp"
 	"sort"
 	"strconv"
@@ -33,8 +34,12 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 	devices := []uhppote.Device{}
 	for _, id := range keys {
 		d := c.Devices[id]
-		address := d.Address
+		address := netip.AddrPort{}
 		protocol := d.Protocol
+
+		if d.Address != nil && d.Address.IsValid() {
+			address = *d.Address
+		}
 
 		if device := uhppote.NewDevice(d.Name, id, address, protocol, d.Doors); device != nil {
 			devices = append(devices, *device)
