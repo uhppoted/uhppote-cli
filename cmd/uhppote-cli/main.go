@@ -132,7 +132,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf(">>>>>>>>>>>>>>>>> %+v\n", controllers)
 	u := uhppote.NewUHPPOTE(options.bind, options.broadcast, options.listen, options.timeout, controllers, options.debug)
 
 	// execute command
