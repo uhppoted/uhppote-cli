@@ -37,12 +37,12 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 		address := types.ControllerAddr{}
 		protocol := d.Protocol
 
-		if d.Address != nil && d.Address.IsValid() {
+		if d.Address.IsValid() {
 			address = types.ControllerAddrFrom(d.Address.Addr(), d.Address.Port())
 		}
 
-		if device := uhppote.NewDevice(d.Name, id, address, protocol, d.Doors); device != nil {
-			devices = append(devices, *device)
+		if device := uhppote.NewDevice(d.Name, id, address, protocol, d.Doors); device.IsValid() {
+			devices = append(devices, device)
 		}
 	}
 
