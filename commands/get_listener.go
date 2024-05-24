@@ -15,13 +15,13 @@ func (c *GetListener) Execute(ctx Context) error {
 		return err
 	}
 
-	address, err := ctx.uhppote.GetListener(serialNumber)
-
-	if err == nil {
-		fmt.Printf("%v\n", address)
+	if address, err := ctx.uhppote.GetListener(serialNumber); err != nil {
+		return err
+	} else {
+		fmt.Printf("%v %v\n", serialNumber, address)
 	}
 
-	return err
+	return nil
 }
 
 func (c *GetListener) CLI() string {
