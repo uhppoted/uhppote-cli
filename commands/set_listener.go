@@ -4,7 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"net"
+	"net/netip"
 )
 
 var SetListenerCmd = SetListener{}
@@ -13,31 +13,28 @@ type SetListener struct {
 }
 
 func (c *SetListener) Execute(ctx Context) error {
-	serialNumber, err := getSerialNumber(ctx)
+	controller, err := getSerialNumber(ctx)
 	if err != nil {
 		return err
 	}
 
 	if len(flag.Args()) < 3 {
-		return errors.New("missing IP address")
+		return errors.New("missing IPv4 address:port")
 	}
 
-	address, err := net.ResolveUDPAddr("udp", flag.Arg(2))
-	if err != nil {
+	if addr, err := netip.ParseAddrPort(flag.Arg(2)); err != nil {
 		return err
+	} else if !addr.IsValid() {
+		return fmt.Errorf("invalid IPv4 address:port (%v)", flag.Arg(2))
+	} else if ok, err := ctx.uhppote.SetListener(controller, addr); err != nil {
+		return err
+	} else if !ok {
+		return fmt.Errorf("failed to set listener")
+	} else {
+		fmt.Printf("%-10v %v\n", controller, addr)
+
+		return nil
 	}
-
-	if address == nil || address.IP.To4() == nil {
-		return fmt.Errorf("invalid UDP address: %v", flag.Arg(2))
-	}
-
-	listener, err := ctx.uhppote.SetListener(serialNumber, *address)
-
-	if err == nil {
-		fmt.Printf("%v\n", listener)
-	}
-
-	return err
 }
 
 func (c *SetListener) CLI() string {
