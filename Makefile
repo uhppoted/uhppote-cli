@@ -85,8 +85,7 @@ publish: release
 	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION).zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	./bin/uhppote-cli --debug --bind 192.168.1.100:12345 get-device 405419896
-	./bin/uhppote-cli --debug --bind 192.168.1.100:12345 get-device 303986753
+	./bin/uhppote-cli --debug set-address 423187757 192.168.1.125 255.255.255.255 192.168.1.1
 
 
 irl: build

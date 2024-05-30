@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/uhppoted/uhppote-core/types"
 	"github.com/uhppoted/uhppote-core/uhppote"
@@ -36,12 +37,19 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 		d := c.Devices[id]
 		address := types.ControllerAddr{}
 		protocol := d.Protocol
+		timezone := time.Local
 
 		if d.Address.IsValid() {
 			address = types.ControllerAddrFrom(d.Address.Addr(), d.Address.Port())
 		}
 
-		if device := uhppote.NewDevice(d.Name, id, address, protocol, d.Doors); device.IsValid() {
+		if d.TimeZone != "" {
+			if tz, err := time.LoadLocation(d.TimeZone); err == nil && tz != nil {
+				timezone = tz
+			}
+		}
+
+		if device := uhppote.NewDevice(d.Name, id, address, protocol, d.Doors, timezone); device.IsValid() {
 			devices = append(devices, device)
 		}
 	}
