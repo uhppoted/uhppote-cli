@@ -50,13 +50,13 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		for _, arg := range args[3:] {
 			// from:to
 			if match := regexp.MustCompile("([0-9]{4}-[0-9]{2}-[0-9]{2}):([0-9]{4}-[0-9]{2}-[0-9]{2})").FindStringSubmatch(arg); match != nil {
-				if date, err := types.DateFromString(match[1]); err != nil {
+				if date, err := types.ParseDate(match[1]); err != nil {
 					return fmt.Errorf("%v: invalid 'start' date (%v)", match[1], err)
 				} else {
 					from = &date
 				}
 
-				if date, err := types.DateFromString(match[2]); err != nil {
+				if date, err := types.ParseDate(match[2]); err != nil {
 					return fmt.Errorf("%v: invalid 'to' date (%v)", match[1], err)
 				} else {
 					to = &date

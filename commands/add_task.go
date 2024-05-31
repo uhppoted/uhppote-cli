@@ -250,13 +250,13 @@ func (c *AddTask) getTaskActive(args []string) (*types.Date, *types.Date, error)
 	var from *types.Date
 	var to *types.Date
 
-	if date, err := types.DateFromString(match[1]); err != nil {
+	if date, err := types.ParseDate(match[1]); err != nil {
 		return nil, nil, fmt.Errorf("%v: invalid 'from' date (%v)", match[1], err)
 	} else {
 		from = &date
 	}
 
-	if date, err := types.DateFromString(match[2]); err != nil {
+	if date, err := types.ParseDate(match[2]); err != nil {
 		return nil, nil, fmt.Errorf("%v: invalid 'to' date (%v)", match[1], err)
 	} else {
 		to = &date
