@@ -30,8 +30,8 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		return fmt.Errorf("invalid time profile ID (%v) - valid range is from 2 to 254", profileID)
 	}
 
-	var from *types.Date
-	var to *types.Date
+	var from types.Date
+	var to types.Date
 
 	var weekdays = days{
 		"Monday":    true,
@@ -53,13 +53,13 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 				if date, err := types.ParseDate(match[1]); err != nil {
 					return fmt.Errorf("%v: invalid 'start' date (%v)", match[1], err)
 				} else {
-					from = &date
+					from = date
 				}
 
 				if date, err := types.ParseDate(match[2]); err != nil {
 					return fmt.Errorf("%v: invalid 'to' date (%v)", match[1], err)
 				} else {
-					to = &date
+					to = date
 				}
 
 			}
@@ -105,11 +105,11 @@ func (c *SetTimeProfile) Execute(ctx Context) error {
 		fmt.Println(" ...")
 	}
 
-	if from == nil {
+	if from.IsZero() {
 		return fmt.Errorf("missing 'from' date")
 	}
 
-	if to == nil {
+	if to.IsZero() {
 		return fmt.Errorf("missing 'to' date")
 	}
 

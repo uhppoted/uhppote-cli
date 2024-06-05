@@ -198,15 +198,15 @@ func (c *SetTimeProfiles) load(ctx Context, serialNumber uint32, profiles []type
 }
 
 func (c *SetTimeProfiles) validate(profile types.TimeProfile) error {
-	if profile.From == nil {
+	if profile.From.IsZero() {
 		return fmt.Errorf("invalid 'From' date (%v)", profile.From)
 	}
 
-	if profile.To == nil {
+	if profile.To.IsZero() {
 		return fmt.Errorf("invalid 'To' date (%v)", profile.To)
 	}
 
-	if profile.To.Before(*profile.From) {
+	if profile.To.Before(profile.From) {
 		return fmt.Errorf("'To' date (%v) is before 'From' date (%v)", profile.To, profile.From)
 	}
 
@@ -280,14 +280,11 @@ func (c *SetTimeProfiles) parse(file string) ([]types.TimeProfile, error) {
 
 	profiles := []types.TimeProfile{}
 	for _, record := range recordset {
-		from := record.From
-		to := record.To
-
 		profile := types.TimeProfile{
 			ID:              uint8(record.ID),
 			LinkedProfileID: uint8(record.Linked),
-			From:            &from,
-			To:              &to,
+			From:            record.From,
+			To:              record.To,
 			Weekdays: types.Weekdays{
 				time.Monday:    record.Monday,
 				time.Tuesday:   record.Tuesday,
