@@ -3,7 +3,6 @@ package commands
 import (
 	"bytes"
 	"testing"
-	"time"
 
 	"github.com/uhppoted/uhppote-core/types"
 )
@@ -18,20 +17,20 @@ func TestGetCardsPrint(t *testing.T) {
 	recordset := []types.Card{
 		types.Card{
 			CardNumber: 12345,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 21),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-21"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 0},
 		},
 		types.Card{
 			CardNumber: 8165539,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 31),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 		},
 		types.Card{
 			CardNumber: 8165538,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 31),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
 		},
@@ -57,27 +56,27 @@ func TestGetCardsPrintWithInvalidCardNumber(t *testing.T) {
 	recordset := []types.Card{
 		types.Card{
 			CardNumber: 12345,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 21),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-21"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 0},
 		},
 		types.Card{
 			CardNumber: 8165539,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 31),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 		},
 		types.Card{
 			CardNumber: 8165538,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 31),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
 		},
 		types.Card{
 			CardNumber: 192837465,
-			From:       types.ToDate(2023, time.January, 1),
-			To:         types.ToDate(2023, time.December, 31),
+			From:       types.MustParseDate("2023-01-01"),
+			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
 		},
