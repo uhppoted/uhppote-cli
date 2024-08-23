@@ -1,12 +1,9 @@
 # TODO
 
-- [x] [`restore-default-parameters`](https://github.com/uhppoted/uhppoted/issues/48)
-      - [x] command
-      - [x] CHANGELOG
-      - [x] README
+- [x] TCP/IP protocol (cf. https://github.com/uhppoted/uhppote-core/issues/17)
+- [x] Update to Go 1.23 (cf. https://github.com/uhppoted/uhppoted/issues/53)
 
 - [ ] CLI is waiting for CR on error
-
 - [ ] JSON formatted output for e.g. get-status
       - https://blog.kellybrazil.com/2021/12/03/tips-on-adding-json-output-to-your-cli-app/
 
