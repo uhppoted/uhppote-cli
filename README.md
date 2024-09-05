@@ -20,11 +20,11 @@ savings changes.
 
 ### Current Release
 
-** [v0.8.8](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.8) - 2024-03-27**
+** [v0.8.9](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.9) - 2024-09-06**
 
-1. Implemented `restore-default-parameters` command to reset a controller to the manufacturer
-   default configuration.
-2. Bumped Go version to 1.22.
+1. Added TCP/IP support.
+2. Changed default controller timezone from UTC to Local.
+3. Updated to Go 1.23.
 
 
 ## Installation
