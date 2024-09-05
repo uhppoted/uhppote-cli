@@ -77,16 +77,20 @@ build-all: test vet lint
 
 release: update-release build-all
 	find . -name ".DS_Store" -delete
-	tar --directory=dist --exclude=".DS_Store" -cvzf dist/$(DIST).tar.gz $(DIST)
-	cd dist; zip --recurse-paths $(DIST).zip $(DIST)
+	tar --directory=dist/$(DIST)/linux        --exclude=".DS_Store" -cvzf dist/$(DIST)-linux-x64.tar.gz    .
+	tar --directory=dist/$(DIST)/arm          --exclude=".DS_Store" -cvzf dist/$(DIST)-arm-x64.tar.gz      .
+	tar --directory=dist/$(DIST)/arm7         --exclude=".DS_Store" -cvzf dist/$(DIST)-arm7-x64.tar.gz     .
+	tar --directory=dist/$(DIST)/darwin-x64   --exclude=".DS_Store" -cvzf dist/$(DIST)-darwin-x64.tar.gz   .
+	tar --directory=dist/$(DIST)/darwin-arm64 --exclude=".DS_Store" -cvzf dist/$(DIST)-darwin-arm64.tar.gz .
+	cd dist/$(DIST)/windows && zip --recurse-paths ../../$(DIST)-windows-x64.zip . -x ".DS_Store"
 
 publish: release
 	echo "Releasing version $(VERSION)"
 	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION).zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	./bin/uhppote-cli --debug set-address 423187757 192.168.1.125 255.255.255.255 192.168.1.1
-
+	# ./bin/uhppote-cli --debug set-address 423187757 192.168.1.125 255.255.255.255 192.168.1.1
+	env GOOS=windows GOARCH=amd64 GOWORK=off go build -trimpath -o dist/$(DIST)/windows ./...
 
 irl: build
 	$(CLI) set-time            423187757
