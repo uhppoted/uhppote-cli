@@ -61,13 +61,13 @@ lint:
 vuln:
 	govulncheck ./...
 
-build-all: test vet lint
-	mkdir -p dist/$(DIST)/windows
-	mkdir -p dist/$(DIST)/darwin-x64
-	mkdir -p dist/$(DIST)/darwin-arm64
+build-all: build test vet lint
 	mkdir -p dist/$(DIST)/linux
 	mkdir -p dist/$(DIST)/arm
 	mkdir -p dist/$(DIST)/arm7
+	mkdir -p dist/$(DIST)/darwin-x64
+	mkdir -p dist/$(DIST)/darwin-arm64
+	mkdir -p dist/$(DIST)/windows
 	env GOOS=linux   GOARCH=amd64         GOWORK=off go build -trimpath -o dist/$(DIST)/linux        ./...
 	env GOOS=linux   GOARCH=arm64         GOWORK=off go build -trimpath -o dist/$(DIST)/arm          ./...
 	env GOOS=linux   GOARCH=arm   GOARM=7 GOWORK=off go build -trimpath -o dist/$(DIST)/arm7         ./...
@@ -86,12 +86,12 @@ release: update-release build-all
 
 publish: release
 	echo "Releasing version $(VERSION)"
-	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION)-arm-x64.tar.gz"      \
-	                               "./dist/uhppote-cli_$(VERSION)-arm7.tar.gz"         \
-	                               "./dist/uhppote-cli_$(VERSION)-darwin-arm64.tar.gz" \
-	                               "./dist/uhppote-cli_$(VERSION)-darwin-x64.tar.gz"   \
-	                               "./dist/uhppote-cli_$(VERSION)-linux-x64.tar.gz"    \
-	                               "./dist/uhppote-cli_$(VERSION)-windows-x64.zip"     \
+	gh release create "$(VERSION)" "./dist/$(DIST)-arm-x64.tar.gz"      \
+	                               "./dist/$(DIST)-arm7.tar.gz"         \
+	                               "./dist/$(DIST)-darwin-arm64.tar.gz" \
+	                               "./dist/$(DIST)-darwin-x64.tar.gz"   \
+	                               "./dist/$(DIST)-linux-x64.tar.gz"    \
+	                               "./dist/$(DIST)-windows-x64.zip"     \
 	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
