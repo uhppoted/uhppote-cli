@@ -79,14 +79,20 @@ release: update-release build-all
 	find . -name ".DS_Store" -delete
 	tar --directory=dist/$(DIST)/linux        --exclude=".DS_Store" -cvzf dist/$(DIST)-linux-x64.tar.gz    .
 	tar --directory=dist/$(DIST)/arm          --exclude=".DS_Store" -cvzf dist/$(DIST)-arm-x64.tar.gz      .
-	tar --directory=dist/$(DIST)/arm7         --exclude=".DS_Store" -cvzf dist/$(DIST)-arm7-x64.tar.gz     .
+	tar --directory=dist/$(DIST)/arm7         --exclude=".DS_Store" -cvzf dist/$(DIST)-arm7.tar.gz         .
 	tar --directory=dist/$(DIST)/darwin-x64   --exclude=".DS_Store" -cvzf dist/$(DIST)-darwin-x64.tar.gz   .
 	tar --directory=dist/$(DIST)/darwin-arm64 --exclude=".DS_Store" -cvzf dist/$(DIST)-darwin-arm64.tar.gz .
 	cd dist/$(DIST)/windows && zip --recurse-paths ../../$(DIST)-windows-x64.zip . -x ".DS_Store"
 
 publish: release
 	echo "Releasing version $(VERSION)"
-	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION).tar.gz" "./dist/uhppote-cli_$(VERSION).zip" --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
+	gh release create "$(VERSION)" "./dist/uhppote-cli_$(VERSION)-arm-x64.tar.gz"      \
+	                               "./dist/uhppote-cli_$(VERSION)-arm7.tar.gz"         \
+	                               "./dist/uhppote-cli_$(VERSION)-darwin-arm64.tar.gz" \
+	                               "./dist/uhppote-cli_$(VERSION)-darwin-x64.tar.gz"   \
+	                               "./dist/uhppote-cli_$(VERSION)-linux-x64.tar.gz"    \
+	                               "./dist/uhppote-cli_$(VERSION)-windows-x64.zip"     \
+	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
 	# ./bin/uhppote-cli --debug set-address 423187757 192.168.1.125 255.255.255.255 192.168.1.1
