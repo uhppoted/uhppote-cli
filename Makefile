@@ -95,8 +95,7 @@ publish: release
 	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	# ./bin/uhppote-cli --debug set-address 423187757 192.168.1.125 255.255.255.255 192.168.1.1
-	env GOOS=windows GOARCH=amd64 GOWORK=off go build -trimpath -o dist/$(DIST)/windows ./...
+	$(CLI) $(DEBUG) set-listener 423187757 $(LISTEN)
 
 irl: build
 	$(CLI) set-time            423187757
@@ -147,6 +146,7 @@ get-listener: build
 
 set-listener: build
 	$(CLI) $(DEBUG) set-listener $(SERIALNO) $(LISTEN)
+	$(CLI) $(DEBUG) set-listener $(SERIALNO) $(LISTEN) 7
 
 get-time: build
 	$(CLI) $(DEBUG) get-time $(SERIALNO)

@@ -1,7 +1,10 @@
 # TODO
 
-- [x] TCP/IP protocol (cf. https://github.com/uhppoted/uhppote-core/issues/17)
-- [x] Update to Go 1.23 (cf. https://github.com/uhppoted/uhppoted/issues/53)
+- [x] event listener: add listen auto-send interval (cf. https://github.com/uhppoted/uhppote-core/issues/21)
+      - [x] set-event-listener
+      - [x] get-event-listener
+      - [x] CHANGELOG
+      - [x] README
 
 - [ ] CLI is waiting for CR on error
 - [ ] JSON formatted output for e.g. get-status

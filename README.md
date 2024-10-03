@@ -460,7 +460,8 @@ uhppote-cli [options] set-door-control <device> <door> <state>
 Retrieves the current IP address + port assigned to receive event notifications from a controller. The command returns a fixed width columnar table with:
 
 - `serial number`
-- `listener ` _(IP address:port)_
+- `listener` _IP address:port_
+- `interval` _auto-send interval (if not zero)_
 ```
 uhppote-cli [options] get-listener <device>
 
@@ -479,19 +480,21 @@ uhppote-cli [options] get-listener <device>
   uhppote-cli get-listener 405419896
   
   405419896  192.168.1.100:60001
+  405419896  192.168.1.100:60001 7s
 ```
 
 #### `set-listener`
 
-Sets the IP address + port to which to send controller event notifications. The command returns a fixed width columnar table with:
+Sets the IPv4 address:port to which to send event notifications. The command returns a fixed width columnar table with:
 
 - `serial number`
 - `sucess` _(true/false)_
 ```
-uhppote-cli [options] set-listener <device> <address:port>
+uhppote-cli [options] set-listener <device> <address:port> [interval]
 
   <device>       (required) Controller serial number
   <address:port> (required) Listener IP address and port
+  <interval>     (optional) Auto-send interval (seconds). Defaults to 0 (no auto-send) if not specified.
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -501,9 +504,13 @@ uhppote-cli [options] set-listener <device> <address:port>
   --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
-  Example:
+  Examples:
 
   uhppote-cli set-listener 405419896 192.168.1.100:60001
+ 
+  405419896  true
+
+  uhppote-cli set-listener 405419896 192.168.1.100:60001 7
  
   405419896  true
 ```

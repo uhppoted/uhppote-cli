@@ -109,11 +109,11 @@ func (s *stub) ActivateKeypads(controller uint32, keypads map[uint8]bool) (bool,
 	return false, fmt.Errorf("Not implemented")
 }
 
-func (s *stub) GetListener(controller uint32) (netip.AddrPort, error) {
-	return netip.AddrPort{}, fmt.Errorf("Not implemented")
+func (s *stub) GetListener(controller uint32) (netip.AddrPort, uint8, error) {
+	return netip.AddrPort{}, 0, fmt.Errorf("Not implemented")
 }
 
-func (s *stub) SetListener(controller uint32, address netip.AddrPort) (bool, error) {
+func (s *stub) SetListener(controller uint32, address netip.AddrPort, interval uint8) (bool, error) {
 	return false, fmt.Errorf("Not implemented")
 }
 

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Updated
+1. Added (optional) auto-send interval to _set-listener_ command.
+2. Included auto-send interval (if not zero) in response from _get-listener_ command.
+
 
 ## [0.8.9](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.9) - 2024-09-06
 

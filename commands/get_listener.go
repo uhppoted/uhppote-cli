@@ -15,8 +15,10 @@ func (c *GetListener) Execute(ctx Context) error {
 		return err
 	}
 
-	if address, err := ctx.uhppote.GetListener(serialNumber); err != nil {
+	if address, interval, err := ctx.uhppote.GetListener(serialNumber); err != nil {
 		return err
+	} else if interval > 0 {
+		fmt.Printf("%v %v %vs\n", serialNumber, address, interval)
 	} else {
 		fmt.Printf("%v %v\n", serialNumber, address)
 	}
@@ -29,7 +31,7 @@ func (c *GetListener) CLI() string {
 }
 
 func (c *GetListener) Description() string {
-	return "Returns the IP address to which the selected controller sends events"
+	return "Returns the IPv4 address:port to which the controller sends events"
 }
 
 func (c *GetListener) Usage() string {
@@ -39,14 +41,14 @@ func (c *GetListener) Usage() string {
 func (c *GetListener) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-listener <serial number>")
 	fmt.Println()
-	fmt.Println(" Retrieves the IP address and port of the remote host to which the controller sends access events")
-	fmt.Println(" with the corresponding serial number in the format:")
+	fmt.Println(" Retrieves the configured IP address:port to which the controller sends events. Also")
+	fmt.Println(" retrieves the controller auto-send interval (if not zero).")
 	fmt.Println()
 	fmt.Println("  serial-number  (required) controller serial number")
 	fmt.Println()
 	fmt.Println("  Example:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli get-listener 12345678")
+	fmt.Println("    uhppote-cli get-listener 405419896")
 	fmt.Println()
 }
 
