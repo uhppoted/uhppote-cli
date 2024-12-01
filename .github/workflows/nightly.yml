@@ -65,3 +65,9 @@ jobs:
       with:
         path: dist/development/arm7/uhppote-cli
         name: uhppote-cli_arm7-nightly
+
+    - name: Upload ARM6 artifact
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/development/arm6/uhppote-cli
+        name: uhppote-cli_arm6-nightly

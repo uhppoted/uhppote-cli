@@ -9,6 +9,8 @@
 - [ ] CLI is waiting for CR on error
 - [ ] JSON formatted output for e.g. get-status
       - https://blog.kellybrazil.com/2021/12/03/tips-on-adding-json-output-to-your-cli-app/
+- [ ] getopt
+      - https://dotat.at/@/2024-11-06-getopt.html
 
 ## TODO
 

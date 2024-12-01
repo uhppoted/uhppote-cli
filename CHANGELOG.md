@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+1. ARMv6 build target (for Pi ZeroW).
+
+
 ### Updated
 1. Added (optional) auto-send interval to _set-listener_ command.
 2. Included auto-send interval (if not zero) in response from _get-listener_ command.
