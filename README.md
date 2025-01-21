@@ -8,7 +8,7 @@ Supported operating systems:
 - Linux
 - MacOS
 - Windows
-- Raspberry Pi (ARM7)
+- RaspberryPi (ARM/ARM7/ARM6)
 
 ## Raison d'être
 
