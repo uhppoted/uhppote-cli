@@ -166,7 +166,7 @@ func getPermissions(index int) (map[uint8]uint8, error) {
 
 		for _, token := range tokens {
 			match := regexp.MustCompile("([1-4])(?::([0-9]+))?").FindStringSubmatch(token)
-			if match == nil || len(match) < 3 {
+			if len(match) < 3 {
 				return nil, fmt.Errorf("invalid door '%v'", token)
 			}
 
