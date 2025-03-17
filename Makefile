@@ -263,6 +263,9 @@ activate-keypads: build
 restore-default-parameters: build
 	$(CLI) $(DEBUG) restore-default-parameters $(SERIALNO)
 
+get-antipassback: build
+	$(CLI) $(DEBUG) get-antipassback $(SERIALNO)
+
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 
 

@@ -1,7 +1,10 @@
 # TODO
 
-- [x] event listener: add listen auto-send interval (cf. https://github.com/uhppoted/uhppote-core/issues/21)
-- [x] ARM6 target (cf. https://github.com/uhppoted/uhppoted/issues/55)
+- [ ] anti-passback (cf. https://github.com/uhppoted/uhppoted/issues/60)
+      - [x] get-antipassback
+      - [ ] set-antipassback
+      - [ ] CHANGELOG
+      - [ ] README
 
 - [ ] CLI is waiting for CR on error
 - [ ] JSON formatted output for e.g. get-status

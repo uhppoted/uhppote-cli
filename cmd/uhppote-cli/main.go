@@ -41,7 +41,7 @@ var cli = []commands.Command{
 	&commands.ClearTaskListCmd,
 	&commands.RefreshTaskListCmd,
 	&commands.AddTaskCmd,
-	&commands.SetTaskListCmd,
+	&commands.GetStatusCmd,
 	&commands.ShowCmd,
 	&commands.GrantCmd,
 	&commands.RevokeCmd,
@@ -56,6 +56,7 @@ var cli = []commands.Command{
 	&commands.SetPCControlCmd,
 	&commands.SetInterlockCmd,
 	&commands.ActivateKeypadsCmd,
+	&commands.GetAntiPassbackCmd,
 	&commands.RestoreDefaultParametersCmd,
 	&commands.ListenCmd,
 }

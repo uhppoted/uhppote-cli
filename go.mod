@@ -3,8 +3,8 @@ module github.com/uhppoted/uhppote-cli
 go 1.24
 
 require (
-	github.com/uhppoted/uhppote-core v0.8.11-0.20250303170208-c3e821f32ec2
-	github.com/uhppoted/uhppoted-lib v0.8.11-0.20250303171009-b95d870f809c
+	github.com/uhppoted/uhppote-core v0.8.11-0.20250317160104-48b4c6f5cd42
+	github.com/uhppoted/uhppoted-lib v0.8.11-0.20250303171607-666b90007516
 )
 
 require golang.org/x/sys v0.30.0 // indirect
