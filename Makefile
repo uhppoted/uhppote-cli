@@ -260,11 +260,14 @@ set-interlock: build
 activate-keypads: build
 	$(CLI) $(DEBUG) activate-keypads $(SERIALNO) 1,2,4
 
-restore-default-parameters: build
-	$(CLI) $(DEBUG) restore-default-parameters $(SERIALNO)
-
 get-antipassback: build
 	$(CLI) $(DEBUG) get-antipassback $(SERIALNO)
+
+set-antipassback: build
+	$(CLI) $(DEBUG) set-antipassback $(SERIALNO) "(1:3); (2:4)"
+
+restore-default-parameters: build
+	$(CLI) $(DEBUG) restore-default-parameters $(SERIALNO)
 
 listen: build
 	$(CLI) --listen $(LISTEN) $(DEBUG) listen 

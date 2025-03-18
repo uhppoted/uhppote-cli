@@ -2,9 +2,9 @@
 
 - [ ] anti-passback (cf. https://github.com/uhppoted/uhppoted/issues/60)
       - [x] get-antipassback
-      - [ ] set-antipassback
-      - [ ] CHANGELOG
-      - [ ] README
+      - [x] set-antipassback
+      - [x] CHANGELOG
+      - [x] README
 
 - [ ] CLI is waiting for CR on error
 - [ ] JSON formatted output for e.g. get-status

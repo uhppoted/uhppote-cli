@@ -2,12 +2,17 @@
 
 ## Unreleased
 
+### Added
+1. `get/set-antipassback` command to manage the controller anti-passback mode.
+
+### Updated
+1. Updated to Go 1.24.
+
 
 ## [0.8.10](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.10) - 2025-01-30
 
 ### Added
 1. ARMv6 build target (RaspberryPi ZeroW).
-
 
 ### Updated
 1. Added (optional) auto-send interval to _set-listener_ command.
@@ -20,7 +25,7 @@
 1. github nightly build with executable artifacts.
 2. TCP/IP support.
 
-###
+### Updated
 1. Changed default controller timezone from UTC to Local.
 2. Updated to Go 1.23.
 

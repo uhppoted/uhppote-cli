@@ -15,10 +15,9 @@ func (c *GetAntiPassback) Execute(ctx Context) error {
 	} else if antipassback, err := ctx.uhppote.GetAntiPassback(serialNumber); err != nil {
 		return err
 	} else {
-		fmt.Printf("anti-passback: %v\n", antipassback)
+		fmt.Printf("%v  anti-passback: %v\n", serialNumber, antipassback)
+		return nil
 	}
-
-	return nil
 }
 
 func (c *GetAntiPassback) CLI() string {
@@ -26,7 +25,7 @@ func (c *GetAntiPassback) CLI() string {
 }
 
 func (c *GetAntiPassback) Description() string {
-	return "Returns the controller anti-passback setting"
+	return "Returns the controller anti-passback mode"
 }
 
 func (c *GetAntiPassback) Usage() string {
@@ -36,7 +35,7 @@ func (c *GetAntiPassback) Usage() string {
 func (c *GetAntiPassback) Help() {
 	fmt.Println("Usage: uhppote-cli [options] get-antipassback <serial number> [command options]")
 	fmt.Println()
-	fmt.Println(" Retrieves the controller anti-passback setting")
+	fmt.Println(" Retrieves the controller anti-passback mode")
 	fmt.Println()
 	fmt.Println("  serial-number  (required) controller serial number")
 	fmt.Println()

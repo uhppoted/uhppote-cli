@@ -57,6 +57,7 @@ var cli = []commands.Command{
 	&commands.SetInterlockCmd,
 	&commands.ActivateKeypadsCmd,
 	&commands.GetAntiPassbackCmd,
+	&commands.SetAntiPassbackCmd,
 	&commands.RestoreDefaultParametersCmd,
 	&commands.ListenCmd,
 }

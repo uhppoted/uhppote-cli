@@ -112,6 +112,8 @@ Device commands:
 - [`set-interlock`](#set-interlock)
 - [`activate-keypads`](#activate-keypads)
 - [`set-super-passwords`](#set-super-passwords)
+- [`get-antipassbacks`](#get-antipassback)
+- [`set-antipassbacks`](#set-antipassback)
 - [`restore-default-parameters`](#restore-default-parameters)
 - [`listen`](#listen)
 
@@ -1348,6 +1350,70 @@ uhppote-cli [options] set-super-passwords <controller-id> <door> <password>
 
   > uhppote-cli --debug set-super-passwords Alpha 1 12345,999999,23456,34567,45678,567890
     405419896  set super passwords 405419896 1 ok
+```
+
+
+#### `get-antipassback`
+
+Retrieves the controller anti-passback mode. The anti-passback mode will be one of the 
+following:
+- _disabled_
+- _(1:2);(3:4)_
+- _(1:3);(2:4)_
+- _1:(2,3)_
+- _1:(2,3,4)_
+
+```
+uhppote-cli [options] get-antipassback <controller-id>
+
+  <controller-id> (required) Controller serial number (or name)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli get-antipassback 405419896
+    405419896  anti-passback (1:3);(2:4)
+```
+
+
+#### `set-antipassback`
+
+Sets the controller anti-passback mode. The anti-passback must be one of the 
+following:
+- _disabled_
+- _(1:2);(3:4)_
+- _(1:3);(2:4)_
+- _1:(2,3)_
+- _1:(2,3,4)_
+
+```
+uhppote-cli [options] set-antipassback <controller-id> <antipassback>
+
+  <controller-id> (required) Controller serial number (or name)
+  <antipassback>  (required) Anti-passback mode:
+                  - disabled
+                  - (1:2);(3:4)
+                  - (1:3);(2:4)
+                  - 1:(2,3)
+                  - 1:(2,3,4)
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli set-antipassback 405419896 "(1:3);(2:4)"
+    405419896  anti-passback (1:3);(2:4)  ok
 ```
 
 
