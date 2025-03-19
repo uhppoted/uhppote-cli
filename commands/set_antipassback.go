@@ -50,7 +50,7 @@ func (c *SetAntiPassback) Help() {
 	fmt.Println("  anti-passback  (required) one of the following:")
 	fmt.Println("                 - disabled")
 	fmt.Println("                 - (1:2);(3:4)")
-	fmt.Println("                 - (1:3);(2:4)")
+	fmt.Println("                 - (1,3):(2,4)")
 	fmt.Println("                 - 1:(2,3)")
 	fmt.Println("                 - 1:(2,3,4)")
 	fmt.Println()
@@ -78,7 +78,7 @@ func (c SetAntiPassback) parse() (types.AntiPassback, error) {
 		case "1:2;3:4":
 			return types.Readers12_34, nil
 
-		case "1:3;2:4":
+		case "13:24":
 			return types.Readers13_24, nil
 
 		case "1:23":

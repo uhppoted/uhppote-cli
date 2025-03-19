@@ -1357,11 +1357,21 @@ uhppote-cli [options] set-super-passwords <controller-id> <door> <password>
 
 Retrieves the controller anti-passback mode. The anti-passback mode will be one of the 
 following:
-- _disabled_
-- _(1:2);(3:4)_
-- _(1:3);(2:4)_
-- _1:(2,3)_
-- _1:(2,3,4)_
+
+| Anti-passback | Description                                                  |
+|---------------|--------------------------------------------------------------|
+| _disabled_    | No anti-passback                                             |
+| _(1:2);(3:4)_ | Doors 1 and 2 are interlocked, doors 3 and 4 are interlocked |
+| _(1,3):(2,4)_ | Doors 1 and 3 are interlocked with doors 2 and 4             |
+| _1:(2,3)_     | Door 1 is interlocked with doors 2 and 3                     |
+| _1:(2,3,4)_   | Door 1 is interlocked with doors 2,3 and 4                   |
+
+where _interlocked_ means a card will be swiped through a second time on a door until it has 
+been swiped through at the _interlocked_ door. e.g: if the anti-passback mode is _(1,3):(2,4),
+a card swiped through at either of doors 1 or 3 will be denied access at doors 1 and 3 until 
+it has been swiped through at either of doors 2 or 4. Likewise a card swiped through at either
+of doors 2 or 4 will be denied access at doors 2 and 4 until is has been swiped through at 
+either of doors 1 or 3.
 
 ```
 uhppote-cli [options] get-antipassback <controller-id>
@@ -1378,7 +1388,7 @@ uhppote-cli [options] get-antipassback <controller-id>
 
   Examples:
   > uhppote-cli get-antipassback 405419896
-    405419896  anti-passback (1:3);(2:4)
+    405419896  anti-passback (1,3):(2,4)
 ```
 
 
@@ -1388,9 +1398,24 @@ Sets the controller anti-passback mode. The anti-passback must be one of the
 following:
 - _disabled_
 - _(1:2);(3:4)_
-- _(1:3);(2:4)_
+- _(1,3):(2,4)_
 - _1:(2,3)_
 - _1:(2,3,4)_
+
+| Anti-passback | Description                                                  |
+|---------------|--------------------------------------------------------------|
+| _disabled_    | No anti-passback                                             |
+| _(1:2);(3:4)_ | Doors 1 and 2 are interlocked, doors 3 and 4 are interlocked |
+| _(1,3):(2,4)_ | Doors 1 and 3 are interlocked with doors 2 and 4             |
+| _1:(2,3)_     | Door 1 is interlocked with doors 2 and 3                     |
+| _1:(2,3,4)_   | Door 1 is interlocked with doors 2,3 and 4                   |
+
+where _interlocked_ means a card will be swiped through a second time on a door until it has 
+been swiped through at the _interlocked_ door. e.g: if the anti-passback mode is _(1,3):(2,4),
+a card swiped through at either of doors 1 or 3 will be denied access at doors 1 and 3 until 
+it has been swiped through at either of doors 2 or 4. Likewise a card swiped through at either
+of doors 2 or 4 will be denied access at doors 2 and 4 until is has been swiped through at 
+either of doors 1 or 3.
 
 ```
 uhppote-cli [options] set-antipassback <controller-id> <antipassback>
@@ -1399,7 +1424,7 @@ uhppote-cli [options] set-antipassback <controller-id> <antipassback>
   <antipassback>  (required) Anti-passback mode:
                   - disabled
                   - (1:2);(3:4)
-                  - (1:3);(2:4)
+                  - (1,3):(2,4)
                   - 1:(2,3)
                   - 1:(2,3,4)
 

@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] anti-passback (cf. https://github.com/uhppoted/uhppoted/issues/60)
+- [x] anti-passback (cf. https://github.com/uhppoted/uhppoted/issues/60)
       - [x] get-antipassback
       - [x] set-antipassback
       - [x] CHANGELOG

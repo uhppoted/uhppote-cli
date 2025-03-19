@@ -99,7 +99,13 @@ publish: release
 	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	$(CLI) $(DEBUG) set-listener 423187757 $(LISTEN)
+#	$(CLI) $(DEBUG) get-device       423187757
+#	$(CLI) $(DEBUG) get-time         423187757
+#	$(CLI) $(DEBUG) get-card         423187757 10058400
+#	$(CLI) $(DEBUG) put-card         423187757 10058400 2025-01-01 2025-12-31 1,2,3,4
+#	$(CLI) $(DEBUG) get-antipassback 423187757
+	$(CLI) $(DEBUG) set-antipassback 423187757 "(1,3):(2,4)"
+	$(CLI) $(DEBUG) get-antipassback 423187757
 
 irl: build
 	$(CLI) set-time            423187757
