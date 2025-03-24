@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/uhppoted/uhppote-core/types"
 )
@@ -71,7 +72,7 @@ func (c SetAntiPassback) parse() (types.AntiPassback, error) {
 	if args := flag.Args(); len(args) > 2 {
 		v := regexp.MustCompile(`[ (),]+`).ReplaceAllString(args[2], "")
 
-		switch v {
+		switch strings.ToLower(v) {
 		case "disabled":
 			return types.Disabled, nil
 
