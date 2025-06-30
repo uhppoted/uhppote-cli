@@ -20,9 +20,10 @@ savings changes.
 
 ### Current Release
 
-** [v0.8.10](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.10) - 2025-01-30**
+** [v0.8.11](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.8.11) - 2025-07-01**
 
-1. Added ARMv6 build target (RaspberryPi ZeroW).
+1. Added `get/set-antipassback` command to manage the controller anti-passback mode.
+2. Updated to Go 1.24.
 
 
 ## Installation
