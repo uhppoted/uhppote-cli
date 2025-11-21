@@ -78,7 +78,7 @@ func main() {
 	var listen types.ListenAddr
 
 	flag.StringVar(&options.config, "config", options.config, "Specifies the path for the config file")
-	flag.Var(&bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:60001)")
+	flag.Var(&bind, "bind", "Sets the local IP address and port to which to bind (e.g. 192.168.0.100:0)")
 	flag.Var(&broadcast, "broadcast", "Sets the IP address and port for UDP broadcast (e.g. 192.168.0.255:60000)")
 	flag.Var(&listen, "listen", "Sets the local IP address and port to which to bind for events (e.g. 192.168.0.100:60001)")
 	flag.DurationVar(&options.timeout, "timeout", 2500*time.Millisecond, "Sets the timeout for a response from a controller (e.g. 3.5s)")

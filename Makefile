@@ -191,7 +191,7 @@ get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
 put-card: build
-	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2024-01-01 2024-12-31 1,3,4:29 7531 --card-format any 
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2025-01-01 2025-12-31 1,3,4:29 7531 --card-format any 
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)
