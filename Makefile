@@ -8,7 +8,7 @@ CARD       ?= 10058400
 DOOR       ?= 3
 INTERLOCK  ?= 1&2&3
 DEVICEIP   ?= 192.168.1.125
-LISTEN     ?= 192.168.1.100:60001
+LISTEN     ?= 192.168.1.125:60001
 DEBUG      ?= --debug
 
 .DEFAULT_GOAL := debug
