@@ -162,9 +162,9 @@ func getPermissions(index int) (map[uint8]uint8, error) {
 	permissions := map[uint8]uint8{1: 0, 2: 0, 3: 0, 4: 0}
 
 	if len(flag.Args()) > index {
-		tokens := strings.Split(flag.Arg(index), ",")
+		tokens := strings.SplitSeq(flag.Arg(index), ",")
 
-		for _, token := range tokens {
+		for token := range tokens {
 			match := regexp.MustCompile("([1-4])(?::([0-9]+))?").FindStringSubmatch(token)
 			if len(match) < 3 {
 				return nil, fmt.Errorf("invalid door '%v'", token)

@@ -42,9 +42,9 @@ func (c *Revoke) getDoors() ([]string, error) {
 	doors := []string{}
 
 	s := strings.Join(flag.Args()[2:], " ")
-	tokens := strings.Split(s, ",")
+	tokens := strings.SplitSeq(s, ",")
 
-	for _, t := range tokens {
+	for t := range tokens {
 		if d := strings.ToLower(strings.ReplaceAll(t, " ", "")); d != "" {
 			doors = append(doors, strings.TrimSpace(t))
 		}

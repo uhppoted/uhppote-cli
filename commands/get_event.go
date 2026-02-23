@@ -71,7 +71,7 @@ func (c *GetEvent) Execute(ctx Context) error {
 		}
 	}
 
-	events := []interface{}{}
+	events := []any{}
 
 	for len(events) < count {
 		event, err := ctx.uhppote.GetEvent(serialNumber, index)

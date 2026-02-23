@@ -88,8 +88,8 @@ func (c *ActivateKeypads) getKeypads() (map[uint8]bool, error) {
 	}
 
 	if args := flag.Args(); len(args) > 2 {
-		doors := strings.Split(args[2], ",")
-		for _, d := range doors {
+		doors := strings.SplitSeq(args[2], ",")
+		for d := range doors {
 			if door, err := strconv.Atoi(d); err != nil {
 				return nil, err
 			} else if door < 1 || door > 4 {

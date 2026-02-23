@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"regexp"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -30,7 +30,7 @@ func NewContext(u uhppote.IUHPPOTE, c *config.Config, debug bool) Context {
 		keys = append(keys, id)
 	}
 
-	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	slices.Sort(keys)
 
 	devices := []uhppote.Device{}
 	for _, id := range keys {

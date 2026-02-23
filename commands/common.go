@@ -33,8 +33,8 @@ func (d days) parse(arg string) error {
 	delete(d, "Saturday")
 	delete(d, "Sunday")
 
-	tokens := strings.Split(arg, ",")
-	for _, t := range tokens {
+	tokens := strings.SplitSeq(arg, ",")
+	for t := range tokens {
 		day := strings.ToLower(t)
 		switch {
 		case strings.HasPrefix(day, "mon"):

@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 	"os"
-	"sort"
+	"slices"
 	"strings"
 	"sync"
 
@@ -21,20 +21,16 @@ func (c *GetDevices) Execute(ctx Context) error {
 
 	for _, d := range ctx.devices {
 		deviceId := d.DeviceID
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			if device, err := ctx.uhppote.GetDevice(deviceId); err != nil {
 				fmt.Fprintf(os.Stderr, "   WARN:  %v\n", err)
 			} else if device != nil {
 				list.Store(deviceId, *device)
 			}
-		}()
+		})
 	}
 
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		if controllers, err := ctx.uhppote.GetDevices(); err != nil {
 			fmt.Fprintf(os.Stderr, "   WARN:  %v\n", err)
 		} else {
@@ -42,12 +38,12 @@ func (c *GetDevices) Execute(ctx Context) error {
 				list.Store(uint32(d.SerialNumber), d)
 			}
 		}
-	}()
+	})
 
 	wg.Wait()
 
 	keys := []uint32{}
-	list.Range(func(key, value interface{}) bool {
+	list.Range(func(key, value any) bool {
 		if _, ok := value.(types.Device); ok {
 			keys = append(keys, key.(uint32))
 		}
@@ -55,7 +51,7 @@ func (c *GetDevices) Execute(ctx Context) error {
 		return true
 	})
 
-	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	slices.Sort(keys)
 
 	table := [][]string{}
 	for _, key := range keys {
