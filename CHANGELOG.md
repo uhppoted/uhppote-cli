@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Updated
+1. Updated to Go 1.26.
+2. Updated _modern Go_ with `go fix`.
+
 
 ## [0.9.0](https://github.com/uhppoted/uhppote-cli/releases/tag/v0.9.0) - 2026-01-27
 
