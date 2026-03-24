@@ -9,6 +9,11 @@ DOOR       ?= 3
 INTERLOCK  ?= 1&2&3
 DEVICEIP   ?= 192.168.1.125
 LISTEN     ?= 192.168.1.125:60001
+STARTTIME  ?= 08:00
+ENDTIME    ?= 16:45
+ACTIVE     ?= normally-open
+INACTIVE   ?= normally-closed
+WEEKDAYS   ?= Mon,Tue,Fri
 DEBUG      ?= --debug
 
 .DEFAULT_GOAL := debug
@@ -106,8 +111,7 @@ debug: build
 #	$(CLI) $(DEBUG) get-card         423187757 10058400
 #	$(CLI) $(DEBUG) put-card         423187757 10058400 2025-01-01 2025-12-31 1,2,3,4
 #	$(CLI) $(DEBUG) get-antipassback 423187757
-	$(CLI) $(DEBUG) set-antipassback 423187757 "(1,3):(2,4)"
-	$(CLI) $(DEBUG) get-antipassback 423187757
+	$(CLI) $(DEBUG) set-firstcard 405419896 4 08:30 16:45 normally-open normally-closed Monday,Tue,Thurs,Fri
 
 irl: build
 	$(CLI) set-time            423187757
@@ -273,6 +277,9 @@ get-antipassback: build
 
 set-antipassback: build
 	$(CLI) $(DEBUG) set-antipassback $(SERIALNO) "(1,3):(2,4)"
+
+set-firstcard: build
+	$(CLI) $(DEBUG) set-firstcard $(SERIALNO) $(DOOR) $(STARTTIME) $(ENDTIME) $(ACTIVE) $(INACTIVE) $(WEEKDAYS)
 
 restore-default-parameters: build
 	$(CLI) $(DEBUG) restore-default-parameters $(SERIALNO)

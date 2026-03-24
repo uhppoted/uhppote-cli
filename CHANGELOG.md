@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+1. `set-firstcard` command to set the _first card_ swipe configuration.
+
 ### Updated
 1. Updated to Go 1.26.
 2. Updated to _modern Go_ with `go fix`.

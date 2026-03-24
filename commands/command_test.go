@@ -205,6 +205,10 @@ func (s *stub) SetPCControl(controller uint32, enable bool) (bool, error) {
 	return false, fmt.Errorf("Not implemented")
 }
 
+func (s *stub) SetFirstCard(controller uint32, door uint8, firstcard types.FirstCard) (bool, error) {
+	return false, fmt.Errorf("Not implemented")
+}
+
 func (s *stub) RestoreDefaultParameters(controller uint32) (bool, error) {
 	return false, fmt.Errorf("Not implemented")
 }

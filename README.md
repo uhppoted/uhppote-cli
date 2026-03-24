@@ -111,8 +111,9 @@ Device commands:
 - [`set-interlock`](#set-interlock)
 - [`activate-keypads`](#activate-keypads)
 - [`set-super-passwords`](#set-super-passwords)
-- [`get-antipassbacks`](#get-antipassback)
-- [`set-antipassbacks`](#set-antipassback)
+- [`get-antipassback`](#get-antipassback)
+- [`set-antipassback`](#set-antipassback)
+- [`set-firstcard`](#set-firstcard)
 - [`restore-default-parameters`](#restore-default-parameters)
 - [`listen`](#listen)
 
@@ -1410,7 +1411,7 @@ following:
 | _1:(2,3,4)_   | Door 1 is interlocked with doors 2,3 and 4                   |
 
 where _interlocked_ means a card will be swiped through a second time on a door until it has 
-been swiped through at the _interlocked_ door. e.g: if the anti-passback mode is _(1,3):(2,4),
+been swiped through at the _interlocked_ door. e.g: if the anti-passback mode is _(1,3):(2,4)_,
 a card swiped through at either of doors 1 or 3 will be denied access at doors 1 and 3 until 
 it has been swiped through at either of doors 2 or 4. Likewise a card swiped through at either
 of doors 2 or 4 will be denied access at doors 2 and 4 until is has been swiped through at 
@@ -1440,6 +1441,35 @@ uhppote-cli [options] set-antipassback <controller-id> <antipassback>
     405419896  anti-passback (1:3);(2:4)  ok
 ```
 
+#### `set-firstcard`
+
+Sets the controller first-card configuration which sets the door control mode on the 'first card swipe of the day'.
+
+```
+uhppote-cli [options] set-firstcard <controller-id> <door> <start> <end> <active> <inactive> <weekdays>
+
+  <controller-id> (required) Controller serial number (or name)
+  <door>          (required) Door ID ([1..4])
+  <start>         (required) Time (HH:mm) from which 'first card' is enabled (e.g. 08:30)
+  <end>           (required) Time (HH:mm) after which 'first card' is no longer active (e.g. 16:45)
+  <active>        (required) Door control mode (controlled, normally-open or normally-closed) following
+                             the 'first card' swipe 
+  <inactive>      (required) Door control mode (controlled, normally-open or normally-closed) after the 
+                             first card 'end time'.
+  <weekdays>      (required) List of weekdays on which a 'first card swipe' is enabled, e.g. Mon, Tue, Fri.
+
+  Options: 
+  --config      Sets the uhppoted.conf file to use for controller configurations
+  --bind        Overrides the default (or configured) bind IP address for a command
+  --broadcast   Overrides the default (or configured) broadcast IP address to which to send a command
+  --listen      Overrides the default (or configured) listen IP address on which to listen for events
+  --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
+  --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
+
+  Examples:
+  > uhppote-cli set-firstcard 405419896 4 08:30 16:45 normally-open normally-closed Mon,Tue,Fri
+    405419896  set first-card ok
+```
 
 #### `restore-default-parameters`
 

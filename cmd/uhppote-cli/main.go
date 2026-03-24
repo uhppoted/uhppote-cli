@@ -58,6 +58,7 @@ var cli = []commands.Command{
 	&commands.ActivateKeypadsCmd,
 	&commands.GetAntiPassbackCmd,
 	&commands.SetAntiPassbackCmd,
+	&commands.SetFirstCardCmd,
 	&commands.RestoreDefaultParametersCmd,
 	&commands.ListenCmd,
 }
