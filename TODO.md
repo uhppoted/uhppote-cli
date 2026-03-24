@@ -1,6 +1,6 @@
 # TODO
 
-- [x] 'first card' API (cf. https://github.com/uhppoted/uhppoted/issues/82)
+- [x] 'set first-card' (cf. https://github.com/uhppoted/uhppoted/issues/82)
       - [x] CLI
       - [x] CHANGELOG
       - [x] README
