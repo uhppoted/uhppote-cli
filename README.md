@@ -1443,20 +1443,25 @@ uhppote-cli [options] set-antipassback <controller-id> <antipassback>
 
 #### `set-firstcard`
 
-Sets the controller first-card configuration which sets the door control mode on the 'first card swipe of the day'.
+Sets the controller first-card configuration which sets the door control mode on the 'first card swipe of the day'. Invoking
+`set-firstcard` with only the _controller_ and _door_ values clears the door firstcard configuration.
 
 ```
 uhppote-cli [options] set-firstcard <controller-id> <door> <start> <end> <active> <inactive> <weekdays>
 
   <controller-id> (required) Controller serial number (or name)
   <door>          (required) Door ID ([1..4])
-  <start>         (required) Time (HH:mm) from which 'first card' is enabled (e.g. 08:30)
-  <end>           (required) Time (HH:mm) after which 'first card' is no longer active (e.g. 16:45)
-  <active>        (required) Door control mode (controlled, normally-open or normally-closed) following
+  <start>                    Time (HH:mm) from which 'first card' is enabled (e.g. 08:30)
+  <end>           (required if start-time present) 
+                             Time (HH:mm) after which 'first card' is no longer active (e.g. 16:45)
+  <active>        (required if start-time present)
+                             Door control mode (controlled, normally-open or normally-closed) following
                              the 'first card' swipe 
-  <inactive>      (required) Door control mode (controlled, normally-open or normally-closed) after the 
+  <inactive>      (required if start-time present)
+                             Door control mode (controlled, normally-open or normally-closed) after the 
                              first card 'end time'.
-  <weekdays>      (required) List of weekdays on which a 'first card swipe' is enabled, e.g. Mon, Tue, Fri.
+  <weekdays>      (required if start-time present) 
+                             List of weekdays on which a 'first card swipe' is enabled, e.g. Mon, Tue, Fri.
 
   Options: 
   --config      Sets the uhppoted.conf file to use for controller configurations
@@ -1467,8 +1472,11 @@ uhppote-cli [options] set-firstcard <controller-id> <door> <start> <end> <active
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
   Examples:
+  > uhppote-cli set-firstcard 405419896 4
+    405419896  4 set first-card ok  
+
   > uhppote-cli set-firstcard 405419896 4 08:30 16:45 normally-open normally-closed Mon,Tue,Fri
-    405419896  set first-card ok
+    405419896  4 set first-card ok
 ```
 
 #### `restore-default-parameters`

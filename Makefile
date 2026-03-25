@@ -279,6 +279,7 @@ set-antipassback: build
 	$(CLI) $(DEBUG) set-antipassback $(SERIALNO) "(1,3):(2,4)"
 
 set-firstcard: build
+# 	$(CLI) $(DEBUG) set-firstcard $(SERIALNO) $(DOOR)
 	$(CLI) $(DEBUG) set-firstcard $(SERIALNO) $(DOOR) $(STARTTIME) $(ENDTIME) $(ACTIVE) $(INACTIVE) $(WEEKDAYS)
 
 restore-default-parameters: build

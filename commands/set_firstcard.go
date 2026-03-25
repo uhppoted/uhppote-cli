@@ -23,9 +23,9 @@ func (c *SetFirstCard) Execute(ctx Context) error {
 	} else if ok, err := ctx.uhppote.SetFirstCard(serialNumber, door, firstcard); err != nil {
 		return err
 	} else if ok {
-		fmt.Printf("%v  set first-card ok\n", serialNumber)
+		fmt.Printf("%v  %v set first-card ok\n", serialNumber, door)
 	} else {
-		fmt.Printf("%v  set first-card failed\n", serialNumber)
+		fmt.Printf("%v  %v set first-card failed\n", serialNumber, door)
 	}
 
 	return nil
@@ -74,11 +74,11 @@ func (c SetFirstCard) parse() (uint8, types.FirstCard, error) {
 
 	door := uint8(0)
 	firstcard := types.FirstCard{
-		From:     types.NewHHmm(0, 0),
-		To:       types.NewHHmm(0, 0),
-		Active:   types.Controlled,
-		Inactive: types.Controlled,
-		Weekdays: types.Weekdays{},
+		StartTime: types.NewHHmm(0, 0),
+		EndTime:   types.NewHHmm(0, 0),
+		Active:    types.Controlled,
+		Inactive:  types.Controlled,
+		Weekdays:  types.Weekdays{},
 	}
 
 	modes := map[string]types.ControlState{
@@ -107,58 +107,58 @@ func (c SetFirstCard) parse() (uint8, types.FirstCard, error) {
 	}
 
 	// ... start time
-	if len(args) <= 3 {
-		return door, firstcard, fmt.Errorf("missing start-time")
-	} else if v, err := types.ParseHHmm(args[3]); err != nil {
-		return door, firstcard, fmt.Errorf("invalid start-time (%v)", args[3])
-	} else if v == nil {
-		return door, firstcard, fmt.Errorf("invalid start-time (%v)", args[3])
-	} else {
-		firstcard.From = *v
-	}
+	if len(args) > 3 {
+		if v, err := types.ParseHHmm(args[3]); err != nil {
+			return door, firstcard, fmt.Errorf("invalid start-time (%v)", args[3])
+		} else if v == nil {
+			return door, firstcard, fmt.Errorf("invalid start-time (%v)", args[3])
+		} else {
+			firstcard.StartTime = *v
+		}
 
-	// ... end time
-	if len(args) <= 4 {
-		return door, firstcard, fmt.Errorf("missing end-time")
-	} else if v, err := types.ParseHHmm(args[4]); err != nil {
-		return door, firstcard, fmt.Errorf("invalid end-time (%v)", args[4])
-	} else if v == nil {
-		return door, firstcard, fmt.Errorf("invalid end-time (%v)", args[4])
-	} else {
-		firstcard.To = *v
-	}
+		// ... end time
+		if len(args) <= 4 {
+			return door, firstcard, fmt.Errorf("missing end-time")
+		} else if v, err := types.ParseHHmm(args[4]); err != nil {
+			return door, firstcard, fmt.Errorf("invalid end-time (%v)", args[4])
+		} else if v == nil {
+			return door, firstcard, fmt.Errorf("invalid end-time (%v)", args[4])
+		} else {
+			firstcard.EndTime = *v
+		}
 
-	// ... active control state
-	if len(args) <= 5 {
-		return door, firstcard, fmt.Errorf("missing 'active' control state")
-	} else if v, ok := modes[strings.ToLower(args[5])]; !ok {
-		return door, firstcard, fmt.Errorf("invalid 'active' control state (%v)", args[5])
-	} else {
-		firstcard.Active = v
-	}
+		// ... active control state
+		if len(args) <= 5 {
+			return door, firstcard, fmt.Errorf("missing 'active' control state")
+		} else if v, ok := modes[strings.ToLower(args[5])]; !ok {
+			return door, firstcard, fmt.Errorf("invalid 'active' control state (%v)", args[5])
+		} else {
+			firstcard.Active = v
+		}
 
-	// ... inactive control state
-	if len(args) <= 6 {
-		return door, firstcard, fmt.Errorf("missing 'inactive' control state")
-	} else if v, ok := modes[strings.ToLower(args[6])]; !ok {
-		return door, firstcard, fmt.Errorf("invalid 'inactive' control state (%v)", args[6])
-	} else {
-		firstcard.Inactive = v
-	}
+		// ... inactive control state
+		if len(args) <= 6 {
+			return door, firstcard, fmt.Errorf("missing 'inactive' control state")
+		} else if v, ok := modes[strings.ToLower(args[6])]; !ok {
+			return door, firstcard, fmt.Errorf("invalid 'inactive' control state (%v)", args[6])
+		} else {
+			firstcard.Inactive = v
+		}
 
-	// ... weekdays
-	if len(args) <= 7 {
-		return door, firstcard, fmt.Errorf("missing weekdays")
-	} else {
-		tokens := strings.Split(strings.ToLower(args[7]), ",")
+		// ... weekdays
+		if len(args) <= 7 {
+			return door, firstcard, fmt.Errorf("missing weekdays")
+		} else {
+			tokens := strings.SplitSeq(strings.ToLower(args[7]), ",")
 
-		for _, t := range tokens {
-			if len(t) > 3 {
-				t = t[:3]
-			}
+			for t := range tokens {
+				if len(t) > 3 {
+					t = t[:3]
+				}
 
-			if v, ok := weekdays[t]; ok {
-				firstcard.Weekdays[v] = true
+				if v, ok := weekdays[t]; ok {
+					firstcard.Weekdays[v] = true
+				}
 			}
 		}
 	}
