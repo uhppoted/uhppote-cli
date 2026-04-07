@@ -5,6 +5,8 @@ DATETIME   = $(shell date "+%Y-%m-%d %H:%M:%S")
 CONTROLLER ?= Alpha
 SERIALNO   ?= 405419896
 CARD       ?= 10058400
+STARTDATE  ?= 2026-01-01
+ENDDATE    ?= 2026-12-31
 DOOR       ?= 3
 INTERLOCK  ?= 1&2&3
 DEVICEIP   ?= 192.168.1.125
@@ -106,12 +108,8 @@ publish: release
 	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-#	$(CLI) $(DEBUG) get-device       423187757
-#	$(CLI) $(DEBUG) get-time         423187757
-#	$(CLI) $(DEBUG) get-card         423187757 10058400
-#	$(CLI) $(DEBUG) put-card         423187757 10058400 2025-01-01 2025-12-31 1,2,3,4
-#	$(CLI) $(DEBUG) get-antipassback 423187757
-	$(CLI) $(DEBUG) set-firstcard 405419896 4 08:30 16:45 normally-open normally-closed Monday,Tue,Thurs,Fri
+	$(CLI) $(DEBUG) put-card 405419896 10058400 2025-01-01 2025-12-31 1,2,3,4 firstcard:1,4
+# 	$(CLI) $(DEBUG) set-firstcard 405419896 4 08:30 16:45 normally-open normally-closed Monday,Tue,Thurs,Fri
 
 irl: build
 	$(CLI) set-time            423187757
@@ -197,7 +195,7 @@ get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
 put-card: build
-	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) 2025-01-01 2025-12-31 1,3,4:29 7531 --card-format any 
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) $(STARTDATE) $(ENDDATE) 1,3,4:29 7531 --card-format any 
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)

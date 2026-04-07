@@ -1444,7 +1444,8 @@ uhppote-cli [options] set-antipassback <controller-id> <antipassback>
 #### `set-firstcard`
 
 Sets the controller first-card configuration which sets the door control mode on the 'first card swipe of the day'. Invoking
-`set-firstcard` with only the _controller_ and _door_ values clears the door firstcard configuration.
+`set-firstcard` with only the _controller_ and _door_ values clears the door firstcard configuration. The first-card configuration
+is _pending_ until activated by running the _refresh-tasklist_ command.
 
 ```
 uhppote-cli [options] set-firstcard <controller-id> <door> <start> <end> <active> <inactive> <weekdays>

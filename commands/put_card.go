@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -24,6 +25,7 @@ func (c *PutCard) Execute(ctx Context) error {
 	to := &time.Time{}
 	permissions := map[uint8]uint8{}
 	pin := types.PIN(0)
+	firstcard := []uint8{}
 	format := ctx.config.CardFormat
 	args := flag.Args()
 
@@ -77,10 +79,26 @@ func (c *PutCard) Execute(ctx Context) error {
 				}
 
 			case 5:
-				if v, err := getPIN(ix); err != nil {
+				if arg := flag.Arg(ix); strings.HasPrefix(arg, "firstcard:") {
+					if v, err := getFirstCard(arg); err != nil {
+						return err
+					} else {
+						firstcard = v
+					}
+
+				} else {
+					if v, err := getPIN(arg); err != nil {
+						return err
+					} else {
+						pin = v
+					}
+				}
+
+			case 6:
+				if v, err := getFirstCard(flag.Arg(ix)); err != nil {
 					return err
 				} else {
-					pin = v
+					firstcard = v
 				}
 			}
 
@@ -107,6 +125,12 @@ func (c *PutCard) Execute(ctx Context) error {
 		To:         end,
 		Doors:      permissions,
 		PIN:        pin,
+		FirstCard: types.FirstCardPrivileges{
+			Door1: slices.Contains(firstcard, 1),
+			Door2: slices.Contains(firstcard, 2),
+			Door3: slices.Contains(firstcard, 3),
+			Door4: slices.Contains(firstcard, 4),
+		},
 	}
 
 	if authorised, err := ctx.uhppote.PutCard(serialNumber, card, format); err != nil {
@@ -193,21 +217,34 @@ func getPermissions(index int) (map[uint8]uint8, error) {
 	return permissions, nil
 }
 
-func getPIN(index int) (types.PIN, error) {
+func getPIN(arg string) (types.PIN, error) {
 	pin := types.PIN(0)
 
-	if len(flag.Args()) > index {
-		arg := flag.Arg(index)
-		if ok := regexp.MustCompile("[0-9]+").MatchString(arg); !ok {
-			return pin, fmt.Errorf("invalid PIN (%v)", arg)
-		} else if v, err := strconv.ParseUint(arg, 10, 32); err != nil {
-			return pin, err
-		} else if v > 999999 {
-			return pin, fmt.Errorf("invalid PIN (%v)", v)
-		} else {
-			pin = types.PIN(v)
-		}
+	if ok := regexp.MustCompile("[0-9]+").MatchString(arg); !ok {
+		return pin, fmt.Errorf("invalid PIN (%v)", arg)
+	} else if v, err := strconv.ParseUint(arg, 10, 32); err != nil {
+		return pin, err
+	} else if v > 999999 {
+		return pin, fmt.Errorf("invalid PIN (%v)", v)
+	} else {
+		pin = types.PIN(v)
 	}
 
 	return pin, nil
+}
+
+func getFirstCard(arg string) ([]uint8, error) {
+	firstcard := []uint8{}
+
+	if match := regexp.MustCompile("firstcard:([1-4])(?:,([1-4]))*").FindStringSubmatch(arg); len(match) > 1 {
+		for _, v := range match[1:] {
+			if u, err := strconv.ParseUint(v, 10, 8); err != nil {
+				return firstcard, err
+			} else {
+				firstcard = append(firstcard, uint8(u))
+			}
+		}
+	}
+
+	return firstcard, nil
 }

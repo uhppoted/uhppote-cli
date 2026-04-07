@@ -56,7 +56,7 @@ func (c *GetCard) Help() {
 	fmt.Println()
 	fmt.Println("  Examples:")
 	fmt.Println()
-	fmt.Println("    uhppote-cli get-card 12345678 9876543")
+	fmt.Println("    uhppote-cli get-card 405419896 10058400")
 	fmt.Println()
 }
 
