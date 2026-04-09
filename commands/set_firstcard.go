@@ -50,11 +50,11 @@ func (c *SetFirstCard) Help() {
 	fmt.Println()
 	fmt.Println("  serial-number  (required) controller serial number")
 	fmt.Println("  door           (required) door ID ([1..4])")
-	fmt.Println("  start          (required) time from which first-card is enabled (HH:mm)")
-	fmt.Println("  end            (required) time after which first-card is disabled (HH:mm)")
-	fmt.Println("  active         (required) door control mode after first card swipe (controlled, normally-open, normally-closed)")
-	fmt.Println("  inactive       (required) door control mode after first card end time")
-	fmt.Println("  weekdays       (required) list of weekdays on which first card is enabled (e.g. Mon, Tue, Fri)")
+	fmt.Println("  start          (required) time from which 'first card' is enabled (HH:mm)")
+	fmt.Println("  end            (required) time after which 'first card' is disabled (HH:mm)")
+	fmt.Println("  active         (required) door control mode after 'first card' swipe (controlled, normally-open, normally-closed)")
+	fmt.Println("  inactive       (required) door control mode after 'first card' end time (controlled, normally-open, normally-closed, firstcard)")
+	fmt.Println("  weekdays       (required) list of weekdays on which 'first card' is enabled (e.g. Mon, Tue, Fri)")
 	fmt.Println()
 	fmt.Println("  Options:")
 	fmt.Println()
@@ -76,15 +76,16 @@ func (c SetFirstCard) parse() (uint8, types.FirstCard, error) {
 	firstcard := types.FirstCard{
 		StartTime: types.NewHHmm(0, 0),
 		EndTime:   types.NewHHmm(0, 0),
-		Active:    types.Controlled,
-		Inactive:  types.Controlled,
+		Active:    types.ModeUnknown,
+		Inactive:  types.ModeUnknown,
 		Weekdays:  types.Weekdays{},
 	}
 
 	modes := map[string]types.ControlState{
-		"controlled":      types.Controlled,
-		"normally-open":   types.NormallyOpen,
-		"normally-closed": types.NormallyClosed,
+		"controlled":      types.ModeControlled,
+		"normally-open":   types.ModeNormallyOpen,
+		"normally-closed": types.ModeNormallyClosed,
+		"firstcard":       types.ModeFirstCardOnly,
 	}
 
 	weekdays := map[string]time.Weekday{
@@ -130,7 +131,7 @@ func (c SetFirstCard) parse() (uint8, types.FirstCard, error) {
 		// ... active control state
 		if len(args) <= 5 {
 			return door, firstcard, fmt.Errorf("missing 'active' control state")
-		} else if v, ok := modes[strings.ToLower(args[5])]; !ok {
+		} else if v, ok := modes[strings.ToLower(args[5])]; !ok || v == types.ModeFirstCardOnly {
 			return door, firstcard, fmt.Errorf("invalid 'active' control state (%v)", args[5])
 		} else {
 			firstcard.Active = v

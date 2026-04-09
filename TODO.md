@@ -5,7 +5,7 @@
       - [x] CHANGELOG
       - [x] README
       - [x] add first card privileges to _PutCard_
-      - [ ] _allow only first card swipe_
+      - [x] _allow only first card swipe_
 
 - [ ] CLI is waiting for CR on error
 - [ ] JSON formatted output for e.g. get-status
