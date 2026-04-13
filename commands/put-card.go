@@ -41,6 +41,15 @@ func (c *PutCard) Execute(ctx Context) error {
 					format = v
 				}
 			}
+		} else if args[ix] == "--first-card" {
+			ix++
+			if len(args) > ix {
+				if v, err := getFirstCard(args[ix]); err != nil {
+					return err
+				} else {
+					firstcard = v
+				}
+			}
 		} else {
 			switch argi {
 			case 0:
@@ -79,31 +88,16 @@ func (c *PutCard) Execute(ctx Context) error {
 				}
 
 			case 5:
-				if arg := flag.Arg(ix); strings.HasPrefix(arg, "firstcard:") {
-					if v, err := getFirstCard(arg); err != nil {
-						return err
-					} else {
-						firstcard = v
-					}
-
-				} else {
-					if v, err := getPIN(arg); err != nil {
-						return err
-					} else {
-						pin = v
-					}
-				}
-
-			case 6:
-				if v, err := getFirstCard(flag.Arg(ix)); err != nil {
+				if v, err := getPIN(args[ix]); err != nil {
 					return err
 				} else {
-					firstcard = v
+					pin = v
 				}
 			}
 
 			argi++
 		}
+
 		ix++
 	}
 
@@ -236,7 +230,7 @@ func getPIN(arg string) (types.PIN, error) {
 func getFirstCard(arg string) ([]uint8, error) {
 	firstcard := []uint8{}
 
-	if match := regexp.MustCompile("firstcard:([1-4])(?:,([1-4]))*").FindStringSubmatch(arg); len(match) > 1 {
+	if match := regexp.MustCompile("([1-4])(?:,([1-4]))*").FindStringSubmatch(arg); len(match) > 1 {
 		for _, v := range match[1:] {
 			if u, err := strconv.ParseUint(v, 10, 8); err != nil {
 				return firstcard, err

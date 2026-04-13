@@ -14,7 +14,7 @@ LISTEN     ?= 192.168.1.125:60001
 STARTTIME  ?= 08:00
 ENDTIME    ?= 16:45
 ACTIVE     ?= normally-open
-INACTIVE   ?= normally-closed
+INACTIVE   ?= firstcard
 WEEKDAYS   ?= Mon,Tue,Fri
 DEBUG      ?= --debug
 
@@ -108,7 +108,7 @@ publish: release
 	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	$(CLI) $(DEBUG) put-card 405419896 10058400 2025-01-01 2025-12-31 1,2,3,4 firstcard:1,4
+	$(CLI) $(DEBUG) put-card 405419896 10058400 2025-01-01 2025-12-31 1,2,3,4 --first-card 1,4
 # 	$(CLI) $(DEBUG) set-firstcard 405419896 4 08:30 16:45 normally-open normally-closed Monday,Tue,Thurs,Fri
 
 irl: build
@@ -195,7 +195,7 @@ get-card: build
 	$(CLI) $(DEBUG) get-card $(SERIALNO) $(CARD)
 
 put-card: build
-	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) $(STARTDATE) $(ENDDATE) 1,3,4:29 7531 --card-format any 
+	$(CLI) $(DEBUG) put-card $(SERIALNO) $(CARD) $(STARTDATE) $(ENDDATE) 1,3,4:29 7531  --first-card 1,4 --card-format any 
 
 delete-card: build
 	$(CLI) $(DEBUG) delete-card $(SERIALNO) $(CARD)

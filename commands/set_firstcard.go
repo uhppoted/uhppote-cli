@@ -146,6 +146,8 @@ func (c SetFirstCard) parse() (uint8, types.FirstCard, error) {
 			firstcard.Inactive = v
 		}
 
+		fmt.Printf(">>>>>>>>>>>>> %v\n", firstcard)
+
 		// ... weekdays
 		if len(args) <= 7 {
 			return door, firstcard, fmt.Errorf("missing weekdays")

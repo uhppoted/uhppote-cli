@@ -84,14 +84,21 @@ func (c *GetCards) print(recordset []types.Card, w io.Writer) error {
 		if card.PIN > 0 && card.PIN < 1000000 {
 			return fmt.Sprintf("%v", card.PIN)
 		} else {
-			return ""
+			return "-"
 		}
 	}
 
-	table := [][]string{}
+	firstcard := func(card types.Card) string {
+		if card.FirstCard.IsZero() {
+			return "-"
+		} else {
+			return fmt.Sprintf("%v", card.FirstCard)
+		}
+	}
 
+	table := [][9]any{}
 	for _, card := range recordset {
-		table = append(table, []string{
+		table = append(table, [9]any{
 			fmt.Sprintf("%-8v", card.CardNumber),
 			fmt.Sprintf("%-10v", from(card)),
 			fmt.Sprintf("%-10v", to(card)),
@@ -100,21 +107,25 @@ func (c *GetCards) print(recordset []types.Card, w io.Writer) error {
 			fmt.Sprintf("%v", door(card.Doors[3])),
 			fmt.Sprintf("%v", door(card.Doors[4])),
 			fmt.Sprintf("%v", pin(card)),
+			fmt.Sprintf("%v", firstcard(card)),
 		})
 	}
 
-	width := []int{0, 0, 0, 0, 0, 0, 0, 0}
+	width := [9]int{}
 	for _, row := range table {
 		for ix, field := range row {
-			if len(field) > width[ix] {
-				width[ix] = len(field)
-			}
+			width[ix] = max(width[ix], len(field.(string)))
 		}
 	}
 
-	format := fmt.Sprintf("%%-%vv %%%vv %%-%vv %%-%vv %%-%vv %%-%vv %%-%vv %%-%vv\n", width[0], width[1], width[2], width[3], width[4], width[5], width[6], width[7])
+	fields := [9]string{}
+	for ix, w := range width {
+		fields[ix] = fmt.Sprintf("%%-%vv", w)
+	}
+	format := strings.Join(fields[:], " ") + "\n"
+
 	for _, row := range table {
-		s := fmt.Sprintf(format, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+		s := fmt.Sprintf(format, row[:]...)
 		fmt.Fprintf(w, "%v\n", strings.TrimSpace(s))
 	}
 

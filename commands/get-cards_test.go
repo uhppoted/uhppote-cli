@@ -9,9 +9,9 @@ import (
 
 func TestGetCardsPrint(t *testing.T) {
 	getCards := GetCards{}
-	expected := `12345    2023-01-01 2023-12-21 Y N N N
-8165539  2023-01-01 2023-12-31 Y N N 29
-8165538  2023-01-01 2023-12-31 Y N N 29 7531
+	expected := `12345    2023-01-01 2023-12-21 Y N N N  -    -
+8165539  2023-01-01 2023-12-31 Y N N 29 -    -
+8165538  2023-01-01 2023-12-31 Y N N 29 7531 1,4
 `
 
 	recordset := []types.Card{
@@ -33,6 +33,10 @@ func TestGetCardsPrint(t *testing.T) {
 			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
+			FirstCard: types.FirstCardPrivileges{
+				Door1: true,
+				Door4: true,
+			},
 		},
 	}
 
@@ -47,10 +51,10 @@ func TestGetCardsPrint(t *testing.T) {
 
 func TestGetCardsPrintWithInvalidCardNumber(t *testing.T) {
 	getCards := GetCards{}
-	expected := `12345     2023-01-01 2023-12-21 Y N N N
-8165539   2023-01-01 2023-12-31 Y N N 29
-8165538   2023-01-01 2023-12-31 Y N N 29 7531
-192837465 2023-01-01 2023-12-31 Y N N 29 7531
+	expected := `12345     2023-01-01 2023-12-21 Y N N N  -    -
+8165539   2023-01-01 2023-12-31 Y N N 29 -    -
+8165538   2023-01-01 2023-12-31 Y N N 29 7531 -
+192837465 2023-01-01 2023-12-31 Y N N 29 7531 1,4
 `
 
 	recordset := []types.Card{
@@ -79,6 +83,10 @@ func TestGetCardsPrintWithInvalidCardNumber(t *testing.T) {
 			To:         types.MustParseDate("2023-12-31"),
 			Doors:      map[uint8]uint8{1: 1, 2: 0, 3: 0, 4: 29},
 			PIN:        7531,
+			FirstCard: types.FirstCardPrivileges{
+				Door1: true,
+				Door4: true,
+			},
 		},
 	}
 

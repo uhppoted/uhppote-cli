@@ -595,11 +595,12 @@ Retrieves all access card records from a controller. A card record comprises:
 - `card number`
 - `start date` _date from which the card is active_
 - `end date`   _date after which the card is inactive_
-- `door1`     _Y,N or associated time profile for door 1_
-- `door2`     _Y,N or associated time profile for door 2_
-- `door3`     _Y,N or associated time profile for door 3_
-- `door4`     _Y,N or associated time profile for door 4_
-- `PIN`       _card keypad PIN code_
+- `door1`      _Y,N or associated time profile for door 1_
+- `door2`      _Y,N or associated time profile for door 2_
+- `door3`      _Y,N or associated time profile for door 3_
+- `door4`      _Y,N or associated time profile for door 4_
+- `PIN`        _card keypad PIN code_
+- `firstcard`  _first-card privileges_
 ```
 uhppote-cli [options] get-cards <device ID>
 
@@ -617,9 +618,9 @@ uhppote-cli [options] get-cards <device ID>
 
   uhppote-cli get-cards 405419896
   
-  8165537  2021-01-01 2021-12-31 Y N N N
-  8165539  2021-01-01 2021-12-31 N N N N
-  8165538  2021-01-01 2021-12-31 Y N Y 29 7531
+  8165537  2021-01-01 2021-12-31 Y N N N  -     -
+  8165539  2021-01-01 2021-12-31 N N N N  -     -
+  8165538  2021-01-01 2021-12-31 Y N Y 29 7531  1,4
 ```
 
 #### `get-card`
@@ -629,13 +630,16 @@ Retrieves a single access card record from a controller. A card record comprises
 - `card number`
 - `start date` _date (inclusive) from which the card is active_
 - `end date`   _date (inclusive) after which the card is inactive_
-- `door1`     _Y,N or associated time profile for door 1_
-- `door2`     _Y,N or associated time profile for door 2_
-- `door3`     _Y,N or associated time profile for door 3_
-- `door4`     _Y,N or associated time profile for door 4_
-- `PIN`       _keypad PIN value_
+- `door1`      _Y,N or associated time profile for door 1_
+- `door2`      _Y,N or associated time profile for door 2_
+- `door3`      _Y,N or associated time profile for door 3_
+- `door4`      _Y,N or associated time profile for door 4_
+- `PIN`        _keypad PIN value_
+- `firstcard`  _first-card privileges_
 
-The keypad PIN is only displayed if the PIN is in the valid range (1 to 999999).
+Notes:
+1. The keypad PIN is displayed as a '-' if the PIN is not in the valid range (1 to 999999).
+2. The first-card privileges are displayed as a '-' if card does not have any first-card privileges.
 
 ```
 uhppote-cli [options] get-card <device ID> <card number>
@@ -651,11 +655,16 @@ uhppote-cli [options] get-card <device ID> <card number>
   --timeout     Sets the timeout for a response from a controller (default value is 2.5s)
   --debug       Displays verbose debugging information, in particular the communications with the UHPPOTE controllers
 
-  Example:
+  Examples:
 
-  uhppote-cli get-card 405419896 8165538
+  1. uhppote-cli get-card 405419896 10058400
   
-  8165538  2021-01-01 2021-12-31 Y N Y 29 7531
+     10568400  2021-01-01 2021-12-31 Y N Y 29 7531 1,4
+
+
+  2. uhppote-cli get-card 405419896 100584399
+  
+     105684399  2021-01-01 2021-12-31 Y N Y 29 - -
 ```
 
 #### `put-card`
@@ -670,15 +679,19 @@ Creates (or updates) an access card record on a controller, with the following i
 - `door3`     _Y,N or associated time profile for door 3_
 - `door4`     _Y,N or associated time profile for door 4_
 - `PIN`       _keypad PIN value_
+- `firstcard` _first-card privileges_
 ```
-uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors> [--card-format <any|wiegand-26>]
+uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors> [--firstcard <firstcard>] [--card-format <any|wiegand-26>]
 
   <device ID>   (required) Controller serial number (or name)
   <card number> (required) Access card number
   <start>       (required) Start date from which the card is enabled, formatted as YYYY-mm-dd
   <end>         (required) End dates after which the card is no longer enabled, formatted as YYYY-mm-dd
   <doors>       (optional) Comma separated list of doors for which the card grants access. Time profiled access for a door can be specified as door:profile.
-  <PIN>         (optional) keypad PIN code in the range 0 to 999999 (0 is 'none'). Defaults to 0 is not provided.
+  <PIN>         (optional) keypad PIN code in the range 0 to 999999 (0 is 'none'). Defaults to 0 if not provided.
+  
+  --firstcard <firstcard> (optional) list of doors for which the card has first-card privileges.
+
   --card-format <format> (optional) optionally enables card format validation (either any or Wiegand-26). Defaults to the
                          `card.format` setting in _uhppoted.conf_ (or _none_).
 
@@ -692,14 +705,15 @@ uhppote-cli [options] put-card <device ID> <card number> <start> <end> <doors> [
 
   Example:
 
-  uhppote-cli put-card 405419896 8165538 2023-01-01 2023-12-31 1,3,4:29 7531
-  405419896 8165538 true
+  uhppote-cli put-card 405419896 10058400 2023-01-01 2023-12-31 1,3,4:29 7531 --firstcard 1,4 --card-format any
+  405419896 10058400 true
 
   uhppote-cli put-card  --card-format wiegand-26 405419896 1058400 2023-01-01 2023-12-31 1,3,4:29 7531
   405419896 10058400 true
 ```
 **NOTES**
 1. For a door associated with a time profile, `uhppote-cli` requires the time profile to be an existing time profile defined in the controller. The controller itself does not enforce this requirement but linking to a non-existent time profile counter-intuitively seems to allow access at any time of day.
+
 
 #### `delete-card`
 Unconditionally deletes an access card record from a controller, returning `true` if successful.
