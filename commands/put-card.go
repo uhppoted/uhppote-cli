@@ -44,7 +44,7 @@ func (c *PutCard) Execute(ctx Context) error {
 		} else if args[ix] == "--first-card" {
 			ix++
 			if len(args) > ix {
-				if v, err := getFirstCard(args[ix]); err != nil {
+				if v, err := c.getFirstCard(args[ix]); err != nil {
 					return err
 				} else {
 					firstcard = v
@@ -227,18 +227,20 @@ func getPIN(arg string) (types.PIN, error) {
 	return pin, nil
 }
 
-func getFirstCard(arg string) ([]uint8, error) {
+func (c *PutCard) getFirstCard(arg string) ([]uint8, error) {
 	firstcard := []uint8{}
 
-	if match := regexp.MustCompile("([1-4])(?:,([1-4]))*").FindStringSubmatch(arg); len(match) > 1 {
-		for _, v := range match[1:] {
-			if u, err := strconv.ParseUint(v, 10, 8); err != nil {
-				return firstcard, err
-			} else {
-				firstcard = append(firstcard, uint8(u))
+	for token := range strings.SplitSeq(arg, ",") {
+		if token != "" {
+			if v, err := strconv.ParseUint(token, 10, 8); err == nil {
+				if slices.Contains([]uint8{1, 2, 3, 4}, uint8(v)) {
+					firstcard = append(firstcard, uint8(v))
+				}
 			}
 		}
 	}
 
-	return firstcard, nil
+	slices.Sort(firstcard)
+
+	return slices.Compact(firstcard), nil
 }
