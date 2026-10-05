@@ -1,27 +1,19 @@
 # TODO
 
+## In Progress
 - [x] Migrate to codeberg.org (cf. https://codeberg.org/uhppoted/uhppoted/issues/1)
 - [x] 'set first-card' (cf. https://github.com/uhppoted/uhppoted/issues/82)
 - [x] Add first-card privilege to `get-card` and `put-card` (cf. https://codeberg.org/uhppoted/uhppoted/issues/3)
-    - [x] get-card
-    - [x] get-card-by-index
-    - [x] put-card
-    - [x] get-acl
-    - [x] compare-acl
-    - [x] load-acl
-    - [x] show
-    - [x] grant
-    - [x] ~~revoke~~
 
 
+## To Be Done
+
+- (?) get-card returning firstcard without --firstcard
 - [ ] CLI is waiting for CR on error
 - [ ] JSON formatted output for e.g. get-status
       - https://blog.kellybrazil.com/2021/12/03/tips-on-adding-json-output-to-your-cli-app/
 - [ ] getopt
       - https://dotat.at/@/2024-11-06-getopt.html
-
-## TODO
-
 - [ ] Rework command line parsing with tree-sitter
 - [ ] Glamour
       - https://github.com/charmbracelet/glamour

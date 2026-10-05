@@ -108,7 +108,9 @@ publish: release
 	                               --draft --prerelease --title "$(VERSION)-beta" --notes-file release-notes.md
 
 debug: build
-	./bin/uhppoted-cli --debug --config ./workdir/uhppoted.conf get-device 303986753
+# 	$(CLI) --config ./workdir/cards.conf load-acl ./workdir/cards.tsv
+# 	$(CLI) --config ./workdir/cards.conf get-acl  ./workdir/x.tsv
+	$(CLI) --config ./workdir/cards.conf set-listener 423187757 192.168.1.125:60001
 
 irl: build
 	$(CLI) set-time            423187757
