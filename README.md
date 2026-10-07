@@ -23,7 +23,7 @@ savings changes.
 ## [0.9.1](https://codeberg.org/uhppoted/uhppoted-cli/releases/tag/v0.9.1) - 2026-10-07
 
 1. Migrated from _github_ to _codeberg_.
-2. Updated to Go 1.26.
+2. Updated to Go 1.27.
 3. Added `set-firstcard` command to set the _first card_ swipe configuration.
 3. Added (optional) _first card_ permissions to _put-card_.
 4. _get-card_ and _get-cards_ display '-' for no PIN and no firstcard privileges.

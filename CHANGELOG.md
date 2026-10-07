@@ -7,7 +7,7 @@
 2. Created parallel _uhppoted-cli_ executable to match renamed project.
 
 ### Updated
-1. Updated to Go 1.26.
+1. Updated to Go 1.27.
 2. Updated to _modern Go_ with `go fix`.
 3. Updated _put-card_ to include _firstcard_ permission.
 4. Updated _get-card_ to display '-' for no PIN and no firstcard privileges.
