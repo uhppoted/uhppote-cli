@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Unreleased
+
+
 ## [0.9.1](https://codeberg.org/uhppoted/uhppoted-cli/releases/tag/v0.9.1) - 2026-10-07
 
 ### Added
@@ -15,7 +18,7 @@
 6. Migrated from _github.com/uhppoted/uhppote-cli_ to _codeberg.org/uhppoted/uhppoted-cli_.
 
 
-## [0.9.0](https://codeberg.org/uhppoted/uhppoted-cli/releases/tag/v0.9.0) - 2026-01-27
+## [0.9.0](https://github.com/uhppoted/uhppoted-cli/releases/tag/v0.9.0) - 2026-01-27
 
 ### Updated
 1. Updated to Go 1.25.

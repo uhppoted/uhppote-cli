@@ -1,4 +1,5 @@
-![build](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/twystd/2609d9356470acaf904386ce4a74f54e/raw/uhppoted-cli.json)
+![build](https://github.com/uhppoted/uhppote-cli/workflows/build/badge.svg)
+
 
 # uhppoted-cli
 
