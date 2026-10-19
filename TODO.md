@@ -1,9 +1,6 @@
 # TODO
 
 ## In Progress
-- [x] Migrate to codeberg.org (cf. https://codeberg.org/uhppoted/uhppoted/issues/1)
-- [x] 'set first-card' (cf. https://github.com/uhppoted/uhppoted/issues/82)
-- [x] Add first-card privilege to `get-card` and `put-card` (cf. https://codeberg.org/uhppoted/uhppoted/issues/3)
 
 
 ## To Be Done
